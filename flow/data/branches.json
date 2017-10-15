@@ -1,0 +1,101 @@
+[{
+        "id": 1,
+        "name": "Bogota",
+        "screens": [
+            {
+                "id": 1,
+                "name": "Pantalla 1",
+                "url": "localhost/tv1",
+                "content": [
+                    {
+                        "id": 1,
+                        "path": "pathbucket"
+                    },
+                    {
+                        "id": 2,
+                        "path": "pathbucket"
+                    },
+                    {
+                        "id": 3,
+                        "path": "pathbucket"
+                    }
+
+                ]
+            }
+            ,
+            {
+                "id": 2,
+                "name": "Pantalla 2",
+                "url": "localhost/tv2",
+                "content": [
+                    {
+                        "id": 1,
+                        "path": "pathbucket"
+                    },
+                    {
+                        "id": 2,
+                        "path": "pathbucket"
+                    }
+
+                ]
+            }
+            ,
+            {
+                "id": 3,
+                "name": "Pantalla 3",
+                "url": "localhost/tv3",
+                "content": [
+                    {
+                        "id": 1,
+                        "path": "pathbucket"
+                    },
+                    {
+                        "id": 2,
+                        "path": "pathbucket"
+                    }
+
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Medellin",
+        "screens": [
+            {
+                "id": 1,
+                "name": "Pantalla 1",
+                "url": "localhost/tv1",
+                "content": [
+                    {
+                        "id": 1,
+                        "path": "pathbucket"
+                    },
+                    {
+                        "id": 2,
+                        "path": "pathbucket"
+                    }
+
+                ]
+            }
+            ,
+            {
+                "id": 2,
+                "name": "Pantalla 2",
+                "url": "localhost/tv2",
+                "content": [
+                    {
+                        "id": 1,
+                        "path": "pathbucket"
+                    },
+                    {
+                        "id": 2,
+                        "path": "pathbucket"
+                    }
+
+                ]
+            }
+
+        ]
+    }
+]

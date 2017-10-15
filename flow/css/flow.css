@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15/10/2017, 02:52:23 PM
+    Author     : Diego F. Ruiz S
+*/
+
+.content >img{
+    padding: 5px;
+    width: 100%;
+    border: 1px #63c2de solid;
+}
+
+.contentVideos{
+    white-space: pre;
+    padding: 5px;
+    border: 1px #63c2de solid;
+}
+.deleteContent{
+    border: 1px red solid;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+.addContent{
+    border: 1px #4dbd74 solid;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+.contentShow{
+    padding: 7px;
+    width: 100%;
+    height: 100%;
+}
+.paddingRow{
+    padding: 10px;
+}
+

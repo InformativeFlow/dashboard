@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-sm-12" id="accordion">
+                <div class="card">
+                    <div class="card-header">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Imagenes</a>
+                        <span class="badge badge-pill badge-success float-right">{{contentImages.length}}</span>
+                        <div class="card-body pb-0">
+                            <div class="btn-group pull-right">
+                                <p>Para agregar imagenes arrastrelas desde la izquierda a la derecha</p>
+                            </div>
+                            <h4 class="mb-0">{{contentImages.length}}</h4>
+                            <p>Imagenes disponibles</p>
+                        </div>
+                    </div>
+                    <div id="collapse1" class="card-body panel-collapse collapse in">
+                        <div id="div1">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="content" ng-if="$even" ng-repeat='item in contentImages'>
+                                        <img src="{{item.path}}" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}},  placeholder: 'keep'}"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="content" ng-if="$odd" ng-repeat='item in contentImages'>
+                                        <img src="{{item.path}}" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}"  />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12"  id="accordion2">
+                <div class="card">
+                    <div class="card-header">
+                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">Videos</a>
+                        <span class="badge badge-pill badge-success float-right">{{contentVideos.length}}</span>
+                        <div class="card-body pb-0">
+                            <div class="btn-group pull-right">
+                                <p>Para agregar videos arrastrelos desde la izquierda a la derecha</p>
+                            </div>
+                            <h4 class="mb-0">{{contentVideos.length}}</h4>
+                            <p>Imagenes disponibles</p>
+                        </div>
+                    </div>
+                    <div id="collapse2" class="card-body panel-collapse collapse in">
+                        <div id="div2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div  ng-if="$even" ng-repeat='item in contentVideos'>
+                                        <video class="contentVideos" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentVideos" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}" controls width="100%">
+                                            <source src="{{item.path}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video> 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div ng-if="$odd" ng-repeat='item in contentVideos'>
+                                        <video class="contentVideos" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentVideos" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}" controls width="100%">
+                                            <source src="{{item.path}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>    
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        Contenido asociado a la pantalla {{screen.name}}
+                        <span class="badge badge-pill badge-info float-right">{{list4.length}}</span>
+                        <div class="card-body pb-0">
+                            <div class="btn-group float-right">
+                                <p>Personalice su pantalla</p>
+                            </div>
+                            <h4 class="mb-0">{{list4.length}}</h4>
+                            <p>contenidos en esta pantalla</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-success" ng-click="saveContent()"><i class="fa fa-save"></i> Guardar</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteContentModal"><i class="fa fa-trash"></i> Borrar todo el contenido</button>                       
+                    </div>
+                    <div class="row paddingRow">
+                        <div class="col-md-6">
+                            <div class="addContent">
+                                <div data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
+                                    <div class="contentShow" ng-repeat="item in list4 track by $index">
+                                        <img ng-if="item.type === 'img'" src="{{item.path}}" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"/>
+
+                                        <video ng-if="item.type === 'video'" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}" controls width="100%" >
+                                            <source src="{{item.path}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video> 
+                                    </div>
+                                    <div ng-hide="hideMe()" style="width: 240px; height: 135px;">Suelte aquí el contenido para asociar</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="deleteContent" data-drop="true" ng-model="list2" jqyoui-droppable="{beforeDrop: 'beforeDrop'}" ng-bind="list2.id ? 'Borrado correctamente..!' : 'Para borrar un contenido de la pantalla arrastrelo aquí...'" ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Contenido de pantallas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro de borrar todo el contenido a esta pantalla?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" ng-click="deleteContent()"  class="btn btn-primary" data-dismiss="modal">Si</button>
+            </div>
+        </div>
+    </div>
+</div>

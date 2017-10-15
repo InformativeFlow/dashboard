@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
+        "type": "video"
+    },
+    {
+        "id": 2,
+        "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
+        "type": "video"
+    },
+    {
+        "id": 3,
+        "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
+        "type": "video"
+    },
+    {
+        "id": 4,
+        "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
+        "type": "video"
+    },
+    {
+        "id": 5,
+        "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
+        "type": "video"
+    },
+    {
+        "id": 6,
+        "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
+        "type": "video"
+    }
+]
