@@ -19,12 +19,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="content" ng-if="$even" ng-repeat='item in contentImages'>
-                                        <img src="{{item.path}}" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}},  placeholder: 'keep'}"  />
+                                       
+                                        <img src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}},  placeholder: 'keep'}"  />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="content" ng-if="$odd" ng-repeat='item in contentImages'>
-                                        <img src="{{item.path}}" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}"  />
+                                        <img src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}"  />
                                     </div>
                                 </div>
                             </div>
@@ -50,16 +51,16 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div  ng-if="$even" ng-repeat='item in contentVideos'>
-                                        <video class="contentVideos" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentVideos" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}" controls width="100%">
-                                            <source src="{{item.path}}" type="video/mp4">
+                                        <video class="contentVideos" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentVideos" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}" controls width="100%">
+                                            <source src="{{item.path['S']}}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video> 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div ng-if="$odd" ng-repeat='item in contentVideos'>
-                                        <video class="contentVideos" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentVideos" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}" controls width="100%">
-                                            <source src="{{item.path}}" type="video/mp4">
+                                        <video class="contentVideos" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentVideos" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}" controls width="100%">
+                                            <source src="{{item.path['S']}}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>       
                                     </div>

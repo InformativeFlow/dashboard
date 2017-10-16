@@ -6,9 +6,9 @@ angular.module('app')
 screenCtrl.$inject = ['$scope', '$http', '$state', '$q', '$uibModal'];
 function screenCtrl($scope, $http, $state, $q, $uibModal) {
 
+
     $scope.branchId = $state.params.branchId;
     $scope.screenId = $state.params.screenId;
-
 
     $scope.screens = [];
     $scope.screensBranch = [];
@@ -16,23 +16,26 @@ function screenCtrl($scope, $http, $state, $q, $uibModal) {
     $scope.contentVideos = [];
     $scope.list4 = [];
 
-    $http.get('data/branches.json').then(function (response) {
-        $scope.screens = response.data;
+    $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
+        $scope.screens = response.data.Items;
         for (var item in $scope.screens) {
-            if ($scope.screens[item].id == $scope.branchId) {
-                $scope.screensBranch = $scope.screens[item].screens;
+         
+            if ($scope.screens[item].id["N"] == $scope.branchId) {
+                $scope.screensBranch = $scope.screens[item].screens["L"];
+                
             }
         }
+       
     });
 
-    $http.get('data/images.json').then(function (response) {
-        $scope.contentImages = response.data;
-
+    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {
+     $scope.contentImages = response.data.Items;
+     
 
     });
-    $http.get('data/videos.json').then(function (response) {
+    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {
 
-        $scope.contentVideos = response.data;
+        $scope.contentVideos = response.data.Items;
     });
 
 

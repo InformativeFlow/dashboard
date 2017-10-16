@@ -8,21 +8,26 @@
     , {
         "id": 2,
         "path": "https://cdn-images-1.medium.com/max/2000/1*jsi-gJBn298-Z415voGj9Q.jpeg",
-        "type": "img"
+        "type": "img",
+        "name": "nombre2"
     }
     , {
         "id": 3,
         "path": "https://addons.opera.com/media/CACHE/images/themes/45/118845/1.0-rev1/images/bea68c7d-7621-4d4b-930d-43eb824c73ca/7fa869611eb5f3559e99445298ad432c.jpg",
-        "type": "img"
+        "type": "img",
+        "name": "nombre3"
     }
     , {
         "id": 4,
         "path": "http://www.eltiempo.com/contenido/multimedia/fotos/viajar/IMAGEN/IMAGEN-14660759-2.png",
-        "type": "img"
+        "type": "img",
+        "name": "nombre4"
     }
     , {
         "id": 5,
         "path": "https://locuraviajes.com/wp-content/uploads/2014/05/los-10-mejores-paisajes-del-mundo-monte-cook-600x403.jpg",
-        "type": "img"
+        "type": "img",
+        "name": "nombre5"
+        
     }
 ]

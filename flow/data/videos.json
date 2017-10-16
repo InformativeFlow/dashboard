@@ -2,31 +2,37 @@
     {
         "id": 1,
         "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
-        "type": "video"
+        "type": "video",
+        "name": "video1"
     },
     {
         "id": 2,
         "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
-        "type": "video"
+        "type": "video",
+        "name": "video2"
     },
     {
         "id": 3,
         "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
-        "type": "video"
+        "type": "video",
+        "name": "video3"
     },
     {
         "id": 4,
         "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
-        "type": "video"
+        "type": "video",
+        "name": "video4"
     },
     {
         "id": 5,
         "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
-        "type": "video"
+        "type": "video",
+        "name": "video5"
     },
     {
         "id": 6,
         "path": "https://s3-us-west-2.amazonaws.com/iflowvidin/video.mp4",
-        "type": "video"
+        "type": "video",
+        "name": "video6"
     }
 ]
