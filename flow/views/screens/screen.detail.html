@@ -96,10 +96,9 @@
                             <div class="addContent">
                                 <div data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
                                     <div class="contentShow" ng-repeat="item in list4 track by $index">
-                                        <img ng-if="item.type === 'img'" src="{{item.path}}" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"/>
-
-                                        <video ng-if="item.type === 'video'" ng-show="item.id" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}" controls width="100%" >
-                                            <source src="{{item.path}}" type="video/mp4">
+                                        <img ng-if="item.type['S'] === 'img'" src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"/>
+                                        <video ng-if="item.type['S'] === 'video'" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}" controls width="100%" >
+                                            <source src="{{item.path['S']}}" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video> 
                                     </div>

@@ -20,10 +20,17 @@ angular
             'ngDragDrop',
             'ui.bootstrap'
         ])
-        .config(['cfpLoadingBarProvider', '$qProvider', function (cfpLoadingBarProvider, $qProvider) {
+        .config(['cfpLoadingBarProvider', '$qProvider', '$sceDelegateProvider', '$httpProvider',
+            function (cfpLoadingBarProvider, $qProvider, $sceDelegateProvider, $httpProvider) {
                 cfpLoadingBarProvider.includeSpinner = false;
                 cfpLoadingBarProvider.latencyThreshold = 1;
                 $qProvider.errorOnUnhandledRejections(false);
+
+                $sceDelegateProvider.resourceUrlWhitelist(['self', '**']);
+
+                $httpProvider.defaults.useXDomain = true;
+
+                delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
 
             }])

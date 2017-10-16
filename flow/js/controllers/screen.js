@@ -29,8 +29,7 @@ function screenCtrl($scope, $http, $state, $q, $uibModal) {
     });
 
     $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {
-     $scope.contentImages = response.data.Items;
-     
+     $scope.contentImages = response.data.Items;     
 
     });
     $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {

@@ -10,7 +10,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
+
                     <video width="450" controls>
                         <source src="{{screen['M'].content['L'][0]['M']['path']['S']}}" type="video/mp4">
                         Your browser does not support HTML5 video.
@@ -26,7 +26,7 @@
         <div class="col-md-6">
             <div ng-if="$odd" ng-repeat="screen in screensBranch" class="card">
                 <div class="card-header">
-                                        <i class="fa fa-laptop bg-info p-3 font-2xl mr-3 float-left"></i>
+                    <i class="fa fa-laptop bg-info p-3 font-2xl mr-3 float-left"></i>
                     <div class="h5 text-info mb-0 mt-2">{{screen["M"].name["S"]}}</div>
                     <div class="card-footer px-3 py-2">
                         <a class="font-weight-bold font-xs btn-block text-muted" ui-sref-active="active" ui-sref="app.screen({branchId: branchId,screenId: screen.id})">Ver detalle <i class="fa fa-angle-right float-right font-lg"></i></a>
