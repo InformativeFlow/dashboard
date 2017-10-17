@@ -1,0 +1,62 @@
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-picture-o"></i> Cargar videos
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-2">
+                    <button type="button" class="btn btn-primary" ngf-select="uploadFiles($files, $invalidFiles)" multiple
+                            accept="video/*" ngf-max-height="15000" ngf-max-size="15MB">
+                        Seleccionar videos</button>
+                </div>
+                <div class="col-10">
+                    <li ng-repeat="f in files" style="font:smaller">Archivo: {{f.name}} {{f.$errorParam}}
+                        <span class="progress" ng-show="f.progress >= 0">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{f.progress}}%"  
+                                 ng-bind="f.progress + '% Completado (Exitosamente)'"></div>
+                        </span>
+                    </li>
+                    <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                    </li> 
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-picture-o"></i> videos cargados
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div id="collapse1">
+                    <div id="div1" class="tz-gallery">
+                        <div class="row">
+                            <div class="baguetteBoxOne col-sm-6 col-md-4" ng-if="$even" ng-repeat='item in contentVideos'>
+                                <button type="button" class="pull-right btn btn-danger" style="padding: 1px;" ng-click="deleteVideo(item.id['N'])"><i class="fa fa-trash"></i></button>                       
+                                <a class="lightbox" href="{{item.path['S']}}">
+                                <video ng-if="item.type['S'] === 'video'" ng-show="item.id['N']" controls width="100%" >
+                                    <source src="{{item.path['S']}}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                </a>
+                            </div>
+                            <div class="baguetteBoxOne col-sm-6 col-md-4" ng-if="$odd" ng-repeat='item in contentVideos'>
+                                <button type="button" class="pull-right btn btn-danger" style="padding: 1px;" ng-click="deleteVideo(item.id['N'])"><i class="fa fa-trash"></i></button>                       
+                                <a class="lightbox" href="{{item.path['S']}}">
+                                <video ng-if="item.type['S'] === 'video'" ng-show="item.id['N']" controls width="100%" >
+                                    <source src="{{item.path['S']}}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

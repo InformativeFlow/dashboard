@@ -1,0 +1,56 @@
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-picture-o"></i> Cargar imagenes
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-2">
+                    <button type="button" class="btn btn-primary" ngf-select="uploadFiles($files, $invalidFiles)" multiple
+                            accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+                        Seleccionar imagenes</button>
+                </div>
+                <div class="col-10">
+                    <li ng-repeat="f in files" style="font:smaller">Archivo: {{f.name}} {{f.$errorParam}}
+                        <span class="progress" ng-show="f.progress >= 0">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{f.progress}}%"  
+                                 ng-bind="f.progress + '% Completado (Exitosamente)'"></div>
+                        </span>
+                    </li>
+                    <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                    </li> 
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-picture-o"></i> Imagenes cargadas
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div id="collapse1">
+                    <div id="div1" class="tz-gallery">
+                        <div class="row">
+                            <div class="baguetteBoxOne col-sm-6 col-md-4" ng-if="$even" ng-repeat='item in contentImages'>
+                                <button type="button" class="pull-right btn btn-danger" style="padding: 1px;" ng-click="deleteImage(item.id['N'])"><i class="fa fa-trash"></i></button>                       
+                                <a class="lightbox" href="{{item.path['S']}}">
+                                    <img src="{{item.path['S']}}" alt="image">
+                                </a>
+                            </div>
+                            <div class="baguetteBoxOne col-sm-6 col-md-4" ng-if="$odd" ng-repeat='item in contentImages'>
+                                <button type="button" class="pull-right btn btn-danger" style="padding: 1px;" ng-click="deleteImage(item.id['N'])"><i class="fa fa-trash"></i></button>                       
+                                <a class="lightbox" href="{{item.path['S']}}">
+                                    <img src="{{item.path['S']}}" alt="image">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

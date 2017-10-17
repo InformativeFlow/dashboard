@@ -136,5 +136,19 @@ angular
                             ncyBreadcrumb: {
                                 label: 'Sedes / Pantallas / Detalle'
                             }
-                        })
+                        }).state('app.images', {
+                    url: '/content/images',
+                    templateUrl: 'views/content/images.html',
+                    controller: 'contentCtrl',
+                    ncyBreadcrumb: {
+                        label: 'Contenido / Imagenes'
+                    }
+                }).state('app.videos', {
+                    url: '/content/videos',
+                    templateUrl: 'views/content/videos.html',
+                    controller: 'contentCtrl',
+                    ncyBreadcrumb: {
+                        label: 'Contenido / Videos'
+                    }
+                });
             }]);

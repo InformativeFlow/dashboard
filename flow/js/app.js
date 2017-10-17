@@ -18,7 +18,8 @@ angular
             'ncy-angular-breadcrumb',
             'angular-loading-bar',
             'ngDragDrop',
-            'ui.bootstrap'
+            'ui.bootstrap',
+            'ngFileUpload'
         ])
         .config(['cfpLoadingBarProvider', '$qProvider', '$sceDelegateProvider', '$httpProvider',
             function (cfpLoadingBarProvider, $qProvider, $sceDelegateProvider, $httpProvider) {
