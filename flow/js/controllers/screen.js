@@ -23,10 +23,6 @@ function screenCtrl($scope, $http, $state, $q) {
             if ($scope.screens[item].id["N"] == $scope.branchId) {
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
-                $scope.list4 = $scope.screens[item].screens["L"][item]["M"].content["L"];
-                console.log($scope.screens[item].screens["L"][item]["M"].content["L"]);
-                console.log($scope.list4);
-
             }
         }
 
@@ -34,13 +30,21 @@ function screenCtrl($scope, $http, $state, $q) {
 
     $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {
         $scope.contentImages = response.data.Items;
-        console.log($scope.contentImages);
-
     });
 
     $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {
-
         $scope.contentVideos = response.data.Items;
+    });
+
+    /*
+     * Método que retorna el contenido asociado a una pantalla.
+     * Se envia el id de la pantalla y se espera recibir un array como el que retorna el siguiente servicio
+     * @returns {Boolean}
+     * 
+     */
+    console.log($scope.screenId);
+    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', {"id": $scope.screenId}).then(function (response) {
+        $scope.list4 = response.data.Items;
     });
 
 
