@@ -1,10 +1,9 @@
 'use strict';
 angular.module('app')
-        .controller('screenCtrl', screenCtrl)
-        .controller('ModalInstanceCtrl', ModalInstanceCtrl);
+        .controller('screenCtrl', screenCtrl);
 
-screenCtrl.$inject = ['$scope', '$http', '$state', '$q', '$uibModal'];
-function screenCtrl($scope, $http, $state, $q, $uibModal) {
+screenCtrl.$inject = ['$scope', '$http', '$state', '$q'];
+function screenCtrl($scope, $http, $state, $q) {
 
 
     $scope.branchId = $state.params.branchId;
@@ -18,12 +17,12 @@ function screenCtrl($scope, $http, $state, $q, $uibModal) {
 
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
         $scope.screens = response.data.Items;
+
         for (var item in $scope.screens) {
 
             if ($scope.screens[item].id["N"] === $scope.branchId) {
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
-
             }
         }
 
@@ -31,11 +30,21 @@ function screenCtrl($scope, $http, $state, $q, $uibModal) {
 
     $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {
         $scope.contentImages = response.data.Items;
-
     });
-    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {
 
+    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {
         $scope.contentVideos = response.data.Items;
+    });
+
+    /*
+     * Método que retorna el contenido asociado a una pantalla.
+     * Se envia el id de la pantalla y se espera recibir un array como el que retorna el siguiente servicio
+     * @returns {Boolean}
+     * 
+     */
+    console.log($scope.screenId);
+    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', {"id": $scope.screenId}).then(function (response) {
+        $scope.list4 = response.data.Items;
     });
 
 
@@ -70,16 +79,18 @@ function screenCtrl($scope, $http, $state, $q, $uibModal) {
 
 
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
-                console.lod(JSON.stringify(response.data));
+                console.log(JSON.stringify(response.data));
             });
-          
+
         }
     };
 
     $scope.deleteContent = function () {
+
         $scope.list4 = [];
 
     }
+
     $scope.list2 = {};
 
     $scope.beforeDrop = function () {
@@ -94,16 +105,5 @@ function screenCtrl($scope, $http, $state, $q, $uibModal) {
         return deferred.promise;
     };
 
-
-}
-ModalInstanceCtrl.$inject = ['$scope', '$http', '$uibModalInstance', '$q', '$uibModal'];
-function ModalInstanceCtrl($scope, $http, $uibModalInstance, $q, $uibModal) {
-
-    $scope.ok = function () {
-        $uibModalInstance.close();
-    };
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
 
 }
