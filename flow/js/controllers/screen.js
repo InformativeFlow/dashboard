@@ -16,16 +16,18 @@ function screenCtrl($scope, $http, $state, $q) {
     $scope.list4 = [];
 
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
+
         $scope.screens = response.data.Items;
-
         for (var item in $scope.screens) {
-
-            if ($scope.screens[item].id["N"] === $scope.branchId) {
+            if ($scope.screens[item].id["N"] == $scope.branchId) {
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
+                for (var screen in $scope.screensBranch) 
+                    if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) 
+                        for (var content in $scope.screensBranch[screen]["M"].content["L"])
+                            $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
+                }
             }
-        }
-
     });
 
     $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {
@@ -42,11 +44,6 @@ function screenCtrl($scope, $http, $state, $q) {
      * @returns {Boolean}
      * 
      */
-    console.log($scope.screenId);
-    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', {"id": $scope.screenId}).then(function (response) {
-        $scope.list4 = response.data.Items;
-    });
-
 
     $scope.hideMe = function () {
         return $scope.list4.length > 0;
@@ -77,9 +74,8 @@ function screenCtrl($scope, $http, $state, $q) {
                 }
             };
 
-
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
-                console.log(JSON.stringify(response.data));
+
             });
 
         }
@@ -89,7 +85,7 @@ function screenCtrl($scope, $http, $state, $q) {
 
         $scope.list4 = [];
 
-    }
+    };
 
     $scope.list2 = {};
 
@@ -104,6 +100,5 @@ function screenCtrl($scope, $http, $state, $q) {
         //}
         return deferred.promise;
     };
-
 
 }

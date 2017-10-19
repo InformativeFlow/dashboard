@@ -133,6 +133,7 @@ angular
                             },
                             templateUrl: 'views/screens/screen.detail.html',
                             controller: 'screenCtrl',
+                           
                             ncyBreadcrumb: {
                                 label: 'Sedes / Pantallas / Detalle'
                             }

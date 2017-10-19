@@ -17,7 +17,7 @@ baguetteBoxOne.$inject = ['$timeout'];
 function baguetteBoxOne($timeout) {
     var directive = {
         restrict: 'AC',
-        link: function ($scope, $elm, ) {
+        link: function ($scope, $elm ) {
             $timeout(function () {
                 baguetteBox.run('.tz-gallery');
             });
