@@ -9,21 +9,21 @@
     "angular-animate": "^1.6.6",
     "angular-breadcrumb": "^0.5.0",
     "angular-chart.js": "^1.1.1",
+    "angular-dragdrop": "^1.0.13",
     "angular-loading-bar": "^0.9.0",
     "angular-sanitize": "^1.6.6",
     "angular-translate": "^2.15.2",
+    "angular-ui-bootstrap": "^2.5.0",
     "bootstrap": "^4.0.0-beta",
     "chart.js": "^2.7.0",
     "font-awesome": "^4.7.0",
+    "glyphicons": "^0.2.0",
     "jquery": "^3.2.1",
+    "ng-file-upload": "^12.2.13",
     "oclazyload": "^1.1.0",
     "popper.js": "^1.12.5",
     "simple-line-icons": "^2.4.1",
-    "toastr": "^2.1.2",
-    "angular-dragdrop": "^1.0.13",
-    "angular-ui-bootstrap": "^2.5.0",
-    "ng-file-upload": "^12.2.13" 
-        
+    "toastr": "^2.1.2"
   },
   "devDependencies": {
     "browser-sync": "^2.16.0",
