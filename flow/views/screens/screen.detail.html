@@ -94,7 +94,7 @@
                     <div class="row paddingRow">
                         <div class="col-md-12" >
                             <div class="addContent">
-                                <div data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
+                                <div class="areaDrop" data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
                                     <div   class="contentShow" ng-repeat="item in list4 track by $index">
                                         <img  ng-if="item.type['S'] === 'img'"   src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"  />
                                             

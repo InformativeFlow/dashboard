@@ -122,3 +122,7 @@ form .flow-progress {
     transform :translate(350px,-220px);
     z-index: 5;
 }
+.areaDrop{
+    height: 100%;
+    width: 100%;
+}
