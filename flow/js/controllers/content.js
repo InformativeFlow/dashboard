@@ -4,7 +4,10 @@ angular.module('app')
 
 contentCtrl.$inject = ['$scope', 'Upload', '$timeout', '$http'];
 function contentCtrl($scope, Upload, $timeout, $http) {
-
+    
+$http.get('data/keys.json').then(function(response){
+            console.log(response.data);
+        });
     $scope.contentImages = [];
     /*
      * El siguiente método recibe sea imagenes o videos para guardar en el servicio que recibe los archivos.
@@ -15,6 +18,8 @@ function contentCtrl($scope, Upload, $timeout, $http) {
     $scope.uploadFiles = function (files, errFiles) {
         $scope.files = files;
         $scope.errFiles = errFiles;
+        
+        
         angular.forEach(files, function (file) {
             file.upload = Upload.upload({
                 url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
