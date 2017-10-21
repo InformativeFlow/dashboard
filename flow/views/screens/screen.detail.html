@@ -1,4 +1,8 @@
+<div class="alert alert-danger" ng-if="messages">
+  <strong>{{messages}}</strong>
+</div>
 <div class="row">
+    
     <div class="col-md-6">
         <div class="row">
             <div class="col-sm-12" id="accordion">
@@ -93,8 +97,8 @@
                     </div>
                     <div class="row paddingRow">
                         <div class="col-md-12" >
-                            <div class="addContent">
-                                <div data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
+                            <div class="addContent"  data-drop="true" >
+                                <div id="conBox" data-drop="true"  ng-model='list4' jqyoui-droppable="{multiple:true}">
                                     <div   class="contentShow" ng-repeat="item in list4 track by $index">
                                         <img  ng-if="item.type['S'] === 'img'"   src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"  />
                                             
@@ -104,7 +108,9 @@
                                             Your browser does not support the video tag.
                                         </video> 
                                         
-                                          <div id="item{{$index}}"  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item,$event)"  ></div>
+                                        <div id="item{{$index}}"  >
+                                            <span  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item,$event)" ></span>
+                                        </div>
                                         </div>
                                     </div>
                                     <div ng-hide="hideMe()" style="width: 240px; height: 135px;">Suelte aquí el contenido para asociar</div>

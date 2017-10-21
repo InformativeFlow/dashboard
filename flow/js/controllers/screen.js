@@ -29,12 +29,10 @@ function screenCtrl($scope, $http, $state, $q) {
                     if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId)
                         for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
                             $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
-
-                            if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img") {
+                            if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img")
                                 $scope.idsImg.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
-                            } else {
+                            else
                                 $scope.idsVideo.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
-                            }
                         }
             }
         }
@@ -60,6 +58,7 @@ function screenCtrl($scope, $http, $state, $q) {
     $scope.hideMe = function () {
         return $scope.list4.length > 0;
     };
+
 
     $scope.saveContent = function () {
 
@@ -121,14 +120,12 @@ function screenCtrl($scope, $http, $state, $q) {
                     var parent = element.parentElement;
                     parent.removeChild(element);
                     delete $scope.list4[con];
-
+                    
                 });
             }
-
-
-
     };
     $scope.deleteContent = function () {
+         $scope.list4 = [];
         var idx = $scope.screenId - 1;
         var params = {
             "TableName": "branch",
@@ -143,7 +140,7 @@ function screenCtrl($scope, $http, $state, $q) {
         $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
             console.log(response.data);
 
-            $scope.list4 = [];
+           
         });
 
 
