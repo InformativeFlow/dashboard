@@ -19,7 +19,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="content" ng-if="$even" ng-repeat='item in contentImages'>
-                                       
+
                                         <img src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}},  placeholder: 'keep'}"  />
                                     </div>
                                 </div>
@@ -94,30 +94,32 @@
                     <div class="row paddingRow">
                         <div class="col-md-12" >
                             <div class="addContent">
-                                <div class="areaDrop" data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
-                                    <div   class="contentShow" ng-repeat="item in list4 track by $index">
-                                        <img  ng-if="item.type['S'] === 'img'"   src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"  />
-                                            
-                                        
-                                        <video  ng-if="item.type['S'] === 'video'"  ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}" controls width="100%" >
-                                            <source src="{{item.path['S']}}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video> 
-                                        
-                                          <div id="item{{$index}}"  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item,$event)"  ></div>
+                                <div class="areaDrag" data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
+                                    <div class="areaDrop">Suelte aquí el contenido para asociar</div>
+                                    <div class="listContent">
+                                        <div class="contentShow" ng-repeat="item in list4 track by $index">
+                                            <img  ng-if="item.type['S'] === 'img'"   src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"  />
+
+
+                                            <video  ng-if="item.type['S'] === 'video'"  ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}" controls width="100%" >
+                                                <source src="{{item.path['S']}}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video> 
+
+                                            <div id="item{{$index}}"  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item, $event)"  ></div>
                                         </div>
-                                        
-                                    <div ng-hide="hideMe()" style="width: 240px; height: 135px;">Suelte aquí el contenido para asociar</div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

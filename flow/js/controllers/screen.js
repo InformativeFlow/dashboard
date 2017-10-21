@@ -162,5 +162,6 @@ function screenCtrl($scope, $http, $state, $q) {
         //}
         return deferred.promise;
     };
-
+    
+    
 }
