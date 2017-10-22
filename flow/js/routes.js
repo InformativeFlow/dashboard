@@ -118,4 +118,10 @@ angular
                             url: '/500',
                             templateUrl: 'views/pages/500.html'
                         })
+                        .state('appSimple.display', {
+                            url: '/screen/{url:.*}',
+                            param:{url:null},
+                            templateUrl: 'views/display/display.html',
+                            controller: 'displayCtrl'
+                        })
             }]);
