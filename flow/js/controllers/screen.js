@@ -163,4 +163,40 @@ function screenCtrl($scope, $http, $state, $q) {
         return deferred.promise;
     };
 
+    $scope.contentExist = function () {
+        console.log("Revisando items en lista.");
+        var items = '';
+        var item = '';
+        var typeItem = '';
+        var newItem = '';
+        var typeNewItem = '';
+        var total = $scope.list4.length;
+        var last = total - 1;
+        
+        if (total > 0) {
+            newItem = $scope.list4[last].id["N"];
+            typeNewItem = $scope.list4[last].type["S"];
+            
+            //Se valida si el nuevo item agregado ya existe en la lista y en caso positivo se elimina de esta.
+            for (var con in $scope.list4) {
+                item = $scope.list4[con].id["N"];
+                typeItem = $scope.list4[con].type["S"];
+                
+                items = items + '-' + con + ':' + item +", tipo: "+typeItem;
+                if (con < last) {
+                    if ((newItem === item) && (typeNewItem === typeItem)) {
+                        console.log("existe en pos " + con);
+                        //Se elimina el elemnto de la lista.
+                        $scope.list4.splice(last, 1);
+                        break;
+                    }
+                }
+            }
+            console.log("items: " + items);
+            console.log("newItem: " + newItem + " en pos: " + last);
+            console.log("Total: " + $scope.list4.length);
+        }
+    };
+
+
 }

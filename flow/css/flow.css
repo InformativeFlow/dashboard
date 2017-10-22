@@ -30,14 +30,19 @@ and open the template in the editor.
     padding: 5px;
     width: 100%;
     height: 300px;
+    overflow-y: hidden;
+}
+.listContent{
+    width: 100%;
+    height: 300px;/*100%;*/
     overflow-y: scroll;
+    
 }
 .contentShow{
     position:relative;
     padding: 7px;
     width: 100%;
     height: 100%;
-    
 }
 .paddingRow{
     padding: 10px;
@@ -121,4 +126,13 @@ form .flow-progress {
     position: absolute;
     transform :translate(350px,-220px);
     z-index: 5;
+}
+.areaDrag{
+    height: 100%;
+    width: 100%;
+}
+.areaDrop{
+    height: 10%;
+    width: 100%;
+    padding-left: 7px;
 }
