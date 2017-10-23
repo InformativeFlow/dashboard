@@ -13,6 +13,7 @@ function displayCtrl($scope, $http, $state) {
         for (var item in $scope.data) {
             if ($scope.data[item].url == $scope.urlDisplay) {
                 $scope.video = $scope.data[item].video;
+                console.log("video "+$scope.video);
             }
         }
         if ($scope.video) {
