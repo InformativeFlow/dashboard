@@ -170,15 +170,19 @@ form .flow-progress {
 }
 
 @media (min-aspect-ratio: 16/9) {
-  .fullscreen-bg__video {
-    height: 300%;
-    top: -100%;
-  }
+    .fullscreen-bg__video {
+        height: 300%;
+        top: -100%;
+    }
 }
 
 @media (max-aspect-ratio: 16/9) {
-  .fullscreen-bg__video {
-    width: 300%;
-    left: -100%;
-  }
+    .fullscreen-bg__video {
+        width: 300%;
+        left: -100%;
+    }
+}
+
+.uploadButton{
+    padding: 0.43rem 1.5rem;
 }

@@ -17,8 +17,8 @@ angular.module('app')
                     }
                 };
             }]);
-contentCtrl.$inject = ['$scope', 'Upload', '$timeout', '$http', 'creds'];
-function contentCtrl($scope, Upload, $timeout, $http, creds) {
+contentCtrl.$inject = ['$scope', '$state', '$timeout', '$http', 'creds'];
+function contentCtrl($scope, $state, $timeout, $http, creds) {
     $scope.creds = {};
     $scope.creds.access_key = creds.apiKey;
     $scope.creds.secret_key = creds.apiSecret;
@@ -26,6 +26,7 @@ function contentCtrl($scope, Upload, $timeout, $http, creds) {
     $scope.creds.bucketVid = 'iflowvidin';
     $scope.contentImages = {};
     $scope.contentVideos = {};
+    $scope.uploadFileTrue = false;
 
 
 
@@ -52,6 +53,7 @@ function contentCtrl($scope, Upload, $timeout, $http, creds) {
     $scope.bucketVid = new AWS.S3({params: {Bucket: $scope.creds.bucketVid}});
 
     $scope.uploadFile = function () {
+        $scope.uploadFileTrue = true;
         var file = $scope.myFile;
         console.log('file is ' + file.type);
         console.dir(file);
@@ -71,14 +73,16 @@ function contentCtrl($scope, Upload, $timeout, $http, creds) {
                 return false;
             } else {
                 // Upload Successfully Finished
-                console.log('File Uploaded Successfully');
-
             }
         }).on('httpUploadProgress', function (progress) {
             $scope.uploadProgress = Math.round(progress.loaded / progress.total * 100);
             if ($scope.uploadProgress == 100) {
-                $scope.uploadProgress = 0;
-                getImages();
+                $timeout(function () {
+                    $scope.uploadProgress = 0;
+                    $scope.uploadFileTrue = false;
+                    getImages();
+                }, 5000);
+
             }
             $scope.$digest();
         });
@@ -112,7 +116,7 @@ function contentCtrl($scope, Upload, $timeout, $http, creds) {
             if ($scope.uploadProgress == 100) {
                 $scope.uploadProgress = 0;
                 getVideos();
-                
+
             }
             $scope.$digest();
         });
@@ -125,7 +129,9 @@ function contentCtrl($scope, Upload, $timeout, $http, creds) {
                 console.log(err, err.stack); // an error occurred
             else {
                 console.log("file successfully deleted");
+
                 getImages();
+                $state.go('app.images', {}, {reload: true});
             }
             // successful response
         });

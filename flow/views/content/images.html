@@ -1,28 +1,23 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Cargue Imagen</h3>
-          </div>
-          <div class="panel-body">
-            <input type = "file"  file-model="myFile" />
-            <hr>
-         <button class="btn btn-default btn-block btn-lg" ng-click = "uploadFile()">guardar archivo</button>
-            </div>
-            <hr>
-            <div class="progress">
-              <div class="progress-bar" ng-if="uploadProgress > 0" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;">
-                {{ uploadProgress == 0 ? '' : uploadProgress + '%' }}
-              </div>
-          </div>
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-picture-o"></i>Cargar imagen
         </div>
- </div>
-   <hr>
+        <div class="card-body">
+            <input type = "file" file-model="myFile" class="btn btn-info btn-sm"/>
+            <button type="button" class="btn btn-success uploadButton" ng-click = "uploadFile()">Subir</button>
+ 
+        </div>
+        <div class="card-body">
+            <div ng-if="uploadFileTrue" id="bar-file" class="col-12">
+                <span class="progress" ng-show="uploadProgress >= 0">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{uploadProgress}}%"  
+                         ng-bind="uploadProgress + '% Completado (Exitosamente)'"></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="animated fadeIn">
     <div class="card card-default">
