@@ -25,15 +25,24 @@ function screenCtrl($scope, $http, $state, $q) {
             if ($scope.screens[item].id["N"] == $scope.branchId) {
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
-                for (var screen in $scope.screensBranch)
-                    if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId)
+                for (var screen in $scope.screensBranch) {
+                    if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) {
+
                         for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
+
                             $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
-                            if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img")
+
+                            console.log($scope.list4);
+
+                            if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img") {
+                                //console.log($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
                                 $scope.idsImg.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
-                            else
+                            } else {
                                 $scope.idsVideo.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
+                            }
                         }
+                    }
+                }
             }
         }
         console.log(JSON.stringify($scope.idsVideo));
@@ -63,7 +72,6 @@ function screenCtrl($scope, $http, $state, $q) {
     $scope.saveContent = function () {
 
         if ($scope.list4.length > 0) {
-            
             $scope.listReady = [];
 
             for (var item in $scope.list4) {
@@ -75,6 +83,8 @@ function screenCtrl($scope, $http, $state, $q) {
                     $scope.listReady.push(mapbuilder);
                 }
             }
+
+
 
             var idx = $scope.screenId - 1;
             var params = {
@@ -121,12 +131,12 @@ function screenCtrl($scope, $http, $state, $q) {
                     var parent = element.parentElement;
                     parent.removeChild(element);
                     delete $scope.list4[con];
-                    
+
                 });
             }
     };
     $scope.deleteContent = function () {
-         $scope.list4 = [];
+        $scope.list4 = [];
         var idx = $scope.screenId - 1;
         var params = {
             "TableName": "branch",
@@ -141,7 +151,7 @@ function screenCtrl($scope, $http, $state, $q) {
         $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
             console.log(response.data);
 
-           
+
         });
 
 
@@ -170,19 +180,19 @@ function screenCtrl($scope, $http, $state, $q) {
         var typeNewItem = '';
         var total = $scope.list4.length;
         var last = total - 1;
-        
+
         if (total > 0) {
             newItem = $scope.list4[last].id["N"];
             typeNewItem = $scope.list4[last].type["S"];
-            
+
             //Se valida si el nuevo item agregado ya existe en la lista y en caso positivo se elimina de esta.
             for (var con in $scope.list4) {
                 item = $scope.list4[con].id["N"];
                 typeItem = $scope.list4[con].type["S"];
-                
-                items = items + '-' + con + ':' + item +", tipo: "+typeItem;
+
+                items = items + '-' + con + ':' + item + ", tipo: " + typeItem;
                 if (con < last) {
-                    if ((newItem === item) && (typeNewItem === typeItem)) {
+                    if ((newItem == item) && (typeNewItem == typeItem)) {
                         console.log("existe en pos " + con);
                         //Se elimina el elemnto de la lista.
                         $scope.list4.splice(last, 1);
