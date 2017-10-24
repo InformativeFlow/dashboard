@@ -63,10 +63,11 @@ function screenCtrl($scope, $http, $state, $q) {
     $scope.saveContent = function () {
 
         if ($scope.list4.length > 0) {
-            var mapbuilder = {};
+            
             $scope.listReady = [];
 
             for (var item in $scope.list4) {
+                var mapbuilder = {};
                 var logic = $scope.list4[item].type["S"] === "img" ? $scope.idsImg.lastIndexOf($scope.list4[item].id["N"]) : $scope.idsVideo.lastIndexOf($scope.list4[item].id["N"]);
                 if (logic === -1) {
                     delete $scope.list4[item]["$$hashKey"];
