@@ -31,7 +31,7 @@ function screenCtrl($scope, $http, $state, $q) {
                         for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
 
                             $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
-
+                                
                             console.log($scope.list4);
 
                             if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img") {
@@ -83,9 +83,7 @@ function screenCtrl($scope, $http, $state, $q) {
                     $scope.listReady.push(mapbuilder);
                 }
             }
-
-
-
+            
             var idx = $scope.screenId - 1;
             var params = {
                 "TableName": "branch",
@@ -135,8 +133,10 @@ function screenCtrl($scope, $http, $state, $q) {
                 });
             }
     };
+    
     $scope.deleteContent = function () {
         $scope.list4 = [];
+        
         var idx = $scope.screenId - 1;
         var params = {
             "TableName": "branch",
@@ -145,7 +145,7 @@ function screenCtrl($scope, $http, $state, $q) {
                     "S": $scope.branchSelectedName
                 }
             },
-            "UpdateExpression": "REMOVE screens[" + idx + "].content",
+            "UpdateExpression":"REMOVE screens[" + idx + "].content",
             "ReturnValues": "ALL_NEW"
         };
         $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {

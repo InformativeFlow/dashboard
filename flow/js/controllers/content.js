@@ -30,6 +30,37 @@ function contentCtrl($scope, $state, $timeout, $http, creds) {
 
 
 
+    function delimgDB(name) {
+        $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
+            $scope.screens = response.data.Items;
+            for (var item in $scope.screens) {
+
+                $scope.branchSelectedName = $scope.screens[item].name["S"];
+                $scope.screensBranch = $scope.screens[item].screens["L"];
+                for (var screen in $scope.screensBranch) {
+                    for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
+                        if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].name["S"] == name) {
+                            var params = {
+                                "TableName": "branch",
+                                "Key": {
+                                    "name": {
+                                        "S": $scope.branchSelectedName
+                                    }
+                                },
+                                "UpdateExpression": "REMOVE screens[" + screen + "].content[" + content + "]",
+                                "ReturnValues": "ALL_NEW"
+                            };
+                            console.log(params);
+                            $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
+                                console.log(JSON.stringify(response));
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+    ;
     function getVideos() {
         $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (res) {
             $scope.contentVideos = res.data.Items;
@@ -123,6 +154,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds) {
     };
 
     $scope.deleteImage = function (name) {
+        delimgDB(name);
 
         $scope.bucketImg.deleteObject({Bucket: 'iflowimgin', Key: name}, function (err, data) {
             if (err)
@@ -137,7 +169,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds) {
         });
     };
     $scope.deleteVideo = function (name) {
-        console.log(name);
+        delimgDB(name);
         $scope.bucketVid.deleteObject({Bucket: 'iflowvidin', Key: name}, function (err, data) {
             if (err)
                 console.log(err, err.stack); // an error occurred
