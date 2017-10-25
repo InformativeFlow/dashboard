@@ -19,7 +19,10 @@ angular
             'angular-loading-bar',
             'ngDragDrop',
             'ui.bootstrap',
-            'ngFileUpload'
+            'ngFileUpload',
+            'ngSanitize',
+            'ngAnimate',
+            'ngToast'
         ])
         .config(['cfpLoadingBarProvider', '$qProvider', '$sceDelegateProvider', '$httpProvider',
             function (cfpLoadingBarProvider, $qProvider, $sceDelegateProvider, $httpProvider) {

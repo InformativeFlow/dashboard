@@ -213,9 +213,9 @@ function trafficDemoCtrl($scope){
     data3.push(65);
   }
 
-  $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Thursday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  $scope.series = ['Current', 'Previous', 'BEP'];
-  $scope.data = [ data1, data2, data3];
+  $scope.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  $scope.series = ['Current'];
+  $scope.data = [ data1];
   $scope.colors = [{
     backgroundColor: convertHex(brandInfo,10),
     borderColor: brandInfo,
@@ -250,8 +250,8 @@ function trafficDemoCtrl($scope){
         ticks: {
           beginAtZero: true,
           maxTicksLimit: 5,
-          stepSize: Math.ceil(250 / 5),
-          max: 250
+          stepSize: Math.ceil(100 / 5),
+          max: 100
         }
       }]
     },

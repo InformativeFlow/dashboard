@@ -6,13 +6,12 @@
         <div class="card-body">
             <input type = "file" file-model="myFile" class="btn btn-info btn-sm"/>
             <button type="button" class="btn btn-success uploadButton" ng-click = "uploadFile()">Subir</button>
- 
         </div>
         <div class="card-body">
             <div ng-if="uploadFileTrue" id="bar-file" class="col-12">
                 <span class="progress" ng-show="uploadProgress >= 0">
                     <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{uploadProgress}}%"  
-                         ng-bind="uploadProgress + '% Completado (Exitosamente)'"></div>
+                         ng-bind="uploadProgress + '% ' + msg"></div>
                 </span>
             </div>
         </div>
