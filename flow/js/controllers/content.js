@@ -29,36 +29,6 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast) {
     $scope.uploadFileTrue = false;
     $scope.msg = "Completado";
 
-    function delimgDB(name) {
-        $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
-            $scope.screens = response.data.Items;
-            for (var item in $scope.screens) {
-
-                $scope.branchSelectedName = $scope.screens[item].name["S"];
-                $scope.screensBranch = $scope.screens[item].screens["L"];
-                for (var screen in $scope.screensBranch) {
-                    for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
-                        if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].name["S"] == name) {
-                            var params = {
-                                "TableName": "branch",
-                                "Key": {
-                                    "name": {
-                                        "S": $scope.branchSelectedName
-                                    }
-                                },
-                                "UpdateExpression": "REMOVE screens[" + screen + "].content[" + content + "]",
-                                "ReturnValues": "ALL_NEW"
-                            };
-                            console.log(params);
-                            $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
-                                console.log(JSON.stringify(response));
-                            });
-                        }
-                    }
-                }
-            }
-        });
-    };
     function getVideos() {
         $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (res) {
             $scope.contentVideos = res.data.Items;
@@ -158,7 +128,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast) {
     };
 
     $scope.deleteImage = function (name) {
-        delimgDB(name);
+        
 
         $scope.bucketImg.deleteObject({Bucket: 'iflowimgin', Key: name}, function (err, data) {
             if (err)
@@ -171,7 +141,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast) {
         });
     };
     $scope.deleteVideo = function (name) {
-        delimgDB(name);
+        
         $scope.bucketVid.deleteObject({Bucket: 'iflowvidin', Key: name}, function (err, data) {
             if (err)
                 console.log(err, err.stack); // an error occurred
@@ -186,117 +156,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast) {
         });
     };
 
-}
-;
+};
 
 
 
-/*  
- $scope.callVideos = function () {
- $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {
- $scope.contentVideos = response.data.Items;
- });
- }
- 
- $scope.deleteImage = function (id) {
- console.log("Enviando id de la imagen a borrar " + id);
- }
- 
- $scope.deleteVideo = function (id) {
- console.log("Enviando id del video a borrar " + id);
- }
- 
- $scope.callImages();
- $scope.callVideos();
- 
- }
- 
- 
- /*
- * mod.controller('videoCtrl', ['$scope', '$http',
- function (scope, http) {
- 
- scope.creds= {};
- scope.uploadProgress = 0;
- 
- scope.creds.bucket = "iflowvidin";
- 
- AWS.config.update({ accessKeyId: scope.creds.access_key, secretAccessKey: scope.creds.secret_key });
- AWS.config.region = 'us-west-2';
- var bucket = new AWS.S3({ params: { Bucket: scope.creds.bucket } });
- 
- scope.uploadFile = function(){
- var file = scope.myFile;
- console.log('file is '+ file.type );
- console.dir(file);
- 
- 
- var params = {
- Key: file.name,
- ContentType:file.type,
- Body: file,
- ServerSideEncryption: 'AES256'
- };
- 
- bucket.putObject(params,function(error,data){
- 
- if(error) {
- console.log(error.message);
- return false;
- }
- else {
- // Upload Successfully Finished
- console.log('File Uploaded Successfully');
- window.location.reload();
- }
- var params = {
- Key: file.name,
- ContentType:file.type,
- Body: file,
- ServerSideEncryption: 'AES256'
- };
- 
- bucket.putObject(params,function(error,data){
- 
- if(error) {
- console.log(error.message);
- return false;
- }
- else {
- // Upload Successfully Finished
- console.log('File Uploaded Successfully');
- window.location.reload();
- }
- }).on('httpUploadProgress',function(progress) {
- scope.uploadProgress = Math.round(progress.loaded / progress.total * 100);
- scope.$digest();
- });
- 
- };
- 
- var paramslist = {
- Bucket: 'iflowvidin',
- Delimiter: '/'
- };
- 
- 
- bucket.listObjects(paramslist,
- function (err, data) {
- if(err)throw err;
- scope.records = data.Contents;
- });
- 
- scope.listBucketObjects = function(){
- return scope.records;
- 
- };
- scope.deleteBucketObj = function(name){
- bucket.deleteObject({Bucket: 'iflowvidin',Key:name}, function(err, data) {
- if (err) console.log(err, err.stack); // an error occurred
- else     console.log("file successfully deleted");           // successful response
- });};
- }
- ]);
- 
- })(window.angular);
- */
