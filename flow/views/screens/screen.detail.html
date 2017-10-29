@@ -1,17 +1,17 @@
 <div class="row">
+
     <div class="col-md-6">
         <div class="row">
             <div class="col-sm-12" id="accordion">
                 <div class="card">
                     <div class="card-header">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Imagenes</a>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> Imagenes disponibles </a>
                         <span class="badge badge-pill badge-success float-right">{{contentImages.length}}</span>
                         <div class="card-body pb-0">
                             <div class="btn-group pull-right">
                                 <p>Para agregar imagenes arrastrelas desde la izquierda a la derecha</p>
                             </div>
-                            <h4 class="mb-0">{{contentImages.length}}</h4>
-                            <p>Imagenes disponibles</p>
+
                         </div>
                     </div>
                     <div id="collapse1" class="card-body panel-collapse collapse in">
@@ -36,14 +36,12 @@
             <div class="col-sm-12"  id="accordion2">
                 <div class="card">
                     <div class="card-header">
-                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">Videos</a>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"> Videos disponibles </a>
                         <span class="badge badge-pill badge-success float-right">{{contentVideos.length}}</span>
                         <div class="card-body pb-0">
                             <div class="btn-group pull-right">
-                                <p>Para agregar videos arrastrelos desde la izquierda a la derecha</p>
+                                <p>Para agregar videos arrastrelas desde la izquierda a la derecha</p>
                             </div>
-                            <h4 class="mb-0">{{contentVideos.length}}</h4>
-                            <p>Imagenes disponibles</p>
                         </div>
                     </div>
                     <div id="collapse2" class="card-body panel-collapse collapse in">
@@ -89,15 +87,15 @@
                     </div>
                     <div class="card-body">
                         <button type="button" class="btn btn-success" ng-click="saveContent()" ><i class="fa fa-save"></i> Guardar</button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteContentModal"><i class="fa fa-trash"></i> Borrar todo el contenido</button>                       
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteContentModal"><i class="fa fa-trash"></i> Borrar </button>                       
                     </div>
                     <div class="row paddingRow">
                         <div class="col-md-12" >
-                            <div class="addContent">
-                                <div class="areaDrag" data-drop="true" ng-model='list4' jqyoui-droppable="{multiple:true}">
-                                    <div ng-mouseover="contentExist()" class="areaDrop">Suelte aquí el contenido para asociar</div>
+                            <div ng-mouseover="contentExist()" class="addContent"  data-drop="true">
+                                <div id="conBox" class="areaDrag" data-drop="true"  ng-model='list4' jqyoui-droppable="{multiple:true}">
+                                    <div ng-hide="hideMe()" class="areaDrop">Suelte aquí el contenido para asociar</div>
                                     <div class="listContent">
-                                        <div class="contentShow" ng-repeat="item in list4 track by $index">
+                                        <div   class="contentShow" ng-repeat="item in list4 track by $index">
                                             <img  ng-if="item.type['S'] === 'img'"   src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"  />
 
 
@@ -106,10 +104,12 @@
                                                 Your browser does not support the video tag.
                                             </video> 
 
-                                            <div id="item{{$index}}"  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item, $event)"  ></div>
+                                            <div id="item{{$index}}"  >
+                                                <span  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item, $event)" ></span>
+                                            </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>

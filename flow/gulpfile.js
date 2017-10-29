@@ -16,6 +16,8 @@ gulp.paths = {
 
 var paths = gulp.paths;
 
+ 
+
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function() {
 

@@ -10,13 +10,29 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
-                    <video width="450" controls>
-                        <source src="{{screen['M'].content['L'][0]['M']['path']['S']}}" type="video/mp4">
-                        Your browser does not support HTML5 video.
-                    </video>
+                    <div class="col-sm-6 col-lg-12">
+                        <div class="card text-white bg-primary" ng-controller="cardChartCtrl1">
+                            <div class="card-body pb-0">
+                                <div class="btn-group float-right">
+                                    <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="icon-settings"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+                                <h4 class="mb-0">120</h4>
+                                <p>Huéspedes han interactuado</p>
+                            </div>
+                            <div class="chart-wrapper px-3" style="height:70px;">
+                                <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-options="options" chart-colors="colors" height="70"></canvas>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-header">
-                        <strong>{{screen['M'].url['S']}}</strong>
+                        <a target="_blank" href="http://localhost:8383/flow/index.html#!/screen/{{screen['M'].url['S']}}"><strong>http://localhost:8383/flow/index.html#!/screen/{{screen['M'].url['S']}}</strong></a>
                     </div>
 
                 </div>
@@ -33,12 +49,33 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <video width="450" controls>
-                        <source src="{{screen['M'].content['L'][0]['M']['path']['S']}}" type="video/mp4">
-                        Your browser does not support HTML5 video.
-                    </video>
+                    <!--                    <video width="450" controls>
+                                            <source src="{{screen['M'].content['L'][0]['M']['path']['S']}}" type="video/mp4">
+                                            Your browser does not support HTML5 video.
+                                        </video>-->
+                    <div class="col-sm-6 col-lg-12">
+                        <div class="card text-white bg-primary" ng-controller="cardChartCtrl1">
+                            <div class="card-body pb-0">
+                                <div class="btn-group float-right">
+                                    <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="icon-settings"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+                                <h4 class="mb-0">120</h4>
+                                <p>Huéspedes han interactuado</p>
+                            </div>
+                            <div class="chart-wrapper px-3" style="height:70px;">
+                                <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-options="options" chart-colors="colors" height="70"></canvas>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-header">
-                        <strong>{{screen['M'].url['S']}}</strong>
+                        <a target="_blank" href="http://localhost:8383/flow/index.html#!/screen/{{screen['M'].url['S']}}"><strong>http://localhost:8383/flow/index.html#!/screen/{{screen['M'].url['S']}}</strong></a>
                     </div>
                 </div>
             </div>

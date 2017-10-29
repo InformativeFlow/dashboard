@@ -137,10 +137,19 @@ angular
                             ncyBreadcrumb: {
                                 label: 'Sedes / Pantallas / Detalle'
                             }
-                        }).state('app.images', {
+                        })
+                                
+                        .state('app.images', {
                     url: '/content/images',
                     templateUrl: 'views/content/images.html',
                     controller: 'contentCtrl',
+                    resolve:{
+                      creds:['$http',function(r){
+                              return r.get('data/keys.json').then(function(res){
+                                  return res.data;
+                              });
+                      }]
+                    },
                     ncyBreadcrumb: {
                         label: 'Contenido / Imagenes'
                     }
@@ -148,6 +157,13 @@ angular
                     url: '/content/videos',
                     templateUrl: 'views/content/videos.html',
                     controller: 'contentCtrl',
+                     resolve:{
+                      creds:['$http',function(r){
+                              return r.get('data/keys.json').then(function(res){
+                                  return res.data;
+                              });
+                      }]
+                    },
                     ncyBreadcrumb: {
                         label: 'Contenido / Videos'
                     }
