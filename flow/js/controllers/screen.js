@@ -109,7 +109,6 @@ function screenCtrl($scope, $http, $state, $q) {
 
     $scope.removeItem = function (item, ev) {
 
-
         var idx = $scope.screenId - 1;
         for (var con in $scope.list4)
             if ($scope.list4[con].id["N"] === item.id["N"]) {
@@ -134,14 +133,12 @@ function screenCtrl($scope, $http, $state, $q) {
             }
     };
 
-
-
     $scope.deleteContent = function () {
-        var idx = $scope.screenId-1;
+        var idx = $scope.screenId - 1;
         for (var screen in $scope.screensBranch)
             for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
                 console.log(JSON.stringify($scope.screensBranch[screen]["M"].content["L"][content]));
-              console.log(content);
+                console.log(content);
                 var params = {
                     "TableName": "branch",
                     "Key": {
@@ -153,11 +150,11 @@ function screenCtrl($scope, $http, $state, $q) {
                     "ReturnValues": "ALL_NEW"
                 };
                 console.log(JSON.stringify(params));
-               
+
                 $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
                     console.log(response.data);
                     $scope.list4 = [];
-                }); 
+                });
             }
     };
 
