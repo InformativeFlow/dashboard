@@ -26,7 +26,6 @@ function screenCtrl($scope, $http, $state, $q) {
             if ($scope.screens[item].id["N"] == $scope.branchId) {
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
-                console.log($scope.screensBranch)
                 for (var screen in $scope.screensBranch) {
                     if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) {
 
@@ -45,8 +44,6 @@ function screenCtrl($scope, $http, $state, $q) {
                 }
             }
         }
-        console.log(JSON.stringify($scope.idsVideo));
-        console.log(JSON.stringify($scope.idsImg));
     });
 
     $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {

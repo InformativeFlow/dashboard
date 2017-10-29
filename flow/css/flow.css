@@ -154,11 +154,10 @@ form .flow-progress {
     width: 100%;
     height: 100%;
 }
-
-@media (min-aspect-ratio: 16/9) {
+/*@media (min-aspect-ratio: 16/9) {
     .fullscreen-bg__video {
-        width: 100%;
-        height: auto;
+        width: auto;
+        height: 100%;
     }
 }
 
@@ -168,7 +167,7 @@ form .flow-progress {
         height: 100%;
     }
 }
-
+/*
 @media (min-aspect-ratio: 16/9) {
     .fullscreen-bg__video {
         height: 300%;
@@ -182,7 +181,12 @@ form .flow-progress {
         left: -100%;
     }
 }
-
+*/
 .uploadButton{
     padding: 0.43rem 1.5rem;
+}
+
+.fullscreen {
+    width: 100%;
+    height: 100%;
 }
