@@ -190,3 +190,17 @@ form .flow-progress {
     width: 100%;
     height: 100%;
 }
+
+.promotion{
+    -moz-border-radius-bottomright: 10px; 
+    -moz-border-radius-topright: 10px; 
+    background-color: CornflowerBlue; 
+    bottom: 0px; 
+    color: #FFF; 
+    margin: 0; 
+    opacity: 1.4; 
+    filter:alpha(opacity=40); 
+    padding: 5px 10px; 
+    position: absolute; 
+    width: auto;
+}
