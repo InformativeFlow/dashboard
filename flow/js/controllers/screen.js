@@ -24,6 +24,7 @@ function screenCtrl($scope, $http, $state, $q) {
 
         for (var item in $scope.screens) {
             if ($scope.screens[item].id["N"] == $scope.branchId) {
+                console.log($scope.screens[item]["screens"]["L"][0]["M"].url);
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
                 for (var screen in $scope.screensBranch) {
@@ -80,32 +81,55 @@ function screenCtrl($scope, $http, $state, $q) {
                     $scope.listReady.push(mapbuilder);
                 }
             }
-
+            console.log(JSON.stringify($scope.listReady));
             var idx = $scope.screenId - 1;
-            var params = {
-                "TableName": "branch",
-                "Key": {
-                    "name": {
-                        "S": $scope.branchSelectedName
-                    }
-                },
-                "UpdateExpression": "SET #ri[" + idx + "].content = list_append( #ri[" + idx + "].content,:vals)",
-                "ExpressionAttributeNames": {"#ri": "screens"},
-                "ExpressionAttributeValues": {
-                    ":vals": {"L": $scope.listReady}
-                },
-                "ReturnValues": "UPDATED_NEW"
-            };
-            if (logic === -1)
-                $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
-                    console.log(response.data);
-                });
+            var p = {};
+            for (var vid in $scope.listReady) {
 
+                if ($scope.listReady[vid]["M"].type["S"] == 'video') {
+                    p = {"TableName": "branch",
+                        "Key": {
+                            "name": {
+                                "S": $scope.branchSelectedName
+                            }},
+                        "UpdateExpression": "SET screens[" + idx + "].video =:video",
+                        "ExpressionAttributeValues": {":video": {"S": "https://s3-us-west-2.amazonaws.com/iflowvidin/" + $scope.listReady[vid]["M"].name["S"]}
+                        },
+                        "ReturnValues": "UPDATED_NEW"
+                    }
+                }
+                ;
+
+                break;
+            }
         }
+
+        console.log(JSON.stringify(p));
+        $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', p).then(function (response) {
+            console.log(response.data);
+        });
+        var params = {
+            "TableName": "branch",
+            "Key": {
+                "name": {
+                    "S": $scope.branchSelectedName
+                }
+            },
+            "UpdateExpression": "SET #ri[" + idx + "].content = list_append( #ri[" + idx + "].content,:vals)",
+            "ExpressionAttributeNames": {"#ri": "screens"},
+            "ExpressionAttributeValues": {
+                ":vals": {"L": $scope.listReady}
+            },
+            "ReturnValues": "UPDATED_NEW"
+        };
+        console.log(JSON.stringify(params));
+        if (logic === -1)
+            $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
+                console.log(response.data);
+            });
     };
 
     $scope.removeItem = function (item, ev) {
-
 
         var idx = $scope.screenId - 1;
         for (var con in $scope.list4)
@@ -131,14 +155,12 @@ function screenCtrl($scope, $http, $state, $q) {
             }
     };
 
-
-
     $scope.deleteContent = function () {
-        var idx = $scope.screenId-1;
+        var idx = $scope.screenId - 1;
         for (var screen in $scope.screensBranch)
             for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
                 console.log(JSON.stringify($scope.screensBranch[screen]["M"].content["L"][content]));
-              console.log(content);
+                console.log(content);
                 var params = {
                     "TableName": "branch",
                     "Key": {
@@ -150,11 +172,11 @@ function screenCtrl($scope, $http, $state, $q) {
                     "ReturnValues": "ALL_NEW"
                 };
                 console.log(JSON.stringify(params));
-               
+
                 $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
                     console.log(response.data);
                     $scope.list4 = [];
-                }); 
+                });
             }
     };
 

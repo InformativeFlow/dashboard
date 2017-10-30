@@ -126,7 +126,6 @@ angular
                         })
                         .state('app.screen', {
                             url: '/branch/{branchId:int}/screen/{screenId:int}',
-                            //parent: 'branches',
                             param: {
                                 branchId: null,
                                 screenId: null
@@ -135,7 +134,7 @@ angular
                             controller: 'screenCtrl',
                            
                             ncyBreadcrumb: {
-                                label: 'Sedes / Pantallas / Detalle'
+                                label: 'Sedes / Pantallas / Detalle pantalla'
                             }
                         })
                                 

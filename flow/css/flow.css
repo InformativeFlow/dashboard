@@ -185,3 +185,8 @@ form .flow-progress {
 .uploadButton{
     padding: 0.43rem 1.5rem;
 }
+
+.fullscreen {
+    width: 100%;
+    height: 100%;
+}

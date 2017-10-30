@@ -4,8 +4,10 @@
             <i class="fa fa-picture-o"></i>Cargar video
         </div>
         <div class="card-body">
-            <input type = "file" file-model="myFile" class="btn btn-info btn-sm"/>
+            
+            <input type = "file" file-model="myFile"   class="btn btn-info btn-sm"/>
             <button type="button" class="btn btn-success uploadButton" ng-click = "uploadVideo()">Subir</button>
+           
         </div>
         <div class="card-body">
             <div ng-if="uploadFileTrue" id="bar-file" class="col-12">

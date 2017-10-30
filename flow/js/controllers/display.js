@@ -11,12 +11,14 @@ function displayCtrl($scope, $http, $state) {
         $scope.data = response.data.Items;
 
         for (var item in $scope.data) {
-            for(var screen in $scope.data[item].screens["L"] )
-            if ($scope.data[item].screens["L"][screen]["M"].url["S"] == $scope.urlDisplay) {
-                $scope.video = $scope.data[item].screens["L"][screen]["M"].video["S"];
-                console.log("URL Video "+$scope.video);
-            }
+            for (var screen in $scope.data[item].screens["L"])
+                if ($scope.data[item].screens["L"][screen]["M"].url["S"] == $scope.urlDisplay) {
+                    $scope.video = $scope.data[item].screens["L"][screen]["M"].video["S"];
+                    console.log("URL Video " + $scope.video);
+
+                }
         }
+        
         if ($scope.video) {
         } else {
             $state.go('appSimple.404', {}, {reload: true});

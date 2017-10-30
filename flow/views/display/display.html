@@ -1,34 +1,37 @@
-<div class="fullscreen-bg row" >
-    <div class="col-sm-9 col-md-6 col-lg-8 fullscreen-bg">
-        <video name="test" src="{{video| trustUrl}}" autoplay="true" loop="true" class="fullscreen-bg__video"></video>
-    </div>
-    <div class="col-sm-3 col-md-6 col-lg-4">
-        <div class="col-md-12">
-            <div class="animated fadeIn">
-                <div class="card-header">
-                    Escanea el código QR de promociones
+<!--<img id="img1" class="img-responsive center-block" src="http://www.puraitalia.com/wp-content/uploads/2014/06/Restaurante-Italiano-Comida-Italiana-Pura-Italia.png"  style="width: 100px; height: 100px;" fullscreen/>-->
+<div ngsf-fullscreen>
+    <!--    <button ngsf-toggle-fullscreen>Toggle fullscreen</button>-->
+    <div class="fullscreen-bg row" id="display-all">
+        <div class="col-sm-9 col-md-6 col-lg-8 fullscreen-bg">
+            <video id="video-display" name="test" src="{{video| trustUrl}}" autoplay="true" loop="true" class="fullscreen-bg__video"></video>
+        </div>
+        <div class="col-sm-3 col-md-6 col-lg-4">
+            <div class="col-md-12">
+                <div class="animated fadeIn">
+                    <div class="card-header">
+                        <div class="h5 text-editor mb-0 mt-2">Escanea el código QR de promociones</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card-body">
-                <div class="col-sm-12 col-lg-12">
-                    <div class="card text-white bg-info">
-                        <div class="card-body pb-0">
-                            <p class="text-center">Pura Italiana</p>
-                            <img class="img-responsive center-block" src="http://www.puraitalia.com/wp-content/uploads/2014/06/Restaurante-Italiano-Comida-Italiana-Pura-Italia.png"  style="width: 100%; height: 100%;"/>
-                        </div>
-                        <div class="card-body pb-0">
-                            <img  class="img-responsive center-block" src="https://www.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png"  style="width: 100%; height: 100%;"/>
-                        </div>
-                        <div class="card-body pb-0">
-                            <p class="text-center">Pura Italiana</p>
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="card text-white bg-info">
+                            <div class="card-body pb-0">
+                                <p class="text-center">Pura Italiana</p>
+                                <img id="img2" class="img-responsive center-block" src="http://www.puraitalia.com/wp-content/uploads/2014/06/Restaurante-Italiano-Comida-Italiana-Pura-Italia.png"  style="width: 100%; height: 100%;" />
+                            </div>
+                            <div class="card-body pb-0">
+                                <img id="img3" class="img-responsive center-block" src="https://www.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png"  style="width: 100%; height: 100%;" />
+                            </div>
+                            <div class="card-body pb-0">
+                                <p class="text-center">Pura Italiana</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-
 </div>
-

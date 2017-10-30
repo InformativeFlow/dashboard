@@ -7208,10 +7208,10 @@ base-chart.chart {
     padding: 0.5rem 1rem;
     margin-right: 0;
     background-color: #fff;
-    background-image: url("../img/iflow2.PNG");
+    background-image: url("../img/logo.png");
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 50px auto;
+    background-size: 70px auto;
     border-bottom: 1px solid #c2cfd6; }
   .app-header.navbar .navbar-toggler {
     color: #536c79; }
