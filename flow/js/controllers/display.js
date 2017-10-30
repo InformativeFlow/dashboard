@@ -4,7 +4,8 @@ angular.module('app')
 
 displayCtrl.$inject = ['$scope', '$http', '$state'];
 function displayCtrl($scope, $http, $state) {
-
+    
+    
     $scope.urlDisplay = $state.params.url;
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
 
@@ -24,6 +25,14 @@ function displayCtrl($scope, $http, $state) {
             $state.go('appSimple.404', {}, {reload: true});
         }
 
+    });
+    
+    //Se listan las promociones disponibles.
+    $http.get('data/promotions.json').then(function (response){
+        
+        $scope.promotions = response.data;
+        console.log("promociones: "+$scope.promotions);
+        
     });
 
 }

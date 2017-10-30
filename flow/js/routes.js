@@ -124,4 +124,16 @@ angular
                             templateUrl: 'views/display/display.html',
                             controller: 'displayCtrl'
                         })
+                        .state('promotion', {
+                            url: '/promotion/{url:.*}',
+                            param:{url:null},
+                            templateUrl: 'views/promotions/form.html',
+                            controller: 'promotionCtrl'
+                        })
+                        .state('prueba', {
+                            url: '/prueba',
+                            param:{url:null},
+                            templateUrl: 'views/promotions/prueba.html',
+                            controller: 'promotionCtrl'
+                        })
             }]);

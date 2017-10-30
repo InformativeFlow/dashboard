@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "url": "test1",
+        "title":"Pura Italiana",
+        "image": "http://www.puraitalia.com/wp-content/uploads/2014/06/Restaurante-Italiano-Comida-Italiana-Pura-Italia.png",
+        "link_qr":"http://www.codigos-qr.com/qr/php/qr_img.php?d=http%3A%2F%2Flocalhost%3A8383%2Fflow%2Findex.html%23%21%2Fpromotion%2Ftest1&s=8&e=m",
+        "activation": "http://localhost:8383/flow/index.html#!/promotion/test1"
+    }
+]
