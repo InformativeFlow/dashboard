@@ -130,10 +130,10 @@ angular
                             templateUrl: 'views/promotions/form.html',
                             controller: 'promotionCtrl'
                         })
-                        .state('prueba', {
-                            url: '/prueba',
+                        .state('pruebaSlides', {
+                            url: '/pruebaSlides',
                             param:{url:null},
-                            templateUrl: 'views/promotions/prueba.html',
-                            controller: 'promotionCtrl'
-                        })
+                            templateUrl: 'views/promotions/pruebaSlides.html',
+                            controller: 'slidesCtrl'
+                        });
             }]);

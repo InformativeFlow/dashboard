@@ -1,35 +1,39 @@
 <div class="app flex-row align-items-center">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card mx-4">
-          <div class="card-body p-4">
-            <h1>Promoción</h1>
-            <p class="text-muted">Solicitar código para reclamar.</p>
-            <div class="input-group mb-3">
-              <span class="input-group-addon"><i class="icon-user"></i></span>
-              <input type="text" class="form-control" placeholder="Nombre completo">
-            </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mx-4">
+                    <div class="card-body p-4" ng-show="showForm()">
+                        <h1>Promoción</h1>
+                        <p class="text-muted">Solicitar código para reclamar.</p>
+                        <div class="input-group mb-3">
+                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                            <input type="text" class="form-control" placeholder="Nombre completo" ng-model="infoUsuario.name">
+                        </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-addon"></span>
-              <input type="text" class="form-control" placeholder="Documento">
-            </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-addon"></span>
+                            <input type="text" class="form-control" placeholder="Documento" ng-model="infoUsuario.document">
+                        </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-addon">@</span>
-              <input type="text" class="form-control" placeholder="Correo electrónico">
-            </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control" placeholder="Correo electrónico" ng-model="infoUsuario.email">
+                        </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-addon"></span>
-              <input type="text" class="form-control" placeholder="# Habitación">
-            </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-addon"></span>
+                            <input type="text" class="form-control" placeholder="# Habitación" ng-model="infoUsuario.room">
+                        </div>
 
-            <button type="button" class="btn btn-block btn-success">Enviar</button>
-          </div>
+                        <button type="button" class="btn btn-block btn-success" ng-click="getCode()">Enviar</button>
+                    </div>
+                    <div class="card-body p-4" ng-show="showCode()">
+                        <p class="text-muted">Tu código para reclamar es: <strong>{{infoUsuario.code}}</strong></p>
+
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

@@ -22,7 +22,8 @@ angular
             'ngFileUpload',
             'ngSanitize',
             'ngAnimate',
-            'ngToast'
+            'ngToast',
+            'msl.slides'
             
         ])
         .config(['cfpLoadingBarProvider', '$qProvider', '$sceDelegateProvider', '$httpProvider',
