@@ -120,6 +120,13 @@ angular
                             },
                             templateUrl: 'views/screens/screens.html',
                             controller: 'screenCtrl',
+                             resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }]
+                            },
                             ncyBreadcrumb: {
                                 label: 'Sedes / Pantallas'
                             }
@@ -132,36 +139,42 @@ angular
                             },
                             templateUrl: 'views/screens/screen.detail.html',
                             controller: 'screenCtrl',
-                           
+                             resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }]
+                            },
                             ncyBreadcrumb: {
                                 label: 'Sedes / Pantallas / Detalle pantalla'
                             }
                         })
-                                
+
                         .state('app.images', {
-                    url: '/content/images',
-                    templateUrl: 'views/content/images.html',
-                    controller: 'contentCtrl',
-                    resolve:{
-                      creds:['$http',function(r){
-                              return r.get('data/keys.json').then(function(res){
-                                  return res.data;
-                              });
-                      }]
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Contenido / Imagenes'
-                    }
-                }).state('app.videos', {
+                            url: '/content/images',
+                            templateUrl: 'views/content/images.html',
+                            controller: 'contentCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }]
+                            },
+                            ncyBreadcrumb: {
+                                label: 'Contenido / Imagenes'
+                            }
+                        }).state('app.videos', {
                     url: '/content/videos',
                     templateUrl: 'views/content/videos.html',
                     controller: 'contentCtrl',
-                     resolve:{
-                      creds:['$http',function(r){
-                              return r.get('data/keys.json').then(function(res){
-                                  return res.data;
-                              });
-                      }]
+                    resolve: {
+                        creds: ['$http', function (r) {
+                                return r.get('data/keys.json').then(function (res) {
+                                    return res.data;
+                                });
+                            }]
                     },
                     ncyBreadcrumb: {
                         label: 'Contenido / Videos'

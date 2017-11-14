@@ -120,8 +120,15 @@ angular
                         })
                         .state('display', {
                             url: '/screen/{url:.*}',
-                            param:{url:null},
+                            param: {url: null},
                             templateUrl: 'views/display/display.html',
-                            controller: 'displayCtrl'
+                            controller: 'displayCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }]
+                            },
                         })
             }]);
