@@ -57,8 +57,7 @@ function displayCtrl($scope, $http, $state, creds) {
                         var body = message.Body;
                         // execute logic
 
-                         console.log(window.location.href.split('/').pop());
-                         console.log(body);
+                        
                         if (window.location.href.split('/').pop() == body) {
                             
                             window.sessionStorage.clear();
