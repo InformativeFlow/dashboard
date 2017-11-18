@@ -151,7 +151,8 @@ angular
                                 loginRequired: loginRequired
                             },
                             ncyBreadcrumb: {
-                                label: 'Sedes / Pantallas'
+                             
+                                label: 'Pantallas'
                             }
                         })
                         .state('app.screen', {
@@ -171,7 +172,8 @@ angular
                                 loginRequired: loginRequired
                             },
                             ncyBreadcrumb: {
-                                label: 'Sedes / Pantallas / Detalle pantalla'
+                                   parent: 'app.branches',
+                                label: 'Detalle '
                             }
                         })
 
@@ -188,7 +190,7 @@ angular
                                 loginRequired: loginRequired
                             },
                             ncyBreadcrumb: {
-                                label: 'Contenido / Imagenes'
+                                label: 'Contenido / Promociones'
                             }
                         })
 

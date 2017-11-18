@@ -25,6 +25,7 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
     $scope.idsVideo = [];
     $scope.paramsMsg = {};
     $scope.list4 = [];
+    $scope.detailNameScreen={};
 
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
@@ -43,9 +44,13 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
                             QueueUrl: queueURL
 
                         };
+                        
+                        $scope.detailNameScreen= $scope.screensBranch[screen]["M"].name["S"];
+                        
                         for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
 
                             $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
+                            
                             
                             if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img") {
                                 //console.log($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
