@@ -26,7 +26,8 @@
     "oclazyload": "^1.1.0",
     "popper.js": "^1.12.5",
     "simple-line-icons": "^2.4.1",
-    "ng-toast": "^2.0.0"
+    "ng-toast": "^2.0.0",
+    "satellizer": "^0.15.5"
   },
   "devDependencies": {
     "browser-sync": "^2.16.0",

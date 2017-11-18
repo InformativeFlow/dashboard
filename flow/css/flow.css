@@ -204,3 +204,12 @@ form .flow-progress {
     position: absolute; 
     width: auto;
 }
+
+.login-html {
+/*  background: url("https://tabletzona.es/app/uploads/2016/04/Wallpaper-seleccion-tabletzona-1.jpg") no-repeat center fixed;*/
+  background: url("http://www.zews.co.cr/wp-content/uploads/2014/10/cpic.png") no-repeat center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

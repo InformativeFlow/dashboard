@@ -2,8 +2,8 @@
 angular.module('app')
         .controller('screenCtrl', screenCtrl);
 
-screenCtrl.$inject = ['$scope', '$http', '$state', '$q', 'creds'];
-function screenCtrl($scope, $http, $state, $q, creds) {
+screenCtrl.$inject = ['$scope', '$http', '$state', '$q', 'creds','configService'];
+function screenCtrl($scope, $http, $state, $q, creds,configService) {
 
     $scope.creds = {};
     $scope.creds.access_key = creds.apiKey;
@@ -26,13 +26,13 @@ function screenCtrl($scope, $http, $state, $q, creds) {
     $scope.paramsMsg = {};
     $scope.list4 = [];
 
-    $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
+    $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.screens = response.data.Items;
 
         for (var item in $scope.screens) {
             if ($scope.screens[item].id["N"] == $scope.branchId) {
-                console.log($scope.screens[item]["screens"]["L"][0]["M"].url);
+             
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
                 for (var screen in $scope.screensBranch) {
@@ -60,12 +60,12 @@ function screenCtrl($scope, $http, $state, $q, creds) {
         }
     });
 
-    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {
+    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (response) {
 
         $scope.contentImages = response.data.Items;
     });
 
-    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {
+    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (response) {
 
         $scope.contentVideos = response.data.Items;
     });

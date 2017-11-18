@@ -2,8 +2,8 @@
 angular.module('app')
         .controller('displayCtrl', displayCtrl);
 
-displayCtrl.$inject = ['$scope', '$http', '$state', 'creds'];
-function displayCtrl($scope, $http, $state, creds) {
+displayCtrl.$inject = ['$scope', '$http', '$state', 'creds','configService'];
+function displayCtrl($scope, $http, $state, creds,configService) {
     $scope.creds = {};
     $scope.creds.access_key = creds.apiKey;
     $scope.creds.secret_key = creds.apiSecret;
@@ -13,7 +13,7 @@ function displayCtrl($scope, $http, $state, creds) {
     var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
     var queueURL = "https://sqs.us-west-2.amazonaws.com/344712433810/screens";
     $scope.urlDisplay = $state.params.url;
-    $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
+    $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.data = response.data.Items;
 
@@ -61,7 +61,7 @@ function displayCtrl($scope, $http, $state, creds) {
                         if (window.location.href.split('/').pop() == body) {
                             
                             window.sessionStorage.clear();
-                            window.localStorage.clear();
+                           // window.localStorage.clear();
                             
                             window.location.reload(true);
                             removeFromQueue(message);

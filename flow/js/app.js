@@ -22,9 +22,10 @@ angular
             'ngFileUpload',
             'ngSanitize',
             'ngAnimate',
-            'ngToast'
-            
-        ])
+            'ngToast',
+            'satellizer'
+        
+])
         .config(['cfpLoadingBarProvider', '$qProvider', '$sceDelegateProvider', '$httpProvider',
             function (cfpLoadingBarProvider, $qProvider, $sceDelegateProvider, $httpProvider) {
                 cfpLoadingBarProvider.includeSpinner = false;
