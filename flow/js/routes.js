@@ -1,6 +1,7 @@
 angular
         .module('app')
-        .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
+        .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', '$authProvider',
+            function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider, $authProvider) {
 
                 $urlRouterProvider.otherwise('/dashboard');
 
@@ -14,6 +15,42 @@ angular
                     includeAbstract: true,
                     template: '<li class="breadcrumb-item" ng-repeat="step in steps" ng-class="{active: $last}" ng-switch="$last || !!step.abstract"><a ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a><span ng-switch-when="true">{{step.ncyBreadcrumbLabel}}</span></li>'
                 });
+
+                $authProvider.httpInterceptor = function () {
+                    return true;
+                }
+                $authProvider.withCredentials = false;
+                $authProvider.tokenRoot = null;
+                $authProvider.baseUrl = '/';
+                $authProvider.loginUrl = '/data/user';
+                $authProvider.tokenName = 'token';
+                $authProvider.tokenPrefix = 'satellizer';
+                $authProvider.tokenHeader = 'Authorization';
+                $authProvider.tokenType = 'Bearer';
+                $authProvider.storageType = 'localStorage';
+
+
+                /**
+                 * Helper auth functions
+                 */
+                var skipIfLoggedIn = ['$auth', function ($auth) {
+                        if ($auth.isAuthenticated()) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }];
+
+                var loginRequired = ['$location', '$auth', '$state',function ($location, $auth,$state) {
+                        if ($auth.isAuthenticated()) {
+                            return true;
+                        } else {
+                            $state.go('appSimple.login', {}, {reload: true});
+                        
+                        }
+
+                    }];
+
 
                 $stateProvider
                         .state('app', {
@@ -79,7 +116,9 @@ angular
                                         return $ocLazyLoad.load({
                                             files: ['js/controllers/main.js']
                                         });
-                                    }]
+                                    }],
+                                loginRequired: loginRequired
+
                             }
                         })
                         .state('appSimple', {
@@ -104,7 +143,16 @@ angular
                         // Additional Pages
                         .state('appSimple.login', {
                             url: '/login',
-                            templateUrl: 'views/pages/login.html'
+                            templateUrl: 'views/login/login.html',
+                            controller: 'loginCtrl',
+                            resolve: {
+                                skipIfLoggedIn: skipIfLoggedIn
+                            }
+                        })
+                        .state('appSimple.logout', {
+                            url: '/logout',
+                            template: null,
+                            controller: 'logoutCtrl'
                         })
                         .state('appSimple.register', {
                             url: '/register',
@@ -120,9 +168,16 @@ angular
                         })
                         .state('display', {
                             url: '/screen/{url:.*}',
-                            param:{url:null},
+                            param: {url: null},
                             templateUrl: 'views/display/display.html',
-                            controller: 'displayCtrl'
+                            controller: 'displayCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }]
+                            },
                         })
                         .state('promotion', {
                             url: '/promotion/{url:.*}',

@@ -1,6 +1,6 @@
 <div class="sidebar">
     <nav class="sidebar-nav">
-        <ul class="nav">
+        <ul class="nav" ng-controller="extrasCtrl">
             <li class="nav-item">
                 <a class="nav-link" ui-sref-active="active" ui-sref="app.main"><i class="icon-speedometer"></i> Dashboard <span class="badge badge-info">iFlow</span></a>
             </li>
@@ -9,11 +9,11 @@
             <li class="nav-title">
                 Hotel & Resorts
             </li>
-            <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.components')}">
+            <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.components')}"  >
                 <a class="nav-link nav-dropdown-toggle" ng-class="{active: $state.includes('app.components')}" href="#"><i class="fa fa-building-o"></i>Sedes</a>
                 <ul class="nav-dropdown-items">
                     <li ng-repeat="branch in branches" class="nav-item">
-                        <a class="nav-link" ui-sref-active="active" ui-sref="app.branches({branchId: branch.id['N']})"><i class="fa fa-building"></i>{{branch.name["S"]}}</a>
+                        <a class="nav-link" ui-sref-active="active" ui-sref="app.branches({branchId: branch.id['N']})"><i class="fa fa-building"></i>{{branch.name["S"]}}<span class="badge badge-light">{{branch.screens["L"].length}} <span class="fa fa-tv"></span></span></a>
                     </li>
                    <!-- <li class="nav-item">
                         <a class="nav-link" ui-sref-active="active" ui-sref="app.components.buttons"><i class="icon-puzzle"></i> Buttons</a>
@@ -39,14 +39,14 @@
             <li class="nav-title">
                 Contenido
             </li>
-            <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.videos')}" ng-controller="extrasCtrl">
+            <li class="nav-item nav-dropdown" ng-class="{open: $state.includes('app.videos')}">
                 <a class="nav-link nav-dropdown-toggle" ng-class="{active: $state.includes('app.images')}" href="#"><i class="fa fa-file-archive-o"></i> Contenido</a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        <a class="nav-link" ui-sref-active="active" ui-sref="app.videos"><i class="fa fa-file-video-o"></i> Videos <span class="badge badge-secondary">{{sizeVideos}}</span></a>
+                        <a class="nav-link" ui-sref-active="active" ui-sref="app.videos"><i class="fa fa-file-video-o"></i> Videos <span class="badge badge-light">{{sizeVideos}} </span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" ui-sref-active="active" ui-sref="app.images"><i class="fa fa-image"></i>  Imagenes<span class="badge badge-secondary">{{sizeImages}}</span></a>
+                        <a class="nav-link" ui-sref-active="active" ui-sref="app.images"><i class="fa fa-image"></i>  Promociones<span class="badge badge-light">{{sizeImages}}</span></a>
                     </li>
                 </ul>
             </li>

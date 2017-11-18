@@ -1,3 +1,16 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <small>Personalización de la pantalla ubicada en:</small>
+            <i class="fa fa-tv bg-info p-3 font-2xl mr-3 float-left"></i>
+                    <div class="h5 text-capitalize mb-0 mt-2">{{detailNameScreen}}</div>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
 <div class="row">
 
     <div class="col-md-6">
@@ -5,11 +18,11 @@
             <div class="col-sm-12" id="accordion">
                 <div class="card">
                     <div class="card-header">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> Imagenes disponibles </a>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> Imágenes disponibles </a>
                         <span class="badge badge-pill badge-success float-right">{{contentImages.length}}</span>
                         <div class="card-body pb-0">
                             <div class="btn-group pull-right">
-                                <p>Para agregar imagenes arrastrelas desde la izquierda a la derecha</p>
+                                <p>Para agregar imágenes arrastrelas desde la izquierda a la derecha</p>
                             </div>
 
                         </div>
@@ -75,14 +88,11 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        Contenido asociado a la pantalla {{screen.name}}
+                        Contenido asociado a la pantalla {{detailNameScreen}}
                         <span class="badge badge-pill badge-info float-right">{{list4.length}}</span>
                         <div class="card-body pb-0">
-                            <div class="btn-group float-right">
-                                <p>Personalice su pantalla</p>
-                            </div>
                             <h4 class="mb-0">{{list4.length}}</h4>
-                            <p>contenidos en esta pantalla</p>
+                            <p>contenido en esta pantalla</p>
                         </div>
                     </div>
                     <div class="card-body">
@@ -104,9 +114,9 @@
                                                 Your browser does not support the video tag.
                                             </video> 
 
-                                            <div id="item{{$index}}"  >
+<!--                                            <div id="item{{$index}}"  >
                                                 <span  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item, $event)" ></span>
-                                            </div>
+                                            </div>-->
                                         </div>
 
                                     </div>

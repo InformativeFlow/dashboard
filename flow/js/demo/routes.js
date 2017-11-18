@@ -1,6 +1,28 @@
 angular
         .module('app')
-        .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
+        .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$breadcrumbProvider',
+            function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $breadcrumbProvider) {
+
+                /**
+                 * Helper auth functions
+                 */
+                var skipIfLoggedIn = ['$auth', function ($auth) {
+                        if ($auth.isAuthenticated()) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }];
+
+                var loginRequired = ['$location', '$auth', '$state',function ($location, $auth,$state) {
+                        if ($auth.isAuthenticated()) {
+                            return true;
+                        } else {
+                            $state.go('appSimple.login', {}, {reload: true});
+                        }
+
+                    }];
+
                 $stateProvider
                         .state('app.icons', {
                             url: "/icons",
@@ -120,8 +142,17 @@ angular
                             },
                             templateUrl: 'views/screens/screens.html',
                             controller: 'screenCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }],
+                                loginRequired: loginRequired
+                            },
                             ncyBreadcrumb: {
-                                label: 'Sedes / Pantallas'
+                             
+                                label: 'Pantallas'
                             }
                         })
                         .state('app.screen', {
@@ -132,39 +163,51 @@ angular
                             },
                             templateUrl: 'views/screens/screen.detail.html',
                             controller: 'screenCtrl',
-                           
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }],
+                                loginRequired: loginRequired
+                            },
                             ncyBreadcrumb: {
-                                label: 'Sedes / Pantallas / Detalle pantalla'
+                                   parent: 'app.branches',
+                                label: 'Detalle '
                             }
                         })
-                                
+
                         .state('app.images', {
-                    url: '/content/images',
-                    templateUrl: 'views/content/images.html',
-                    controller: 'contentCtrl',
-                    resolve:{
-                      creds:['$http',function(r){
-                              return r.get('data/keys.json').then(function(res){
-                                  return res.data;
-                              });
-                      }]
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Contenido / Imagenes'
-                    }
-                }).state('app.videos', {
-                    url: '/content/videos',
-                    templateUrl: 'views/content/videos.html',
-                    controller: 'contentCtrl',
-                     resolve:{
-                      creds:['$http',function(r){
-                              return r.get('data/keys.json').then(function(res){
-                                  return res.data;
-                              });
-                      }]
-                    },
-                    ncyBreadcrumb: {
-                        label: 'Contenido / Videos'
-                    }
-                });
+                            url: '/content/images',
+                            templateUrl: 'views/content/images.html',
+                            controller: 'contentCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }],
+                                loginRequired: loginRequired
+                            },
+                            ncyBreadcrumb: {
+                                label: 'Contenido / Promociones'
+                            }
+                        })
+
+                        .state('app.videos', {
+                            url: '/content/videos',
+                            templateUrl: 'views/content/videos.html',
+                            controller: 'contentCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }],
+                                loginRequired: loginRequired
+                            },
+                            ncyBreadcrumb: {
+                                label: 'Contenido / Videos'
+                            }
+                        });
             }]);

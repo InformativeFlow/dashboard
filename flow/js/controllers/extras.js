@@ -2,16 +2,17 @@
 angular.module('app')
         .controller('extrasCtrl', extrasCtrl);
 
-extrasCtrl.$inject = ['$scope', '$http'];
-function extrasCtrl($scope, $http) {
+extrasCtrl.$inject = ['$scope', '$http','configService'];
+function extrasCtrl($scope, $http,configService) {
 
     $scope.sizeImages = {};
     $scope.sizeVideos = {};
+    
 
-    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image').then(function (response) {
+    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (response) {
         $scope.sizeImages = response.data.Items.length;
     });
-    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video').then(function (response) {
+    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (response) {
 
         $scope.sizeVideos = response.data.Items.length;
     });

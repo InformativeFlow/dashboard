@@ -2,12 +2,19 @@
 angular.module('app')
         .controller('displayCtrl', displayCtrl);
 
-displayCtrl.$inject = ['$scope', '$http', '$state'];
-function displayCtrl($scope, $http, $state) {
-    
+displayCtrl.$inject = ['$scope', '$http', '$state', 'creds','configService'];
+function displayCtrl($scope, $http, $state, creds,configService) {
+    $scope.creds = {};
+    $scope.creds.access_key = creds.apiKey;
+    $scope.creds.secret_key = creds.apiSecret;
+
+    AWS.config.update({accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key});
+    AWS.config.region = 'us-west-2';
+    var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
+    var queueURL = "https://sqs.us-west-2.amazonaws.com/344712433810/screens";
     
     $scope.urlDisplay = $state.params.url;
-    $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch').then(function (response) {
+    $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.data = response.data.Items;
 
@@ -19,7 +26,7 @@ function displayCtrl($scope, $http, $state) {
 
                 }
         }
-        
+
         if ($scope.video) {
         } else {
             $state.go('appSimple.404', {}, {reload: true});
@@ -35,4 +42,61 @@ function displayCtrl($scope, $http, $state) {
         
     });
 
+
+    var receiveMessageParams = {
+        AttributeNames: [
+            "SentTimestamp"
+        ],
+        MaxNumberOfMessages: 10,
+        MessageAttributeNames: [
+            "All"
+        ],
+        QueueUrl: queueURL,
+        WaitTimeSeconds: 20
+    };
+    var receiveMessage = function () {
+        sqs.receiveMessage(receiveMessageParams, function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            if (data)
+                if (data.Messages) {
+                    for (var i = 0; i < data.Messages.length; i++) {
+                        var message = data.Messages[i];
+                        var body = message.Body;
+                        // execute logic
+
+                        
+                        if (window.location.href.split('/').pop() == body) {
+                            
+                            window.sessionStorage.clear();
+                           // window.localStorage.clear();
+                            
+                            window.location.reload(true);
+                            removeFromQueue(message);
+                        }
+
+                    }
+                    receiveMessage();
+                } else {
+                    console.log("no hay mensajes");
+                    setTimeout(function () {
+                        receiveMessage()
+                    }, 20 * 1000);
+
+                }
+        });
+    };
+
+    var removeFromQueue = function (message) {
+        sqs.deleteMessage({
+            QueueUrl: queueURL,
+            ReceiptHandle: message.ReceiptHandle
+        }, function (err, data) {
+            err && console.log(err);
+        });
+    };
+
+    receiveMessage();
+    console.log();
 }

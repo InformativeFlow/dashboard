@@ -190,3 +190,26 @@ form .flow-progress {
     width: 100%;
     height: 100%;
 }
+
+.promotion{
+    -moz-border-radius-bottomright: 10px; 
+    -moz-border-radius-topright: 10px; 
+    background-color: CornflowerBlue; 
+    bottom: 0px; 
+    color: #FFF; 
+    margin: 0; 
+    opacity: 1.4; 
+    filter:alpha(opacity=40); 
+    padding: 5px 10px; 
+    position: absolute; 
+    width: auto;
+}
+
+.login-html {
+/*  background: url("https://tabletzona.es/app/uploads/2016/04/Wallpaper-seleccion-tabletzona-1.jpg") no-repeat center fixed;*/
+  background: url("http://www.zews.co.cr/wp-content/uploads/2014/10/cpic.png") no-repeat center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
