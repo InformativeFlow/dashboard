@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "title":"Comidas",
+        "image": "http://lorempixel.com/400/200/food",
+        "link_qr":"http://bit.ly/2hLhP91"
+    },
+    {
+        "id": 2,
+        "title":"Deportes",
+        "image": "http://lorempixel.com/400/200/sports",
+        "link_qr":"www.ambarhotel.com/"
+    },
+    {
+        "id": 3,
+        "title":"Personas",
+        "image": "http://lorempixel.com/400/200/people",
+        "link_qr":"http://www.hotelesdann.com/dann-norte-bogota"
+    },
+    {
+        "id": 4,
+        "title":"Ciudades",
+        "image": "http://lorempixel.com/400/200/city",
+        "link_qr":"https://uniandes.edu.co"
+    }
+    
+]

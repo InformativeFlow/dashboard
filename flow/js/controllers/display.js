@@ -2,8 +2,8 @@
 angular.module('app')
         .controller('displayCtrl', displayCtrl);
 
-displayCtrl.$inject = ['$scope', '$http', '$state', 'creds','configService'];
-function displayCtrl($scope, $http, $state, creds,configService) {
+displayCtrl.$inject = ['$scope', '$http', '$state', 'creds','configService', '$interval'];
+function displayCtrl($scope, $http, $state, creds,configService, $interval) {
     $scope.creds = {};
     $scope.creds.access_key = creds.apiKey;
     $scope.creds.secret_key = creds.apiSecret;
@@ -90,4 +90,38 @@ function displayCtrl($scope, $http, $state, creds,configService) {
 
     receiveMessage();
     console.log();
+    
+    //Mostrar Promociones
+        //Se listan las promociones disponibles.
+        $http.get('data/promotions.json').then(function (response){
+
+            $scope.promotions = response.data;
+            console.log("promociones: "+$scope.promotions);
+
+        });
+        
+        $scope.myInterval = 10000;
+        $scope.active = 0;    
+    
+        var showPromotion = function() {
+            //var activePromo = $scope.active;
+            //var totalPromo = $scope.slides.length;
+
+            var promise = $interval(function()    { 
+                    if($scope.active >= $scope.promotions.length-1) {
+                        $scope.active = 0;
+                    }else{
+                        $scope.active = $scope.active+1;
+
+                    }
+                    console.log("Index promo actual: "+$scope.active + " - total: "+$scope.promotions.length);
+                }, 
+                $scope.myInterval);
+
+            $scope.$on('$destroy', function ()   { 
+               $interval.cancel(promise); 
+            });
+        };
+        showPromotion();
+    //FIN Mostrar Promociones
 }
