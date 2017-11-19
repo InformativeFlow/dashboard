@@ -109,7 +109,7 @@ function displayCtrl($scope, $http, $state, creds,configService, $interval) {
 
         });
         
-        $scope.myInterval = 5000;
+        $scope.myInterval = 10000;
         $scope.active = 0;    
     
         var showPromotion = function() {
