@@ -32,8 +32,7 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
         $scope.screens = response.data.Items;
 
         for (var item in $scope.screens) {
-            if ($scope.screens[item].id["N"] == $scope.branchId) {
-             
+            if ($scope.screens[item].id["N"] == $scope.branchId ) {           
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
                 for (var screen in $scope.screensBranch) {

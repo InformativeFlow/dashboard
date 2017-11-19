@@ -24,21 +24,28 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
     $scope.creds.secret_key = creds.apiSecret;
     $scope.creds.bucketImg = 'iflowimgin';
     $scope.creds.bucketVid = 'iflowvidin';
-    $scope.contentImages = {};
-    $scope.contentVideos = {};
+    
+    
     $scope.uploadFileTrue = false;
     $scope.msg = "Completado";
 
     function getVideos() {
         $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (res) {
-            $scope.contentVideos = res.data.Items;
+          $scope.contentVideos = []; 
+        for (var item in  res.data.Items) {
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+                $scope.contentVideos.push(res.data.Items[item]);
+        }   
             console.log(JSON.stringify($scope.contentVideos));
         });
-    }
-    ;
+    };
     function getImages() {
         $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (res) {
-            $scope.contentImages = res.data.Items;
+         $scope.contentImages = [];
+            for (var item in  res.data.Items) {
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+                $scope.contentImages.push(res.data.Items[item]);
+        }
             console.log(JSON.stringify($scope.contentImages));
         });
     }
@@ -62,6 +69,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
             ACL: 'public-read',
             ContentType: file.type,
             Body: file,
+            Metadata:{user:window.sessionStorage.getItem('user')},
             ServerSideEncryption: 'AES256'
         };
 
@@ -100,6 +108,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
             ACL: 'public-read',
             ContentType: file.type,
             Body: file,
+            Metadata:{user:window.sessionStorage.getItem('user')},
             ServerSideEncryption: 'AES256'
         };
 

@@ -8,8 +8,12 @@ function loginCtrl($scope, $http, $location, $auth,configService) {
     $scope.user = {};
 
     $scope.login = function () {
-        $http.get('data/user.json').then(function (data) {
-
+        
+        $http.get('https://zvqzxh7ngd.execute-api.us-west-2.amazonaws.com/prod/users?TableName=user').then(function (response) {
+         console.log(JSON.stringify(response.data.Items))
+            for (var user in response.data.Items)
+             if (response.data.Items[user].name['S'] == $scope.user.user && response.data.Items[user].password['S'] == $scope.user.password )
+                 window.sessionStorage.setItem('user',response.data.Items[user].id['N']);
             $auth.setToken("iflowtoken8650");
             $location.path('/dashboard');
             
