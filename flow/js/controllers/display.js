@@ -102,14 +102,7 @@ function displayCtrl($scope, $http, $state, creds,configService, $interval) {
     
     //Mostrar Promociones
         $scope.myInterval = 5000;
-        $scope.active = 0;
-
-        // Initializing  slide Array   
-        /*$scope.slides = [
-        {path:'http://lorempixel.com/400/200/food'},
-        {path:'http://lorempixel.com/400/200/sports'},
-        {path:'http://lorempixel.com/400/200/people'}];*/
-    
+        $scope.active = 0;    
     
         var showPromotion = function() {
             //var activePromo = $scope.active;
