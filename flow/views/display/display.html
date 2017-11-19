@@ -16,16 +16,19 @@
             <div class="col-md-12">
                 <div class="card-body">
                     <div class="col-sm-12 col-lg-12">
-                        <div class="card text-white bg-info" ng-repeat="item in promotions">
-                            <div class="card-body pb-0">
-                                <p class="text-center">{{item.title}}</p>
-                                <img id="img2" class="img-responsive center-block" src="{{item.image}}"  style="width: 100%; height: 100%;" />
-                            </div>
-                            <div class="card-body pb-0">
-                                <img id="img3"  class="img-responsive center-block" src="{{item.link_qr}}"  style="width: 100%; height: 100%;"/>
-                            </div>
-                            <div class="card-body pb-0">
-                                <p class="text-center"><a style="color: white;" href="{{item.activation}}">{{item.activation}}</a></p>
+                        <div ng-show="$index == active" class="card text-white bg-info" ng-repeat="item in promotions">
+                            <div>
+                                <div class="card-body pb-0">
+                                    <p class="text-center">{{item.title}}</p>
+                                    <img id="img2" class="img-responsive center-block" src="{{item.image}}"  style="width: 100%; height: 100%;" />
+                                </div>
+                                <div class="card-body pb-0">
+                                    <img id="img3"  class="img-responsive center-block" src="{{item.link_qr}}"  style="width: 100%; height: 100%;"/>
+                                </div>
+                                <div class="card-body pb-0">
+                                    <p class="text-center"><a style="color: white;" href="{{item.activation}}">{{item.activation}}</a></p>
+                                </div>
+
                             </div>
                         </div>
                     </div>

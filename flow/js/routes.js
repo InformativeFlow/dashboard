@@ -179,16 +179,5 @@ angular
                                     }]
                             },
                         })
-                        .state('promotion', {
-                            url: '/promotion/{url:.*}',
-                            param:{url:null},
-                            templateUrl: 'views/promotions/form.html',
-                            controller: 'promotionCtrl'
-                        })
-                        .state('pruebaSlides', {
-                            url: '/pruebaSlides',
-                            param:{url:null},
-                            templateUrl: 'views/promotions/pruebaSlides.html',
-                            controller: 'slidesCtrl'
-                        });
+                        
             }]);
