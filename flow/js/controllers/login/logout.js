@@ -12,6 +12,7 @@ function logoutCtrl($scope, $http, $location, $auth,$state) {
             .then(function () {
                 //toastr.info('You have been logged out');
                 console.log("Cerrando sesión");
+                window.sessionStorage.removeItem('user');
                 $state.go('appSimple.login', {}, {reload: true});
                 $location.path('/');
             });
