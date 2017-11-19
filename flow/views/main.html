@@ -6,84 +6,19 @@
                     Interacciones en sedes
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-6">
+                    <div class="row" ng-controller="loadBranchesCtrl">
+                        <div ng-repeat="branch in branches" class="col-sm-6 col-lg-6">
                             <div class="card-header">
                                 <i class="fa fa-building bg-info p-3 font-2xl mr-3 float-left"></i>
-                                <div class="h5 text-capitalize mb-0 mt-2">Medellín</div>
+                                <div class="h5 text-capitalize mb-0 mt-2">{{branch.name["S"]}}</div>
                                 <div class="card-footer px-3 py-2">
-                                    <a class="font-weight-bold font-xs btn-block text-capitalize" ui-sref-active="active" href="#">Ver pantallas <i class="fa fa-angle-right float-right font-lg"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-primary" ng-controller="cardChartCtrl1">
-                                <div class="card-body pb-0">
-                                    <div class="btn-group float-right">
-                                        <i class="fa fa-tv bg-info p-3 font-2xl mr-3 float-left"></i><br>55 Pantallas
-                                    </div>
-                                    <h4 class="mb-0">3.423</h4>
-                                    <p>Huéspedes han interactuado</p>
-                                </div>
-                                <div class="chart-wrapper px-3" style="height:70px;">
-                                    <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-options="options" chart-colors="colors" height="70"></canvas>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row"> 
-
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promociones
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div >
-                                                    <i class="fa icon-people bg-primary p-3 font-2xl mr-3 float-left"></i>
-                                                    <div class="h4 mb-0">2.909</div>
-                                                    <small class="text-muted text-uppercase font-weight-light">Premios</small>
-                                                </div>
-                                                <div class="h1 text-muted text-right mb-4">                                  
-                                                </div>
-                                                <small class="text-muted text-editor font-weight-light">Porcentaje de participación</small>
-                                                <span class="progress">
-                                                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width:85%"  
-                                                         ng-bind= "'85%'"></div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promocion más visitada
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body text-center">
-                                                <div class="h5 text-capitalize mb-0 mt-2">Desayuno premium</div>
-                                                
-                                                <div style="position: relative; margin: 0">
-                                                    <img id="img2" class="img-responsive center-block" src="http://www.posadapuertobemberg.com/imagenes/servicios/desayuno/desayuno_1.jpg"  style="width: 100%; height: 100%;" />
-                                                    <h4 class="promotion bg-info">
-                                                        230 interacciones
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br/>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-6">
-                            <div class="card-header">
-                                <i class="fa fa-building bg-info p-3 font-2xl mr-3 float-left"></i>
-                                <div class="h5 text-capitalize mb-0 mt-2">Bogotá</div>
-                                <div class="card-footer px-3 py-2">
-                                    <a class="font-weight-bold font-xs btn-block text-capitalize" ui-sref-active="active" href="#">Ver pantallas <i class="fa fa-angle-right float-right font-lg"></i></a>
+                                    <a class="font-weight-bold font-xs btn-block text-capitalize" ui-sref-active="active" ui-sref="app.branches({branchId: branch.id['N']})">Ver pantallas <i class="fa fa-angle-right float-right font-lg"></i></a>
                                 </div>
                             </div>
                             <div class="card text-white bg-info" ng-controller="cardChartCtrl2">
                                 <div class="card-body pb-0">
                                     <div class="btn-group float-right">
-                                        <i class="fa fa-tv bg-primary p-3 font-2xl mr-3 float-left"></i><br>40 Pantallas
+                                        <i class="fa fa-tv bg-primary p-3 font-2xl mr-3 float-left"></i><br>{{branch.screens["L"].length}} Pantallas
                                     </div>
                                     <h4 class="mb-0">2.300</h4>
                                     <p>Huéspedes han interactuado</p>
@@ -94,28 +29,6 @@
                             </div>
                             <div class="card-footer">
                                 <div class="row"> 
-
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promociones
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div >
-                                                    <i class="fa icon-people bg-primary p-3 font-2xl mr-3 float-left"></i>
-                                                    <div class="h4 mb-0">2.909</div>
-                                                    <small class="text-muted text-uppercase font-weight-light">Premios</small>
-                                                </div>
-                                                <div class="h1 text-muted text-right mb-4">                                  
-                                                </div>
-                                                <small class="text-muted text-editor font-weight-light">Porcentaje de participación</small>
-                                                <span class="progress">
-                                                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width:85%"  
-                                                         ng-bind= "'85%'"></div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-sm-12 col-md-12">
                                         <div class="card-header">
                                             Promocion más visitada
@@ -123,7 +36,7 @@
                                         <div class="card">
                                             <div class="card-body text-center">
                                                 <div class="h5 text-capitalize mb-0 mt-2">SPA con Jacuzzi</div>
-                                                
+
                                                 <div style="position: relative; margin: 0">
                                                     <img id="img2" class="img-responsive center-block" src="http://www.euromedspa.com/wp-content/uploads/2015/05/Dollarphotoclub_58101270.jpg"  style="width: 100%; height: 100%;" />
                                                     <h4 class="promotion bg-info">
@@ -134,145 +47,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <br/>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-6">
-                            <div class="card-header">
-                                <i class="fa fa-building bg-info p-3 font-2xl mr-3 float-left"></i>
-                                <div class="h5 text-capitalize mb-0 mt-2">Cartagena</div>
-                                <div class="card-footer px-3 py-2">
-                                    <a class="font-weight-bold font-xs btn-block text-capitalize" ui-sref-active="active" href="#">Ver pantallas <i class="fa fa-angle-right float-right font-lg"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-warning" ng-controller="cardChartCtrl3">
-                                <div class="card-body pb-0">
-                                    <div class="btn-group float-right">
-                                        <i class="fa fa-tv bg-primary p-3 font-2xl mr-3 float-left"></i><br>40 Pantallas
-                                    </div>
-                                    <h4 class="mb-0">1.800</h4>
-                                    <p>Huéspedes han interactuado</p>
-                                </div>
-                                <div class="chart-wrapper" style="height:70px;">
-                                    <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-options="options" chart-colors="colors" height="70"></canvas>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row"> 
-
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promociones
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div >
-                                                    <i class="fa icon-people bg-primary p-3 font-2xl mr-3 float-left"></i>
-                                                    <div class="h4 mb-0">2.909</div>
-                                                    <small class="text-muted text-uppercase font-weight-light">Premios</small>
-                                                </div>
-                                                <div class="h1 text-muted text-right mb-4">                                  
-                                                </div>
-                                                <small class="text-muted text-editor font-weight-light">Porcentaje de participación</small>
-                                                <span class="progress">
-                                                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width:85%"  
-                                                         ng-bind= "'85%'"></div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promocion más visitada
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body text-center">
-                                                <div class="h5 text-capitalize mb-0 mt-2">Paquete turístico</div>
-                                                
-                                                <div style="position: relative; margin: 0">
-                                                    <img id="img2" class="img-responsive center-block" src="http://www.fullviajes.net/wp-content/uploads/2016/01/paquetes-turisticos-aruba.jpg"  style="width: 100%; height: 100%;" />
-                                                    <h4 class="promotion bg-info">
-                                                        50 interacciones
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br/>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-lg-6">
-                            <div class="card-header">
-                                <i class="fa fa-building bg-info p-3 font-2xl mr-3 float-left"></i>
-                                <div class="h5 text-capitalize mb-0 mt-2">Cali</div>
-                                <div class="card-footer px-3 py-2">
-                                    <a class="font-weight-bold font-xs btn-block text-capitalize" ui-sref-active="active" href="#">Ver pantallas <i class="fa fa-angle-right float-right font-lg"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-danger" ng-controller="cardChartCtrl4">
-                                <div class="card-body pb-0">
-                                    <div class="btn-group float-right">
-                                        <i class="fa fa-tv bg-primary p-3 font-2xl mr-3 float-left"></i><br>40 Pantallas
-                                    </div>
-                                    <h4 class="mb-0">800</h4>
-                                    <p>Huéspedes han interactuado</p>
-
-                                </div>
-                                <div class="chart-wrapper px-3" style="height:70px;">
-                                    <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-options="options" chart-colors="colors" height="70"></canvas>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row"> 
-
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promociones
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div >
-                                                    <i class="fa icon-people bg-primary p-3 font-2xl mr-3 float-left"></i>
-                                                    <div class="h4 mb-0">2.909</div>
-                                                    <small class="text-muted text-uppercase font-weight-light">Premios</small>
-                                                </div>
-                                                <div class="h1 text-muted text-right mb-4">                                  
-                                                </div>
-                                                <small class="text-muted text-editor font-weight-light">Porcentaje de participación</small>
-                                                <span class="progress">
-                                                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width:85%"  
-                                                         ng-bind= "'85%'"></div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promocion más visitada
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body text-center">
-                                                <div class="h5 text-capitalize mb-0 mt-2">Cena romántica</div>
-                                                
-                                                <div style="position: relative; margin: 0">
-                                                    <img id="img2" class="img-responsive center-block" src="https://watchnews.com.mx/wp-content/uploads/2017/08/destacada-watchandthink-8.jpg"  style="width: 100%; height: 100%;" />
-                                                    <h4 class="promotion bg-info">
-                                                        280 interacciones
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br/>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
