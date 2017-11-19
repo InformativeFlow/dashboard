@@ -16,16 +16,16 @@
             <div class="col-md-12">
                 <div class="card-body">
                     <div class="col-sm-12 col-lg-12">
-                        <div class="card text-white bg-info">
+                        <div ng-show="$index == active" class="card text-white bg-info" ng-repeat="item in promotions">
                             <div class="card-body pb-0">
-                                <p class="text-center">Pura Italiana</p>
-                                <img id="img2" class="img-responsive center-block" src="http://www.puraitalia.com/wp-content/uploads/2014/06/Restaurante-Italiano-Comida-Italiana-Pura-Italia.png"  style="width: 100%; height: 100%;" />
+                                <p class="text-center">{{item.title}}</p>
+                                <img id="img2" class="img-responsive center-block" src="{{item.image}}"  style="width: 100%; height: 100%;" />
                             </div>
                             <div class="card-body pb-0">
-                                <img id="img3" class="img-responsive center-block" src="https://www.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png"  style="width: 100%; height: 100%;" />
+                                <img id="img3"  class="img-responsive center-block" src="{{item.link_qr}}"  style="width: 100%; height: 100%;"/>
                             </div>
                             <div class="card-body pb-0">
-                                <p class="text-center">Pura Italiana</p>
+                                <p class="text-center"><a style="color: white;" href="{{item.activation}}">{{item.activation}}</a></p>
                             </div>
                         </div>
                     </div>

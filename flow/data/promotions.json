@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "url": "test1",
+        "title":"Comidas",
+        "image": "http://lorempixel.com/400/200/food",
+        "link_qr":"http://www.codigos-qr.com/qr/php/qr_img.php?d=http%3A%2F%2Flocalhost%3A8383%2Fflow%2Findex.html%23%21%2Fpromotion%2Ftest1&s=8&e=m",
+        "activation": "http://localhost:8383/flow/index.html#!/promotion/test1"
+    },
+    {
+        "id": 2,
+        "url": "test2",
+        "title":"Deportes",
+        "image": "http://lorempixel.com/400/200/sports",
+        "link_qr":"http://www.codigos-qr.com/qr/php/qr_img.php?d=http%3A%2F%2Flocalhost%3A8383%2Fflow%2Findex.html%23%21%2Fpromotion%2Ftest1&s=8&e=m",
+        "activation": "http://localhost:8080/flow/index.html#!/promotion/test1"
+    }
+    
+]
