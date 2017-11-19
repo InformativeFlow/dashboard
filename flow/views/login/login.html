@@ -2,14 +2,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+               
                 <div class="card-group mb-0">
                     <div class="card p-4">
                         <div class="card-body">
                         
                             <h1>Iniciar sesión</h1>
+                             <span class="alert alert-danger" ng-if="error">{{error}} </span><p></p>
                             <p class="text-muted">Inicia sesión en tu cuenta</p>
                             <form id="form-login" ng-submit="login()">
                                 <div class="input-group mb-3">
+                                  
                                     <span class="input-group-addon"><i class="icon-user"></i></span>
                                     <input type="text" class="form-control" id="user" ng-model="user.user" placeholder="Usuario" required autofocus="">
                                 </div>
