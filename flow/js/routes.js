@@ -93,7 +93,7 @@ angular
                             templateUrl: 'views/main.html',
                             //page title goes here
                             ncyBreadcrumb: {
-                                label: 'Home',
+                                label: 'Dashboard',
                             },
                             //page subtitle goes here
                             params: {subtitle: 'Welcome to ROOT powerfull Bootstrap & AngularJS UI Kit'},

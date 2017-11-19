@@ -101,6 +101,14 @@ function displayCtrl($scope, $http, $state, creds,configService, $interval) {
     console.log();
     
     //Mostrar Promociones
+        //Se listan las promociones disponibles.
+        $http.get('data/promotions.json').then(function (response){
+
+            $scope.promotions = response.data;
+            console.log("promociones: "+$scope.promotions);
+
+        });
+        
         $scope.myInterval = 5000;
         $scope.active = 0;    
     
