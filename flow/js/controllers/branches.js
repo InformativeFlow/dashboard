@@ -11,6 +11,7 @@ function branchesCtrl($scope, $http,configService) {
             if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
                 $scope.branches.push(response.data.Items[item]);
         }
+        console.log($scope.branches);
     });
 
 
