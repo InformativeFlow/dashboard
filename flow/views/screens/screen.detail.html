@@ -124,7 +124,48 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="card" id="accordion3">
+                    <div class="card-header">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"> Promociones asociadas a la pantalla </a>
+                        <span class="badge badge-pill badge-info float-right">{{idsPromoScreen.length}}</span>
+                        <div class="card-body pb-0">
+                            <div class="btn-group pull-right">
+                                <p>Listado de promociones activas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapse3" class="card-body panel-collapse collapse in">
+                        <div id="div2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="content" ng-if="$even" ng-repeat='item in promotionsBranch | filter: { active: 1 }'>
+                                        <p class="text-center font-sm">{{item.title}}</p>
+                                        <img src="{{item.image}}" ng-show="item.id" />
+                                        <div class="checkbox font-sm">
+                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsActive(item.id)" ng-click="activarPromo(item.id)"> Activo</label>
+                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsInactive(item.id)" ng-click="inactivarPromo(item.id)"> Inactivo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="content" ng-if="$odd" ng-repeat='item in promotionsBranch | filter: { active: 1 }'>
+                                        <p class="text-center font-sm">{{item.title}}</p>
+                                        <img src="{{item.image}}" ng-show="item.id" />
+                                        <div class="checkbox font-sm">
+                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsActive(item.id)" ng-click="activarPromo(item.id)"> Activo</label>
+                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsInactive(item.id)" ng-click="inactivarPromo(item.id)"> Inactivo</label>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <center>
+                                <button type="button" class="btn btn-success" ng-click="updatePromotions()" ><i class="fa fa-save"></i> Actualizar</button>                    
+                            </center>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

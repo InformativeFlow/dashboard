@@ -20,6 +20,20 @@
                         "path": "pathbucket"
                     }
 
+                ],
+                "promotions":[
+                    {
+                        "id": 1
+                    },
+                    {
+                        "id": 2
+                    },
+                    {
+                        "id": 3
+                    },
+                    {
+                        "id": 4
+                    }
                 ]
             }
             ,
@@ -37,6 +51,17 @@
                         "path": "pathbucket"
                     }
 
+                ],
+                "promotions":[
+                    {
+                        "id": 1
+                    },
+                    {
+                        "id": 2
+                    },
+                    {
+                        "id": 3
+                    }
                 ]
             }
             ,
@@ -54,6 +79,14 @@
                         "path": "pathbucket"
                     }
 
+                ],
+                "promotions":[
+                    {
+                        "id": 1
+                    },
+                    {
+                        "id": 2
+                    }
                 ]
             }
         ]
@@ -76,6 +109,20 @@
                         "path": "pathbucket"
                     }
 
+                ],
+                "promotions":[
+                    {
+                        "id": 1
+                    },
+                    {
+                        "id": 2
+                    },
+                    {
+                        "id": 3
+                    },
+                    {
+                        "id": 4
+                    }
                 ]
             }
             ,
@@ -93,6 +140,17 @@
                         "path": "pathbucket"
                     }
 
+                ],
+                "promotions":[
+                    {
+                        "id": 1
+                    },
+                    {
+                        "id": 2
+                    },
+                    {
+                        "id": 3
+                    }
                 ]
             }
 

@@ -26,7 +26,10 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
     $scope.paramsMsg = {};
     $scope.list4 = [];
     $scope.detailNameScreen={};
-
+    $scope.promotionsBranch = []; // Objetos con la informacion de las promociones que se han creado para una sede.
+    $scope.idsPromoScreen = []; // id de las promociones que tiene asociado una pantalla en DinamoDB.
+    $scope.idsPromoActuScreen = []; //Listado de ids de promociones a actualizar en DinamoDB para una pantalla especifica.
+    
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.screens = response.data.Items;
@@ -58,6 +61,12 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
                                 $scope.idsVideo.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
                             }
                         }
+                        //Informacion de Promociones asociadas a la pantalla actual.
+                        for (var promotion in $scope.screensBranch[screen]["M"].promotions["L"]) {
+                            
+                            //ALEJO, la idea aqui es incluir el id de las promociones asociadas a la pantalla en la variable 'idsPromoScreen'
+                            $scope.idsPromoScreen.push($scope.screensBranch[screen]["M"].promotions["L"][promotion]["M"].id["N"]);
+                        }
                     }
                 }
             }
@@ -73,7 +82,8 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
 
         $scope.contentVideos = response.data.Items;
     });
-
+    
+   
     /*
      * Método que retorna el contenido asociado a una pantalla.
      * Se envia el id de la pantalla y se espera recibir un array como el que retorna el siguiente servicio
@@ -324,6 +334,89 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
         }
     };
 
+    // PROCESO relacionados con gestion de PROMOCIONES.
+        //Informacion de las promociones creadas para una sede
+        
+        //ALEJO, me apoyas por fa asociando el servicio REST que trae las promociones creadas para una sede
+        $http.get('data/promotions.json').then(function (response){
+            $scope.promotionsBranch = response.data;
 
+            console.log("Total promociones sede: "+$scope.promotionsBranch.length);
+        });
 
+        //Este servicio es temporal mientras ALEJO crea en tabla de branch el listado de promociones de una sede para una pantalla
+        $http.get('data/branches.json').then(function (response){
+            //TEMPORAL, las cargo de dinamo cuando ALEJO conecte el campo de promos en el backeend, 
+            for (var promotion in response.data[0].screens[1].promotions) {
+                $scope.idsPromoScreen.push(response.data[0].screens[1].promotions[promotion].id); //EJ: pantalla 2 de la sede bogota - local
+            }
+            //Se inicializa con los ids actuales que tenga la pantalla
+            $scope.idsPromoActuScreen = $scope.idsPromoScreen;
+            
+            console.log("Total promociones de la pantalla: "+$scope.idsPromoScreen.length);
+        });
+        
+        
+        $scope.promoIsActive = function (x){
+            var respuesta = false;
+            for (var con in $scope.idsPromoScreen) {
+                if(x === $scope.idsPromoScreen[con]) {
+                    respuesta = true;
+                    break;
+                }
+            }
+            return respuesta;
+        };
+        
+        $scope.promoIsInactive = function (x){
+            var respuesta = true;            
+            for (var con in $scope.idsPromoScreen) {
+                if(x === $scope.idsPromoScreen[con]) {
+                    respuesta = false;
+                    break;
+                }
+            }
+            return respuesta;
+        };
+        
+        $scope.activarPromo = function (x){
+            console.log("Existe promo: "+ x +" en : "+ $scope.idsPromoActuScreen);
+            var respuesta = false;  
+            for (var con in $scope.idsPromoActuScreen) {
+                if(x === $scope.idsPromoActuScreen[con]) {
+                    respuesta = true;
+                    break;
+                }
+            }
+            
+            if(respuesta === false){
+                //Se agrega el elemnto de la lista.
+                $scope.idsPromoActuScreen.push(x);   
+            }
+            console.log("nuevo array actualizar: "+ $scope.idsPromoActuScreen);
+        };
+        
+        $scope.inactivarPromo = function (x){
+            console.log("Existe promo: "+ x +" en : "+ $scope.idsPromoActuScreen);
+            var respuesta = false;  
+            for (var con in $scope.idsPromoActuScreen) {
+                if(x === $scope.idsPromoActuScreen[con]) {
+                    //Se elimina el elemnto de la lista.
+                    $scope.idsPromoActuScreen.splice(con, 1);
+                    break;
+                }
+            }            
+            console.log("nuevo array actualizar: "+ $scope.idsPromoActuScreen);
+        };
+        
+        //ALEJO, me apoyas por fa creando el sevicio que permita actualizar en DinamoDB el lstado de promos de la pantalla actual.
+        $scope.updatePromotions = function(){
+            if ($scope.idsPromoActuScreen.length > 0) {
+                console.log("Id promociones a actualizar para la pantalla actuall: "+JSON.stringify($scope.idsPromoActuScreen));
+            }else{
+                  console.log("Se eliminaran todas las promociones que tenga la pantalla actual: "+JSON.stringify($scope.idsPromoActuScreen));               
+            }
+        };
+        
+    // FIN PROCESO relacionados con gestion de PROMOCIONES.
 }
