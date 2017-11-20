@@ -33,9 +33,9 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
     });
     
     //Se listan las promociones disponibles.
-    $http.get('data/promotions.json').then(function (response){
+    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (response){
         
-        $scope.promotions = response.data;
+        $scope.promotions = response.data.Items;
         console.log("promociones: "+$scope.promotions);
         
     });

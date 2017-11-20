@@ -139,22 +139,22 @@
                         <div id="div2">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="content" ng-if="$even" ng-repeat='item in promotionsBranch | filter: { active: 1 }'>
-                                        <p class="text-center font-sm">{{item.title}}</p>
-                                        <img src="{{item.image}}" ng-show="item.id" />
+                                    <div class="content" ng-if="$even" ng-repeat='item in promotionsBranch | filter: { active:{ "S":"1" }}'>
+                                        <p class="text-center font-sm">{{item.title["S"]}}</p>
+                                        <img src="{{item.image['S']}}" ng-show="item.id['N']" />
                                         <div class="checkbox font-sm">
-                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsActive(item.id)" ng-click="activarPromo(item.id)"> Activo</label>
-                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsInactive(item.id)" ng-click="inactivarPromo(item.id)"> Inactivo</label>
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsActive(item.id['N'])" ng-click="activarPromo(item.id['N'])"> Activo</label>
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsInactive(item.id['N'])" ng-click="inactivarPromo(item.id['N'])"> Inactivo</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="content" ng-if="$odd" ng-repeat='item in promotionsBranch | filter: { active: 1 }'>
-                                        <p class="text-center font-sm">{{item.title}}</p>
-                                        <img src="{{item.image}}" ng-show="item.id" />
+                                    <div class="content" ng-if="$odd" ng-repeat='item in promotionsBranch | filter: { active: { "S":"1" } }'>
+                                        <p class="text-center font-sm">{{item.title["S"]}}</p>
+                                        <img src="{{item.image['S']}}" ng-show="item.id['N']" />
                                         <div class="checkbox font-sm">
-                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsActive(item.id)" ng-click="activarPromo(item.id)"> Activo</label>
-                                            <label><input type="radio" name="optradio_{{item.id}}" ng-checked="promoIsInactive(item.id)" ng-click="inactivarPromo(item.id)"> Inactivo</label>
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsActive(item.id['N'])" ng-click="activarPromo(item.id['N'])"> Activo</label>
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsInactive(item.id['N'])" ng-click="inactivarPromo(item.id['N'])"> Inactivo</label>
                                         </div>                                        
                                     </div>
                                 </div>
