@@ -29,12 +29,17 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
 
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
-        $scope.screens = response.data.Items;
-
+       for (var item in response.data.Items) {
+            if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+                $scope.screens.push(response.data.Items[item]);
+        }
+        
         for (var item in $scope.screens) {
             if ($scope.screens[item].id["N"] == $scope.branchId ) {           
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
+                console.log("======")
+                console.log($scope.screensBranch);
                 for (var screen in $scope.screensBranch) {
                     if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) {
 
