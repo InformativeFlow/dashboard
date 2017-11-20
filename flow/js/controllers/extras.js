@@ -2,19 +2,28 @@
 angular.module('app')
         .controller('extrasCtrl', extrasCtrl);
 
-extrasCtrl.$inject = ['$scope', '$http','configService'];
-function extrasCtrl($scope, $http,configService) {
+extrasCtrl.$inject = ['$scope', '$http', 'configService'];
+function extrasCtrl($scope, $http, configService) {
 
-    $scope.sizeImages = {};
-    $scope.sizeVideos = {};
-    
+    $scope.sizeImages = 0;
+    $scope.sizeVideos = 0;
 
-    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (response) {
-        $scope.sizeImages = response.data.Items.length;
+
+    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (res) {
+
+        for (var item in  res.data.Items) {
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
+                $scope.sizeImages++;
+        }
+
     });
-    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (response) {
+    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (res) {
 
-        $scope.sizeVideos = response.data.Items.length;
+        for (var item in  res.data.Items) {
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
+                $scope.sizeVideos++;
+        }
+        
     });
 
 }
