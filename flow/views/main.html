@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header h5 text-capitalize mb-0 mt-2">
-                    Interacciones en sedes
+                    Sedes disponibles 
                 </div>
                 <div class="card-body">
                     <div class="row" ng-controller="loadBranchesCtrl">
@@ -15,39 +15,12 @@
                                     <a class="font-weight-bold font-xs btn-block text-capitalize" ui-sref-active="active" ui-sref="app.branches({branchId: branch.id['N']})">Ver pantallas <i class="fa fa-angle-right float-right font-lg"></i></a>
                                 </div>
                             </div>
-                            <div class="card text-white bg-info" ng-controller="cardChartCtrl2">
-                                <div class="card-body pb-0">
-                                    <div class="btn-group float-right">
-                                        <i class="fa fa-tv bg-primary p-3 font-2xl mr-3 float-left"></i><br>{{branch.screens["L"].length}} Pantallas
-                                    </div>
-                                    <h4 class="mb-0">2.300</h4>
-                                    <p>Huéspedes han interactuado</p>
-                                </div>
-                                <div class="chart-wrapper px-3" style="height:70px;">
-                                    <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-options="options" chart-colors="colors" height="70"></canvas>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row"> 
-                                    <div class="col-sm-12 col-md-12">
-                                        <div class="card-header">
-                                            Promocion más visitada
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body text-center">
-                                                <div class="h5 text-capitalize mb-0 mt-2">SPA con Jacuzzi</div>
-
-                                                <div style="position: relative; margin: 0">
-                                                    <img id="img2" class="img-responsive center-block" src="http://www.euromedspa.com/wp-content/uploads/2015/05/Dollarphotoclub_58101270.jpg"  style="width: 100%; height: 100%;" />
-                                                    <h4 class="promotion bg-info">
-                                                        100 interacciones
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="card-header">
+                                <i class="fa fa-tv bg-info p-3 font-2xl mr-3 float-left text-white bg-info"></i>
+                                <div class="h5 text-capitalize mb-0 mt-2">{{branch.screens["L"].length}} Pantallas</div>
+                                <div class="card-footer px-3 py-2">
+                                <p class="font-weight-bold font-xs btn-block text-capitalize" ui-sref-active="active">10 promociones activas</p>
+                            </div>                            
                         </div>
                     </div>
                 </div>

@@ -70,7 +70,7 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
             if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
                 $scope.contentImages.push(res.data.Items[item]);
         }
-            console.log(JSON.stringify($scope.contentImages));
+//            console.log(JSON.stringify($scope.contentImages));
         
     });
 
@@ -80,7 +80,7 @@ $scope.contentVideos = [];
             if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
                 $scope.contentVideos.push(res.data.Items[item]);
         }   
-            console.log(JSON.stringify($scope.contentVideos));
+//            console.log(JSON.stringify($scope.contentVideos));
     });
 
     /*
