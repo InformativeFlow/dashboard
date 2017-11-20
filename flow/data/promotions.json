@@ -3,25 +3,29 @@
         "id": 1,
         "title":"Comidas",
         "image": "http://lorempixel.com/400/200/food",
-        "link_qr":"http://bit.ly/2hLhP91"
+        "link_qr":"http://bit.ly/2hLhP91",
+        "active":"1"
     },
     {
         "id": 2,
         "title":"Deportes",
         "image": "http://lorempixel.com/400/200/sports",
-        "link_qr":"www.ambarhotel.com/"
+        "link_qr":"www.ambarhotel.com/",
+        "active":"1"
     },
     {
         "id": 3,
         "title":"Personas",
         "image": "http://lorempixel.com/400/200/people",
-        "link_qr":"http://www.hotelesdann.com/dann-norte-bogota"
+        "link_qr":"http://www.hotelesdann.com/dann-norte-bogota",
+        "active":"1"
     },
     {
         "id": 4,
         "title":"Ciudades",
         "image": "http://lorempixel.com/400/200/city",
-        "link_qr":"https://uniandes.edu.co"
+        "link_qr":"https://uniandes.edu.co",
+        "active":"1"
     }
     
 ]

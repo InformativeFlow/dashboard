@@ -12,6 +12,7 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
     AWS.config.region = 'us-west-2';
     var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
     var queueURL = "https://sqs.us-west-2.amazonaws.com/344712433810/screens";
+    
     $scope.urlDisplay = $state.params.url;
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
@@ -29,6 +30,14 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
             $state.go('appSimple.404', {}, {reload: true});
         }
 
+    });
+    
+    //Se listan las promociones disponibles.
+    $http.get('data/promotions.json').then(function (response){
+        
+        $scope.promotions = response.data;
+        console.log("promociones: "+$scope.promotions);
+        
     });
 
 

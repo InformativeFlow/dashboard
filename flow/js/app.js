@@ -23,8 +23,7 @@ angular
             'ngSanitize',
             'ngAnimate',
             'ngToast',
-            'satellizer'
-        
+            'satellizer'        
 ])
         .config(['cfpLoadingBarProvider', '$qProvider', '$sceDelegateProvider', '$httpProvider',
             function (cfpLoadingBarProvider, $qProvider, $sceDelegateProvider, $httpProvider) {
