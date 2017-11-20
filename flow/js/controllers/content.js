@@ -36,7 +36,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
             if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
                 $scope.contentVideos.push(res.data.Items[item]);
         }   
-            console.log(JSON.stringify($scope.contentVideos));
+//            console.log(JSON.stringify($scope.contentVideos));
         });
     };
     function getImages() {
@@ -46,7 +46,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
             if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
                 $scope.contentImages.push(res.data.Items[item]);
         }
-            console.log(JSON.stringify($scope.contentImages));
+//            console.log(JSON.stringify($scope.contentImages));
         });
     }
     ;

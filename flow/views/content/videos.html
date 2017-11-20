@@ -32,7 +32,7 @@
                             <div class="baguetteBoxOne col-sm-6 col-md-4" ng-if="$even" ng-repeat='item in contentVideos'>
                                 <button type="button" class="pull-right btn btn-danger" style="padding: 1px;" ng-click="deleteVideo(item.name['S'])"><i class="fa fa-trash"></i></button>                       
                                 <a class="lightbox" href="{{item.path['S']}}">
-                                <video ng-if="item.type['S'] === 'video'" ng-show="item.id['N']" controls width="100%" >
+                                <video ng-if="item.type['S'] === 'video'" ng-show="item.id['N']" controls width="100%" poster="{{item.poster['S']}}">
                                     <source src="{{item.path['S']}}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
@@ -41,7 +41,7 @@
                             <div class="baguetteBoxOne col-sm-6 col-md-4" ng-if="$odd" ng-repeat='item in contentVideos'>
                                 <button type="button" class="pull-right btn btn-danger" style="padding: 1px;" ng-click="deleteVideo(item.name['S'])"><i class="fa fa-trash"></i></button>                       
                                 <a class="lightbox" href="{{item.path['S']}}">
-                                <video ng-if="item.type['S'] === 'video'" ng-show="item.id['N']" controls width="100%" >
+                                <video ng-if="item.type['S'] === 'video'" ng-show="item.id['N']" controls width="100%" poster="{{item.poster['S']}}">
                                     <source src="{{item.path['S']}}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>

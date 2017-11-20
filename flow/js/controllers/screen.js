@@ -73,14 +73,23 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
         }
     });
 
-    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (response) {
-
-        $scope.contentImages = response.data.Items;
+    $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (res) {
+    $scope.contentImages = [];
+            for (var item in  res.data.Items) {
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+                $scope.contentImages.push(res.data.Items[item]);
+        }
+//            console.log(JSON.stringify($scope.contentImages));
+        
     });
 
-    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (response) {
-
-        $scope.contentVideos = response.data.Items;
+    $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (res) {
+$scope.contentVideos = []; 
+        for (var item in  res.data.Items) {
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+                $scope.contentVideos.push(res.data.Items[item]);
+        }   
+//            console.log(JSON.stringify($scope.contentVideos));
     });
     
    
