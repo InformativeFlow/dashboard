@@ -2,8 +2,8 @@
 angular.module('app')
         .controller('screenCtrl', screenCtrl);
 
-screenCtrl.$inject = ['$scope', '$http', '$state', '$q', 'creds','configService'];
-function screenCtrl($scope, $http, $state, $q, creds,configService) {
+screenCtrl.$inject = ['$scope', '$http', '$state', '$q', 'creds', 'configService'];
+function screenCtrl($scope, $http, $state, $q, creds, configService) {
 
     $scope.creds = {};
     $scope.creds.access_key = creds.apiKey;
@@ -25,35 +25,36 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
     $scope.idsVideo = [];
     $scope.paramsMsg = {};
     $scope.list4 = [];
-    $scope.detailNameScreen={};
+    $scope.detailNameScreen = {};
     $scope.promotionsBranch = []; // Objetos con la informacion de las promociones que se han creado para una sede.
     $scope.idsPromoScreen = []; // id de las promociones que tiene asociado una pantalla en DinamoDB.
     $scope.idsPromoActuScreen = []; //Listado de ids de promociones a actualizar en DinamoDB para una pantalla especifica.
-    
+
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.screens = response.data.Items;
 
         for (var item in $scope.screens) {
-            if ($scope.screens[item].id["N"] == $scope.branchId ) {           
+            if ($scope.screens[item].id["N"] == $scope.branchId) {
                 $scope.branchSelectedName = $scope.screens[item].name["S"];
                 $scope.screensBranch = $scope.screens[item].screens["L"];
                 for (var screen in $scope.screensBranch) {
                     if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) {
-
+                        $scope.promotionsScreen = $scope.screensBranch[screen]["M"].promotions["L"];
+                         
                         $scope.paramsMsg = {
                             MessageBody: $scope.screensBranch[screen]["M"].url['S'],
                             QueueUrl: queueURL
 
                         };
-                        
-                        $scope.detailNameScreen= $scope.screensBranch[screen]["M"].name["S"];
-                        
+
+                        $scope.detailNameScreen = $scope.screensBranch[screen]["M"].name["S"];
+
                         for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
 
                             $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
-                            
-                            
+
+
                             if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img") {
                                 //console.log($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
                                 $scope.idsImg.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
@@ -63,7 +64,7 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
                         }
                         //Informacion de Promociones asociadas a la pantalla actual.
                         for (var promotion in $scope.screensBranch[screen]["M"].promotions["L"]) {
-                            
+
                             //ALEJO, la idea aqui es incluir el id de las promociones asociadas a la pantalla en la variable 'idsPromoScreen'
                             $scope.idsPromoScreen.push($scope.screensBranch[screen]["M"].promotions["L"][promotion]["M"].id["N"]);
                         }
@@ -71,28 +72,29 @@ function screenCtrl($scope, $http, $state, $q, creds,configService) {
                 }
             }
         }
+        console.log($scope.idsPromoScreen);
     });
 
     $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (res) {
-    $scope.contentImages = [];
-            for (var item in  res.data.Items) {
-            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+        $scope.contentImages = [];
+        for (var item in  res.data.Items) {
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
                 $scope.contentImages.push(res.data.Items[item]);
         }
 //            console.log(JSON.stringify($scope.contentImages));
-        
+
     });
 
     $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (res) {
-$scope.contentVideos = []; 
+        $scope.contentVideos = [];
         for (var item in  res.data.Items) {
-            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
                 $scope.contentVideos.push(res.data.Items[item]);
-        }   
+        }
 //            console.log(JSON.stringify($scope.contentVideos));
     });
-    
-   
+
+
     /*
      * Método que retorna el contenido asociado a una pantalla.
      * Se envia el id de la pantalla y se espera recibir un array como el que retorna el siguiente servicio
@@ -119,7 +121,7 @@ $scope.contentVideos = [];
                     $scope.listReady.push(mapbuilder);
                 }
             }
-            console.log(JSON.stringify($scope.listReady));
+            
             var idx = $scope.screenId - 1;
             var p = {};
             for (var vid in $scope.listReady) {
@@ -145,7 +147,7 @@ $scope.contentVideos = [];
         console.log(JSON.stringify(p));
         $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', p).then(function (response) {
             console.log(response.data);
-            
+
             sqs.sendMessage($scope.paramsMsg, function (err, data) {
                 if (err)
                     console.log(err, err.stack); // an error occurred
@@ -168,7 +170,7 @@ $scope.contentVideos = [];
             },
             "ReturnValues": "UPDATED_NEW"
         };
-        console.log(JSON.stringify(params));
+         
         if (logic === -1)
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
                 console.log(response.data);
@@ -176,16 +178,16 @@ $scope.contentVideos = [];
     };
 
     $scope.removeItem = function (item, ev) {
-        var count =0;
+        var count = 0;
         var idx = $scope.screenId - 1;
         for (var con in $scope.list4)
-            if($scope.list4[con].type['S']==='video')
-                count = count+1;
-            
+            if ($scope.list4[con].type['S'] === 'video')
+                count = count + 1;
+
         for (var con in $scope.list4)
             if ($scope.list4[con].id["N"] === item.id["N"]) {
-                if($scope.list4[con].type['S']==='video' & count<2){
-                    var defaultVideo ={
+                if ($scope.list4[con].type['S'] === 'video' & count < 2) {
+                    var defaultVideo = {
                         "TableName": "branch",
                         "Key": {
                             "name": {
@@ -195,22 +197,22 @@ $scope.contentVideos = [];
                         "ExpressionAttributeValues": {":video": {"S": "https://s3-us-west-2.amazonaws.com/iflowvidout/default.mp4"}
                         },
                         "ReturnValues": "UPDATED_NEW"
-                    
+
                     };
-                     $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', defaultVideo).then(function (response) {
+                    $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', defaultVideo).then(function (response) {
                         console.log(response.data);
-                    var element = ev.target;
-                    var parent = element.parentElement;
-                    parent.removeChild(element);
-                    delete $scope.list4[con];
-                    sqs.sendMessage($scope.paramsMsg, function (err, data) {
-                        if (err)
-                            console.log(err, err.stack); // an error occurred
-                        else
-                            console.log(data);   
-                     });
-                });
-            }  
+                        var element = ev.target;
+                        var parent = element.parentElement;
+                        parent.removeChild(element);
+                        delete $scope.list4[con];
+                        sqs.sendMessage($scope.paramsMsg, function (err, data) {
+                            if (err)
+                                console.log(err, err.stack); // an error occurred
+                            else
+                                console.log(data);
+                        });
+                    });
+                }
                 var params = {
                     "TableName": "branch",
                     "Key": {
@@ -236,7 +238,7 @@ $scope.contentVideos = [];
 
                 });
             }
-        
+
     };
 
     $scope.deleteContent = function () {
@@ -261,29 +263,29 @@ $scope.contentVideos = [];
                     "UpdateExpression": "REMOVE screens[" + idx + "].content[" + content + "]",
                     "ReturnValues": "ALL_NEW"
                 };
-                
-                var defaultVideo ={
-                        "TableName": "branch",
-                        "Key": {
-                            "name": {
-                                "S": $scope.branchSelectedName
-                            }},
-                        "UpdateExpression": "SET screens[" + idx + "].video =:video",
-                        "ExpressionAttributeValues": {":video": {"S": "https://s3-us-west-2.amazonaws.com/iflowvidout/default.mp4"}
-                        },
-                        "ReturnValues": "UPDATED_NEW"
-                    
-                    };
-                     $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', defaultVideo).then(function (response) {
-                        console.log(response.data);
+
+                var defaultVideo = {
+                    "TableName": "branch",
+                    "Key": {
+                        "name": {
+                            "S": $scope.branchSelectedName
+                        }},
+                    "UpdateExpression": "SET screens[" + idx + "].video =:video",
+                    "ExpressionAttributeValues": {":video": {"S": "https://s3-us-west-2.amazonaws.com/iflowvidout/default.mp4"}
+                    },
+                    "ReturnValues": "UPDATED_NEW"
+
+                };
+                $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', defaultVideo).then(function (response) {
+                    console.log(response.data);
                     sqs.sendMessage($scope.paramsMsg, function (err, data) {
                         if (err)
                             console.log(err, err.stack); // an error occurred
                         else
-                            console.log(data);   
-                     });
+                            console.log(data);
+                    });
                 });
-                
+
                 console.log(JSON.stringify(params));
 
                 $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
@@ -344,88 +346,128 @@ $scope.contentVideos = [];
     };
 
     // PROCESO relacionados con gestion de PROMOCIONES.
-        //Informacion de las promociones creadas para una sede
-        
-        //ALEJO, me apoyas por fa asociando el servicio REST que trae las promociones creadas para una sede
-        $http.get('data/promotions.json').then(function (response){
-            $scope.promotionsBranch = response.data;
+    //Informacion de las promociones creadas para una sede
 
-            console.log("Total promociones sede: "+$scope.promotionsBranch.length);
-        });
+    //ALEJO, me apoyas por fa asociando el servicio REST que trae las promociones creadas para una sede
+    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (response) {
 
-        //Este servicio es temporal mientras ALEJO crea en tabla de branch el listado de promociones de una sede para una pantalla
-        $http.get('data/branches.json').then(function (response){
-            //TEMPORAL, las cargo de dinamo cuando ALEJO conecte el campo de promos en el backeend, 
-            for (var promotion in response.data[0].screens[1].promotions) {
-                $scope.idsPromoScreen.push(response.data[0].screens[1].promotions[promotion].id); //EJ: pantalla 2 de la sede bogota - local
+        $scope.promotionsBranch = response.data.Items;
+
+    });
+
+
+    $scope.promoIsActive = function (x) {
+        var respuesta = false;
+        for (var con in $scope.idsPromoScreen) {
+            if (x === $scope.idsPromoScreen[con]) {
+                respuesta = true;
+                break;
             }
-            //Se inicializa con los ids actuales que tenga la pantalla
-            $scope.idsPromoActuScreen = $scope.idsPromoScreen;
+        }
+        return respuesta;
+    };
+
+    $scope.promoIsInactive = function (x) {
+        var respuesta = true;
+        for (var con in $scope.idsPromoScreen) {
+            if (x === $scope.idsPromoScreen[con]) {
+                respuesta = false;
+                break;
+            }
+        }
+        return respuesta;
+    };
+
+    $scope.activarPromo = function (x) {
+        console.log("Existe promo: " + x + " en : " + $scope.idsPromoActuScreen);
+        var respuesta = false;
+        for (var con in $scope.idsPromoActuScreen) {
+            if (x === $scope.idsPromoActuScreen[con]) {
+                respuesta = true;
+                break;
+            }
+        }
+
+        if (respuesta === false) {
+            //Se agrega el elemnto de la lista.
+          
+            $scope.idsPromoActuScreen.push(x);
             
-            console.log("Total promociones de la pantalla: "+$scope.idsPromoScreen.length);
-        });
-        
-        
-        $scope.promoIsActive = function (x){
-            var respuesta = false;
-            for (var con in $scope.idsPromoScreen) {
-                if(x === $scope.idsPromoScreen[con]) {
-                    respuesta = true;
-                    break;
-                }
+        }
+        console.log("nuevo array actualizar: " + $scope.idsPromoActuScreen);
+    };
+
+    $scope.inactivarPromo = function (x) {
+        console.log("Existe promo: " + x + " en : " + $scope.idsPromoActuScreen);
+        var respuesta = false;
+        for (var con in $scope.idsPromoActuScreen) {
+            if (x === $scope.idsPromoActuScreen[con]) {
+                //Se elimina el elemnto de la lista.
+                $scope.idsPromoActuScreen.splice(con, 1);
+                break;
             }
-            return respuesta;
-        };
-        
-        $scope.promoIsInactive = function (x){
-            var respuesta = true;            
-            for (var con in $scope.idsPromoScreen) {
-                if(x === $scope.idsPromoScreen[con]) {
-                    respuesta = false;
-                    break;
-                }
+        }
+        console.log("nuevo array actualizar: " + $scope.idsPromoActuScreen);
+    };
+
+    //ALEJO, me apoyas por fa creando el sevicio que permita actualizar en DinamoDB el lstado de promos de la pantalla actual.
+    $scope.updatePromotions = function () {
+
+        var idx = $scope.screenId - 1;
+        if ($scope.idsPromoActuScreen.length > 0) {
+           
+             var listPromo =[];
+            for(var mp in $scope.idsPromoActuScreen){
+                var mapPromo={};
+               mapPromo["M"]={};
+                mapPromo["M"]["id"]={};
+                mapPromo["M"]["id"]["N"]=$scope.idsPromoActuScreen[mp];
+                listPromo.push(mapPromo);
             }
-            return respuesta;
-        };
-        
-        $scope.activarPromo = function (x){
-            console.log("Existe promo: "+ x +" en : "+ $scope.idsPromoActuScreen);
-            var respuesta = false;  
-            for (var con in $scope.idsPromoActuScreen) {
-                if(x === $scope.idsPromoActuScreen[con]) {
-                    respuesta = true;
-                    break;
-                }
-            }
+            var paramsPromo = {
+                "TableName": "branch",
+                "Key": {
+                    "name": {
+                        "S": $scope.branchSelectedName
+                    }
+                },
+                "UpdateExpression": "SET #ri[" + idx + "].promotions = list_append( #ri[" + idx + "].promotions,:vals)",
+                "ExpressionAttributeNames": {"#ri": "screens"},
+                "ExpressionAttributeValues": {
+                    ":vals": {"L": listPromo}
+                },
+                "ReturnValues": "UPDATED_NEW"
+            };
             
-            if(respuesta === false){
-                //Se agrega el elemnto de la lista.
-                $scope.idsPromoActuScreen.push(x);   
+            $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
+                console.log(response.data);
+            });
+            console.log("Id promociones a actualizar para la pantalla actuall: " + JSON.stringify($scope.idsPromoActuScreen));
+        } else {
+            for (var promo in $scope.promotionsScreen) {
+                
+                var paramsPromo = {
+                    "TableName": "branch",
+                    "Key": {
+                        "name": {
+                            "S": $scope.branchSelectedName
+                        }
+                    },
+                    "UpdateExpression": "REMOVE screens[" + idx + "].promotions[" + promo + "]",
+                    "ReturnValues": "ALL_NEW"
+                };
+                console.log(JSON.stringify(paramsPromo));
+                $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
+                    console.log(response.data);
+
+                });
+
             }
-            console.log("nuevo array actualizar: "+ $scope.idsPromoActuScreen);
-        };
-        
-        $scope.inactivarPromo = function (x){
-            console.log("Existe promo: "+ x +" en : "+ $scope.idsPromoActuScreen);
-            var respuesta = false;  
-            for (var con in $scope.idsPromoActuScreen) {
-                if(x === $scope.idsPromoActuScreen[con]) {
-                    //Se elimina el elemnto de la lista.
-                    $scope.idsPromoActuScreen.splice(con, 1);
-                    break;
-                }
-            }            
-            console.log("nuevo array actualizar: "+ $scope.idsPromoActuScreen);
-        };
-        
-        //ALEJO, me apoyas por fa creando el sevicio que permita actualizar en DinamoDB el lstado de promos de la pantalla actual.
-        $scope.updatePromotions = function(){
-            if ($scope.idsPromoActuScreen.length > 0) {
-                console.log("Id promociones a actualizar para la pantalla actuall: "+JSON.stringify($scope.idsPromoActuScreen));
-            }else{
-                  console.log("Se eliminaran todas las promociones que tenga la pantalla actual: "+JSON.stringify($scope.idsPromoActuScreen));               
-            }
-        };
-        
-    // FIN PROCESO relacionados con gestion de PROMOCIONES.
+            console.log("Se eliminaran todas las promociones que tenga la pantalla actual: " + JSON.stringify($scope.idsPromoActuScreen));
+
+        }
+        ;
+
+        // FIN PROCESO relacionados con gestion de PROMOCIONES.
+    }
 }
