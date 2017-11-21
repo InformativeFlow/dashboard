@@ -337,7 +337,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
             },
             "ReturnValues":"ALL_NEW"
         };
-        console.log(JSON.stringify(params))
+       
         $http.put('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios',params).then(function(response){
             console.log(response.data);
             getPromotions();       
