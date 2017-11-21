@@ -318,7 +318,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         //  
         $scope.promotion = "Actualizada";
         $scope.list4 = [];
-        //ABIMELEC! descomentar aca formData  cuando este lista la funcionalidad de update
+        //ABIMELEC! QUITAR COMILLAS aca formData  cuando este lista la funcionalidad de update
         $scope.formPromotion.title = "formData.title";
         $scope.formPromotion.link_qr = "formData.link_qr";
         $scope.formPromotion.image = "formData.image";
