@@ -329,7 +329,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
                 "id":{
                 "N":idPromo}
             },
-            "UpdateExpression":"SET title =:t,SET link_qr =:l,SET image =:i",
+            "UpdateExpression":"SET title =:t, link_qr =:l, image =:i",
             "ExpressionAttributeValues":{
                 ":t":{"S":$scope.formPromotion.title},
                 ":l":{"S":$scope.formPromotion.link_qr},
