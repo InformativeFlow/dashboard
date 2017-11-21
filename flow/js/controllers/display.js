@@ -14,6 +14,9 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
     var queueURL = "https://sqs.us-west-2.amazonaws.com/344712433810/screens";
     
     $scope.urlDisplay = $state.params.url;
+    $scope.idsPromotionsScreen= []; //Lista de ids de las prmomociones asociadas a la pantalla actual.
+    $scope.promotionsScreen = []; //Lista de objetos de las prmomociones asociadas a la pantalla actual.
+    $scope.tituloPromo = '';
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.data = response.data.Items;
@@ -22,6 +25,8 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
             for (var screen in $scope.data[item].screens["L"])
                 if ($scope.data[item].screens["L"][screen]["M"].url["S"] == $scope.urlDisplay) {
                     $scope.video = $scope.data[item].screens["L"][screen]["M"].video["S"];
+                    //Lista de ids de las promociones asociadas a la pantalla actual.
+                    $scope.idsPromotionsScreen = $scope.data[item].screens["L"][screen]["M"].promotions["L"];
                 }
         }
 
@@ -29,15 +34,26 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
         } else {
             $state.go('appSimple.404', {}, {reload: true});
         }
-
     });
     
-    //Se listan las promociones disponibles.
+    
+    
+    //Se listan las promociones disponibles de un hotel.
     $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (response){
         
-        $scope.promotions = response.data.Items;
-        console.log("promociones: "+$scope.promotions);
+        $scope.promotionsBranch = response.data.Items;
         
+        //Se crea el listado de objetos de las promociones asociadas a la pantalla actual.
+        for(var idPromo in $scope.idsPromotionsScreen){
+            for(var promo in $scope.promotionsBranch){
+                if($scope.idsPromotionsScreen[idPromo]["M"].id["N"] === $scope.promotionsBranch[promo].id["N"]){
+                    if($scope.promotionsBranch[promo].active["S"] === "1"){
+                        $scope.promotionsScreen.push($scope.promotionsBranch[promo]);
+                    }
+                }
+            }            
+        }
+        if($scope.promotionsScreen.length) $scope.tituloPromo = 'Escanea el código QR de promociones';
     });
 
 
@@ -99,31 +115,22 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
     console.log();
 
     //Mostrar Promociones
-    //Se listan las promociones disponibles.
-    $http.get('data/promotions.json').then(function (response) {
-
-        $scope.promotions = response.data;
-        
-
-    });
-
+    
     $scope.myInterval = 10000;
     $scope.active = 0;
 
     var showPromotion = function () {
-        //var activePromo = $scope.active;
-        //var totalPromo = $scope.slides.length;
-
+        
         var promise = $interval(function () {
-            if ($scope.active >= $scope.promotions.length - 1) {
+            if ($scope.active >= $scope.promotionsScreen.length - 1) {
                 $scope.active = 0;
             } else {
                 $scope.active = $scope.active + 1;
 
             }
-            console.log("Index promo actual: " + $scope.active + " - total: " + $scope.promotions.length);
+            console.log("Index promo actual: " + $scope.active + " - total: " + $scope.promotionsScreen.length);
         },
-                $scope.myInterval);
+        $scope.myInterval);
 
         $scope.$on('$destroy', function () {
             $interval.cancel(promise);
