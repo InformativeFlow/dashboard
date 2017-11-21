@@ -41,7 +41,7 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                 for (var screen in $scope.screensBranch) {
                     if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) {
                         $scope.promotionsScreen = $scope.screensBranch[screen]["M"].promotions["L"];
-                         
+
                         $scope.paramsMsg = {
                             MessageBody: $scope.screensBranch[screen]["M"].url['S'],
                             QueueUrl: queueURL
@@ -121,7 +121,7 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                     $scope.listReady.push(mapbuilder);
                 }
             }
-            
+
             var idx = $scope.screenId - 1;
             var p = {};
             for (var vid in $scope.listReady) {
@@ -170,7 +170,7 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
             },
             "ReturnValues": "UPDATED_NEW"
         };
-         
+
         if (logic === -1)
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', params).then(function (response) {
                 console.log(response.data);
@@ -390,9 +390,9 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
 
         if (respuesta === false) {
             //Se agrega el elemnto de la lista.
-          
+
             $scope.idsPromoActuScreen.push(x);
-            
+
         }
         console.log("nuevo array actualizar: " + $scope.idsPromoActuScreen);
     };
@@ -415,13 +415,13 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
 
         var idx = $scope.screenId - 1;
         if ($scope.idsPromoActuScreen.length > 0) {
-           
-             var listPromo =[];
-            for(var mp in $scope.idsPromoActuScreen){
-                var mapPromo={};
-               mapPromo["M"]={};
-                mapPromo["M"]["id"]={};
-                mapPromo["M"]["id"]["N"]=$scope.idsPromoActuScreen[mp];
+
+            var listPromo = [];
+            for (var mp in $scope.idsPromoActuScreen) {
+                var mapPromo = {};
+                mapPromo["M"] = {};
+                mapPromo["M"]["id"] = {};
+                mapPromo["M"]["id"]["N"] = $scope.idsPromoActuScreen[mp];
                 listPromo.push(mapPromo);
             }
             var paramsPromo = {
@@ -438,14 +438,14 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                 },
                 "ReturnValues": "UPDATED_NEW"
             };
-            
+
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
                 console.log(response.data);
             });
             console.log("Id promociones a actualizar para la pantalla actuall: " + JSON.stringify($scope.idsPromoActuScreen));
         } else {
             for (var promo in $scope.promotionsScreen) {
-                
+
                 var paramsPromo = {
                     "TableName": "branch",
                     "Key": {

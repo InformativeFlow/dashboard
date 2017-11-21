@@ -58,28 +58,34 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         //Se listan las promociones disponibles de un hotel.
 
         //TEMPORAL Mientras alejo conecta las promociones para un hotel especifico
-        $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (res) {
-            $scope.contentPromotions = res.data.Items;
-        });
+      //  $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (res) {
+        //    $scope.contentPromotions = res.data.Items;
+     //   });
         //ALEJO, por favor agregar en tabla promotions, el campo user, para garantizar que la promo pertence a un hotel especidico
-        /* 
+        
          $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion', configService.getConfig()).then(function (res){
          $scope.contentPromotions = [];
+         $scope.promoIds=[];
          for (var item in  res.data.Items) {
-         if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
-         $scope.contentPromotions.push(res.data.Items[item]);
+         if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() ){
+             $scope.contentPromotions.push(res.data.Items[item]);
+             $scope.promoIds.push(parseInt(res.data.Items[item].id["N"]));
+             
+                 }
          }
          
-         
-         });*/
+         });
     }
     ;
-
 
     getImages();
     getVideos();
     getPromotions();
-
+    
+    function setPromoNewId(){
+      return  Math.max.apply(this,$scope.promoIds) + 1;
+    }
+    
     AWS.config.update({accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key});
     AWS.config.region = 'us-west-2';
     $scope.bucketImg = new AWS.S3({params: {Bucket: $scope.creds.bucketImg}});
@@ -233,18 +239,70 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         //ALEJO por favor me colaboras generando el servicio que crea en DynamoDB la nueva promo en la tabla promotions 
         // A partir de los datos que llegan en el JSON formData={title:"",link_qr:"",image:"",active:"",user:""}; 
         //  
-        //alert('Informacion que se envia' + JSON.stringify(formData)); 
+        //alert('Informacion que se envia' + JSON.stringify(formData.image)); 
+       /*
+        *
+        */
         $scope.promotion = "Creada";
         $scope.list4 = [];
-        $scope.formPromotion.title = "";
-        $scope.formPromotion.link_qr = "";
-        $scope.formPromotion.image = "";
+        $scope.formPromotion.title = formData.title;
+        $scope.formPromotion.link_qr = formData.link_qr;
+        $scope.formPromotion.image = formData.image;
+        var params = {
+            "TableName": "promotion",
+            "Item": {
+                "id": {
+                    N: setPromoNewId().toString()
+                }, 
+                "active": {
+                    S: "1"
+                }, 
+                "image": {
+                    S: $scope.formPromotion.image
+                }, 
+                "link_qr": {
+                    S: $scope.formPromotion.link_qr
+                },
+                "title": {
+                    S: $scope.formPromotion.title
+                },
+                "user": {
+                    S: window.sessionStorage.getItem('user')
+                }
+            }
+        };
+         $http.post('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios',params).then(function(response){
+             console.log(response);
+              getPromotions();
+               $scope.formPromotion= {};
+         });
+             
+         
     };
     
     $scope.deletePromotion = function (idPromotion) {
-        var user = window.sessionStorage.getItem('user').toString();
-        
-        alert(idPromotion, user);
+      //  var user = window.sessionStorage.getItem('user').toString();
+      var id = idPromotion;  
+     //   alert(idPromotion, user);
+        var params ={
+            "TableName":"promotion",
+            "Key":{
+                "id":{
+                    "N": id
+                }
+            }
+        };
+       $http({
+           method: 'DELETE',
+           url: 'https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios',
+           data: params,
+           headers: 'aplication/json,charset=utf-8'
+       }).then(function(response){
+           console.log(response);
+           getPromotions();
+           
+       });
+               
         //ALEJO por favor me colaboras generando el servicio que elimine en DynamoDB una promo asociada a un hotel (user)
         // A partir del id y user.
         
@@ -260,9 +318,29 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         //  
         $scope.promotion = "Actualizada";
         $scope.list4 = [];
-        $scope.formPromotion.title = "";
-        $scope.formPromotion.link_qr = "";
-        $scope.formPromotion.image = "";
+        $scope.formPromotion.title = "formData.title";
+        $scope.formPromotion.link_qr = "formData.link_qr";
+        $scope.formPromotion.image = "formData.image";
+        
+        var params ={
+            "TableName":"promotion",
+            "Key":{
+                "id":{
+                "N":idPromo}
+            },
+            "UpdateExpression":"SET title =:t,SET link_qr =:l,SET image =:i",
+            "ExpressionAttributeValues":{
+                ":t":{"S":$scope.formPromotion.title},
+                ":l":{"S":$scope.formPromotion.link_qr},
+                ":i":{"S":$scope.formPromotion.image}
+            },
+            "ReturnValues":"ALL_NEW"
+        };
+        console.log(JSON.stringify(params))
+        $http.put('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios',params).then(function(response){
+            console.log(response.data);
+            getPromotions();       
+        });
     };
 
     //FIN CRUD PROMOTIONS

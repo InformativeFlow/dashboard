@@ -96,7 +96,7 @@
 <div class="animated fadeIn">
     <div class="card card-default">
         <div class="card-header">
-            <i class="fa fa-gift"></i>Prmociones disponibles
+            <i class="fa fa-gift"></i>Promociones disponibles
         </div>
         <div class="card-body">
             <div class="card">
@@ -124,7 +124,7 @@
                                         </td>
                                         <td><img id="img2" class="img-responsive center-block" src="{{item.image['S']}}"  style="width: 100px; height: 100px;" /></td>
                                         <td>
-                                            <button type="button" class="btn badge-info" style="padding: 1px;"><i class="fa fa-edit"></i></button> 
+                                            <button type="button" class="btn badge-info" style="padding: 1px;"ng-click="updatePromotion(item.id['N'])"><i class="fa fa-edit"></i></button> 
                                         </td>
                                         <td>
                                             <button type="button"  class="btn btn-danger" style="padding: 1px;" ng-click="deletePromotion(item.id['N'])"><i class="fa fa-trash"></i></button> 
