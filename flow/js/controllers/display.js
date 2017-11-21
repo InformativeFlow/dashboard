@@ -128,7 +128,7 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
                 $scope.active = $scope.active + 1;
 
             }
-            console.log("Index promo actual: " + $scope.active + " - total: " + $scope.promotionsScreen.length);
+            //console.log("Index promo actual: " + $scope.active + " - total: " + $scope.promotionsScreen.length);
         },
         $scope.myInterval);
 

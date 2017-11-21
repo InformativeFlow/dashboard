@@ -1,0 +1,141 @@
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-gift"></i>Cargar promoción
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-12" id="accordion">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> Imágenes disponibles </a>
+                                    <span class="badge badge-pill badge-success float-right">{{contentImages.length}}</span>
+                                    <div class="card-body pb-0">
+                                        <div class="btn-group pull-right">
+                                            <p>Para agregar imágenes arrastrelas desde la izquierda a la derecha</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="collapse1" class="card-body panel-collapse collapse in">
+                                    <div id="div1">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="content" ng-if="$even" ng-repeat='item in contentImages'>
+
+                                                    <img src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}},  placeholder: 'keep'}"  />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="content" ng-if="$odd" ng-repeat='item in contentImages'>
+                                                    <img src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="contentImages" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}"  />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    Información de la promoción <span class="badge badge-pill badge-info float-right">{{promotion}}</span>
+                                </div>
+                                <div class="row paddingRow">
+                                    <div class="col-md-12" >
+                                        <form name="formPromo">
+                                            <div class="form-group">
+                                                <label for="image">(*) Imagen</label>
+                                                <div ng-mouseover="contentExist()" class="addContent"  data-drop="true">
+                                                    <div id="conBox" class="areaDrag" data-drop="true"  ng-model='list4' jqyoui-droppable="{multiple:true}">
+                                                        <div ng-hide="hideMe()" class="areaDrop">Suelte aquí la imagen.</div>
+                                                        <div class="listContent">
+                                                            <div   class="contentShow" ng-repeat="item in list4 track by $index">
+                                                                <img  ng-if="item.type['S'] === 'img'"   src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"  />
+
+                                                            </div>
+                                                        </div>
+                                                            
+                                                        <input type="text" style="border: 1px solid white; height: 1px;color:white;font-size: 1px;" type="text" class="form-control" name="image" ng-model="formPromotion.image" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="title">(*) Título</label>
+                                                <input type="text" class="form-control" placeholder="Título" name="title" ng-model="formPromotion.title" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="link_qr">(*) Url</label>
+                                                <input type="text" class="form-control" placeholder="Url para código QR" name="link_qr" ng-model="formPromotion.link_qr" required>
+                                            </div>
+
+                                            <input type="submit" value="Crear" class="btn btn-success pull-right" ng-click="savePromotion(formPromotion)" ng-disabled="!formPromo.$valid" />
+                                        </form>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-gift"></i>Prmociones disponibles
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div id="collapse1">
+                    <div id="div1" class="tz-gallery">
+                        <div class="row">
+                            <table class="table table-hover table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%;">Título</th>
+                                        <th style="width: 30%;">Link</th>
+                                        <th style="width: 10%;">Estado</th>
+                                        <th style="width: 40%;">Imagen</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in contentPromotions">
+                                        <td>{{item.title['S']}}</td>
+                                        <td>{{item.link_qr['S']}}</td>
+                                        <td>
+                                            <label ng-show="item.active['S'] == '1'">Activa</label>
+                                            <label ng-show="item.active['S'] == '0'">Inactiva</label>
+                                        </td>
+                                        <td><img id="img2" class="img-responsive center-block" src="{{item.image['S']}}"  style="width: 100px; height: 100px;" /></td>
+                                        <td>
+                                            <button type="button" class="btn badge-info" style="padding: 1px;"><i class="fa fa-edit"></i></button> 
+                                        </td>
+                                        <td>
+                                            <button type="button"  class="btn btn-danger" style="padding: 1px;" ng-click="deletePromotion(item.id['N'])"><i class="fa fa-trash"></i></button> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
