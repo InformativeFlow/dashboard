@@ -190,7 +190,7 @@ angular
                                 loginRequired: loginRequired
                             },
                             ncyBreadcrumb: {
-                                label: 'Contenido / Promociones'
+                                label: 'Contenido / Imagenes'
                             }
                         })
 
@@ -209,5 +209,23 @@ angular
                             ncyBreadcrumb: {
                                 label: 'Contenido / Videos'
                             }
+                        })
+                        
+                        .state('app.promotions', {
+                            url: '/content/promotions',
+                            templateUrl: 'views/content/promotions.html',
+                            controller: 'contentCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }],
+                                loginRequired: loginRequired
+                            },
+                            ncyBreadcrumb: {
+                                label: 'Contenido / Promociones'
+                            }
                         });
+                        
             }]);

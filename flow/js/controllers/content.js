@@ -17,41 +17,68 @@ angular.module('app')
                     }
                 };
             }]);
-contentCtrl.$inject = ['$scope', '$state', '$timeout', '$http', 'creds', 'ngToast','configService'];
-function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configService) {
+contentCtrl.$inject = ['$scope', '$state', '$timeout', '$http', 'creds', 'ngToast', 'configService'];
+function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configService) {
     $scope.creds = {};
     $scope.creds.access_key = creds.apiKey;
     $scope.creds.secret_key = creds.apiSecret;
     $scope.creds.bucketImg = 'iflowimgin';
     $scope.creds.bucketVid = 'iflowvidin';
-    
-    
+
+
     $scope.uploadFileTrue = false;
     $scope.msg = "Completado";
 
+
     function getVideos() {
         $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (res) {
-          $scope.contentVideos = []; 
-        for (var item in  res.data.Items) {
-            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
-                $scope.contentVideos.push(res.data.Items[item]);
-        }   
+            $scope.contentVideos = [];
+            for (var item in  res.data.Items) {
+                if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
+                    $scope.contentVideos.push(res.data.Items[item]);
+            }
 //            console.log(JSON.stringify($scope.contentVideos));
         });
-    };
+    }
+    ;
     function getImages() {
         $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (res) {
-         $scope.contentImages = [];
+            $scope.contentImages = [];
             for (var item in  res.data.Items) {
-            if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
-                $scope.contentImages.push(res.data.Items[item]);
-        }
+                if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
+                    $scope.contentImages.push(res.data.Items[item]);
+            }
 //            console.log(JSON.stringify($scope.contentImages));
         });
     }
     ;
+
+
+    function getPromotions() {
+        //Se listan las promociones disponibles de un hotel.
+
+        //TEMPORAL Mientras alejo conecta las promociones para un hotel especifico
+        $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (res) {
+            $scope.contentPromotions = res.data.Items;
+        });
+        //ALEJO, por favor agregar en tabla promotions, el campo user, para garantizar que la promo pertence a un hotel especidico
+        /* 
+         $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion', configService.getConfig()).then(function (res){
+         $scope.contentPromotions = [];
+         for (var item in  res.data.Items) {
+         if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+         $scope.contentPromotions.push(res.data.Items[item]);
+         }
+         
+         
+         });*/
+    }
+    ;
+
+
     getImages();
     getVideos();
+    getPromotions();
 
     AWS.config.update({accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key});
     AWS.config.region = 'us-west-2';
@@ -69,7 +96,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
             ACL: 'public-read',
             ContentType: file.type,
             Body: file,
-            Metadata:{user:window.sessionStorage.getItem('user')},
+            Metadata: {user: window.sessionStorage.getItem('user')},
             ServerSideEncryption: 'AES256'
         };
 
@@ -108,7 +135,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
             ACL: 'public-read',
             ContentType: file.type,
             Body: file,
-            Metadata:{user:window.sessionStorage.getItem('user')},
+            Metadata: {user: window.sessionStorage.getItem('user')},
             ServerSideEncryption: 'AES256'
         };
 
@@ -137,7 +164,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
     };
 
     $scope.deleteImage = function (name) {
-        
+
 
         $scope.bucketImg.deleteObject({Bucket: 'iflowimgin', Key: name}, function (err, data) {
             if (err)
@@ -150,7 +177,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
         });
     };
     $scope.deleteVideo = function (name) {
-        
+
         $scope.bucketVid.deleteObject({Bucket: 'iflowvidin', Key: name}, function (err, data) {
             if (err)
                 console.log(err, err.stack); // an error occurred
@@ -165,7 +192,83 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast,configServi
         });
     };
 
-};
+    //CRUD PROMOTIONS
+    $scope.promotion = "";
+    $scope.formPromotion = {
+        title: "",
+        link_qr: "",
+        image: "",
+        active: "1",
+        user: window.sessionStorage.getItem('user').toString()
+    };
+
+    $scope.list4 = [];
+    $scope.hideMe = function () {
+        return $scope.list4.length > 0;
+    };
+
+    $scope.contentExist = function () {
+        $scope.promotion = "";
+        var total = $scope.list4.length;
+        var last = total - 1;
+
+        if (total > 0) {
+
+            $scope.formPromotion.image = $scope.list4[last].path["S"]; //Asigno la url de la imagen seleccionada.
+
+            //Solo se debe permitir una imagen
+            for (var con in $scope.list4) {
+                if (con < last) {
+                    $scope.list4.splice(con, 1);
+                    break;
+                }
+            }
+        }
+    };
+
+    $scope.savePromotion = function (formData) {
+         
+        //
+        //
+        //ALEJO por favor me colaboras generando el servicio que crea en DynamoDB la nueva promo en la tabla promotions 
+        // A partir de los datos que llegan en el JSON formData={title:"",link_qr:"",image:"",active:"",user:""}; 
+        //  
+        //alert('Informacion que se envia' + JSON.stringify(formData)); 
+        $scope.promotion = "Creada";
+        $scope.list4 = [];
+        $scope.formPromotion.title = "";
+        $scope.formPromotion.link_qr = "";
+        $scope.formPromotion.image = "";
+    };
+    
+    $scope.deletePromotion = function (idPromotion) {
+        var user = window.sessionStorage.getItem('user').toString();
+        
+        alert(idPromotion, user);
+        //ALEJO por favor me colaboras generando el servicio que elimine en DynamoDB una promo asociada a un hotel (user)
+        // A partir del id y user.
+        
+        $scope.promotion = "Eliminada";
+    };
+    
+    $scope.updatePromotion = function (idPromo, formData) {
+
+        //
+        //
+        //ALEJO por favor me colaboras generando el servicio que actualice en DynamoDB la inforacion promo en la tabla promotions 
+        // A partir de los datos que llegan en el JSON formData={title:"",link_qr:"",image:"",active:"",user:""} y el idPromo: id del promo a actualizar; 
+        //  
+        $scope.promotion = "Actualizada";
+        $scope.list4 = [];
+        $scope.formPromotion.title = "";
+        $scope.formPromotion.link_qr = "";
+        $scope.formPromotion.image = "";
+    };
+
+    //FIN CRUD PROMOTIONS
+
+}
+;
 
 
 
