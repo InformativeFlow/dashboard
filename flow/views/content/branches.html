@@ -1,0 +1,28 @@
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-picture-o"></i>Actualizar Intervalo de tiempos entre las promociones disponibles en las pantallas <span class="badge badge-pill badge-info float-right">{{stateInterval}}</span>
+        </div>
+        <div class="card-body">
+            <form name="formInterval">
+                <div class="form-group">
+                    <label for="sel1">(*) Sede:</label>
+                    <select class="form-control" ng-model="branchSelect" ng-change="getInterval()">
+                        <option value="" selected>Seleccionar</option>
+                        <option ng-repeat="branch in branchesTimeInterval" value="{{branch.name['S']}}">
+                            {{branch.name["S"]}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time">(*) Intervalo</label>
+                    <input type="text" class="form-control" placeholder="Tiempo en segundos" name="time" ng-model="branchInterval.time" required>
+
+                </div>
+
+                <input type="submit" value="Actualizar" class="btn btn-success pull-left" ng-click="updateTimeInterval(branchInterval)" ng-disabled="!formInterval.$valid" />
+            </form>
+
+        </div>
+    </div>
+</div>
