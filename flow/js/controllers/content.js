@@ -28,7 +28,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
 
     $scope.uploadFileTrue = false;
     $scope.msg = "Completado";
-
+    $scope.branchesTimeInterval = [];
 
     function getVideos() {
         $http.get('https://1y0rxj9ll6.execute-api.us-west-2.amazonaws.com/prod/dbvideos?TableName=video', configService.getConfig()).then(function (res) {
@@ -52,8 +52,16 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         });
     }
     ;
-
-
+    function getBranches() {
+   $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
+      
+      for (var item in response.data.Items) {
+            if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
+                $scope.branchesTimeInterval.push(response.data.Items[item]);
+        }
+      
+   });
+    };
     function getPromotions() {
         //Se listan las promociones disponibles de un hotel.
 
@@ -81,6 +89,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
     getImages();
     getVideos();
     getPromotions();
+    getBranches();
 
     function setPromoNewId() {
         return  Math.max.apply(this, $scope.promoIds) + 1;
@@ -367,6 +376,28 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         $location.hash('areaPromo');
         $anchorScroll();
     };
+    $scope.updateTimeInterval = function(branch){
+        $scope.brancheName = branch.name;
+        $scope.timeInterval = branch.time;
+        var params={
+            "TableName":"branch",
+            "Key":{
+                "name":{
+                    "S": $scope.brancheName
+                }
+            },
+            "UpdateExpression":"SET timeInterval =:t",
+            "ExpressionAttributeValues": {
+                ":t":{
+                    "N": $scope.timeInterval
+                }
+            },
+            "ReturnValues":"ALL_NEW"
+        };
+        $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch',params).then(function(response){
+           console.log(response.data.Items); 
+        });
+    }
     //FIN CRUD PROMOTIONS
 
 }
