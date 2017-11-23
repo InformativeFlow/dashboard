@@ -438,10 +438,17 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
             };
 
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
+               sqs.sendMessage($scope.paramsMsg, function (err, data) {
+                        if (err)
+                            console.log(err, err.stack); // an error occurred
+                        else
+                            console.log(data);
+                    });
                 console.log(response.data);
             });
             console.log("Id promociones a actualizar para la pantalla actuall: " + JSON.stringify($scope.idsPromoActuScreen));
         } else {
+            var complete = false;
             for (var promo in $scope.promotionsScreen) {
 
                 var paramsPromo = {
@@ -457,10 +464,17 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                 console.log(JSON.stringify(paramsPromo));
                 $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
                     console.log(response.data);
-
+                    complete = promo==$scope.promotionsScreen.length-1?true:false;
                 });
-
+            
             }
+            if(complete)
+                sqs.sendMessage($scope.paramsMsg, function (err, data) {
+                        if (err)
+                            console.log(err, err.stack); // an error occurred
+                        else
+                            console.log(data);
+                    });
             console.log("Se eliminaran todas las promociones que tenga la pantalla actual: " + JSON.stringify($scope.idsPromoActuScreen));
 
         }
