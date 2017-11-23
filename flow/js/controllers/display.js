@@ -95,7 +95,7 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
                         if (window.location.href.split('/').pop() == body) {
 
                             window.sessionStorage.clear();
-                            // window.localStorage.clear();
+                             window.localStorage.clear();
 
                             window.location.reload(true);
                             removeFromQueue(message);
