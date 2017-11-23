@@ -16,6 +16,17 @@ function loadBranchesCtrl($scope, $http, configService) {
         }
 
     });
+    $scope.contentPromotions = [];
+    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion', configService.getConfig()).then(function (res) {
+            
+            for (var item in  res.data.Items) {
+                if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString()) {
+                    $scope.contentPromotions.push(res.data.Items[item]);
+
+                }
+            }
+
+        });
 
 
 }

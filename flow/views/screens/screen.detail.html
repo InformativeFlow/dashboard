@@ -1,16 +1,16 @@
 <div class="animated fadeIn">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <small>Personalización de la pantalla ubicada en:</small>
-            <i class="fa fa-tv bg-info p-3 font-2xl mr-3 float-left"></i>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <small>Personalización de la pantalla ubicada en:</small>
+                    <i class="fa fa-tv bg-info p-3 font-2xl mr-3 float-left"></i>
                     <div class="h5 text-capitalize mb-0 mt-2">{{detailNameScreen}}</div>
+                </div>
+            </div>
         </div>
-      </div>
-      </div>
-      </div>
-      </div>
+    </div>
+</div>
 <div class="row">
 
     <div class="col-md-6">
@@ -81,6 +81,51 @@
                     </div>
                 </div>
             </div> 
+            <div class="col-sm-12" id="accordion3">
+                <div class="card">
+                    <div class="card-header">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"> Promociones disponibles </a>
+                        <span class="badge badge-pill badge-success float-right">{{promotionsBranch.length}}</span>
+                        <div class="card-body pb-0">
+                            <div class="btn-group pull-right">
+                                <p>Active / Inactive las promociones para la pantalla.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapse3" class="card-body panel-collapse collapse in">
+                        <div id="div2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="content" ng-if="$even" ng-repeat='item in promotionsBranch| filter: { active:{ "S":"1" }}'>
+                                        <p class="text-center font-sm">{{item.title["S"]}}</p>
+                                        <img src="{{item.image['S']}}" ng-show="item.id['N']" />
+                                        <div class="checkbox font-sm">
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsActive(item.id['N'])" ng-click="activarPromo(item.id['N'])"> Activo</label>
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsInactive(item.id['N'])" ng-click="inactivarPromo(item.id['N'])"> Inactivo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="content" ng-if="$odd" ng-repeat='item in promotionsBranch| filter: { active: { "S":"1" } }'>
+                                        <p class="text-center font-sm">{{item.title["S"]}}</p>
+                                        <img src="{{item.image['S']}}" ng-show="item.id['N']" />
+                                        <div class="checkbox font-sm">
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsActive(item.id['N'])" ng-click="activarPromo(item.id['N'])"> Activo</label>
+                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsInactive(item.id['N'])" ng-click="inactivarPromo(item.id['N'])"> Inactivo</label>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <center>
+                                <button type="button" class="btn btn-success" ng-click="updatePromotions()" ><i class="fa fa-save"></i> Actualizar</button>                    
+                            </center>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>    
     </div>
     <div class="col-md-6">
@@ -114,56 +159,14 @@
                                                 Your browser does not support the video tag.
                                             </video> 
 
-<!--                                            <div id="item{{$index}}"  >
-                                                <span  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item, $event)" ></span>
-                                            </div>-->
+                                            <!--                                            <div id="item{{$index}}"  >
+                                                                                            <span  class="pull-right btn btn-danger fa fa-trash trash" ng-click="removeItem(item, $event)" ></span>
+                                                                                        </div>-->
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" id="accordion3">
-                    <div class="card-header">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"> Promociones asociadas a la pantalla </a>
-                        <span class="badge badge-pill badge-info float-right">{{idsPromoScreen.length}}</span>
-                        <div class="card-body pb-0">
-                            <div class="btn-group pull-right">
-                                <p>Listado de promociones activas</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="collapse3" class="card-body panel-collapse collapse in">
-                        <div id="div2">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="content" ng-if="$even" ng-repeat='item in promotionsBranch | filter: { active:{ "S":"1" }}'>
-                                        <p class="text-center font-sm">{{item.title["S"]}}</p>
-                                        <img src="{{item.image['S']}}" ng-show="item.id['N']" />
-                                        <div class="checkbox font-sm">
-                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsActive(item.id['N'])" ng-click="activarPromo(item.id['N'])"> Activo</label>
-                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsInactive(item.id['N'])" ng-click="inactivarPromo(item.id['N'])"> Inactivo</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="content" ng-if="$odd" ng-repeat='item in promotionsBranch | filter: { active: { "S":"1" } }'>
-                                        <p class="text-center font-sm">{{item.title["S"]}}</p>
-                                        <img src="{{item.image['S']}}" ng-show="item.id['N']" />
-                                        <div class="checkbox font-sm">
-                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsActive(item.id['N'])" ng-click="activarPromo(item.id['N'])"> Activo</label>
-                                            <label><input type="radio" name="optradio_{{item.id['N']}}" ng-checked="promoIsInactive(item.id['N'])" ng-click="inactivarPromo(item.id['N'])"> Inactivo</label>
-                                        </div>                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <center>
-                                <button type="button" class="btn btn-success" ng-click="updatePromotions()" ><i class="fa fa-save"></i> Actualizar</button>                    
-                            </center>
                         </div>
                     </div>
                 </div>

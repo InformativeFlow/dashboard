@@ -29,7 +29,14 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
     $scope.promotionsBranch = []; // Objetos con la informacion de las promociones que se han creado para una sede.
     $scope.idsPromoScreen = []; // id de las promociones que tiene asociado una pantalla en DinamoDB.
     $scope.idsPromoActuScreen = []; //Listado de ids de promociones a actualizar en DinamoDB para una pantalla especifica.
+    
+    //Informacion de las promociones creadas para una sede
+    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (response) {
 
+        $scope.promotionsBranch = response.data.Items;
+
+    });
+    
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.screens = response.data.Items;
@@ -346,16 +353,7 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
     };
 
     // PROCESO relacionados con gestion de PROMOCIONES.
-    //Informacion de las promociones creadas para una sede
-
-    //ALEJO, me apoyas por fa asociando el servicio REST que trae las promociones creadas para una sede
-    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (response) {
-
-        $scope.promotionsBranch = response.data.Items;
-
-    });
-
-
+    
     $scope.promoIsActive = function (x) {
         var respuesta = false;
         for (var con in $scope.idsPromoScreen) {
