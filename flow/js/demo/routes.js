@@ -226,6 +226,23 @@ angular
                             ncyBreadcrumb: {
                                 label: 'Contenido / Promociones'
                             }
+                        })
+                        
+                        .state('app.intervals', {
+                            url: '/content/branches',
+                            templateUrl: 'views/content/branches.html',
+                            controller: 'contentCtrl',
+                            resolve: {
+                                creds: ['$http', function (r) {
+                                        return r.get('data/keys.json').then(function (res) {
+                                            return res.data;
+                                        });
+                                    }],
+                                loginRequired: loginRequired
+                            },
+                            ncyBreadcrumb: {
+                                label: 'Contenido / Intervalos'
+                            }
                         });
                         
             }]);

@@ -1,0 +1,21 @@
+<div class="animated fadeIn">
+    <div class="card card-default">
+        <div class="card-header">
+            <i class="fa fa-picture-o"></i>Actualizar Intervalo de tiempos para las pantallas
+        </div>
+        <div class="card-body">
+            <label for="timeInterval">(*) Intervalo</label>
+            <input type="text" class="form-control" placeholder="Tiempo en segundos" name="timeInterval" ng-model="timeIntervalBranch" required>
+
+            <button type="button" class="btn btn-success uploadButton" ng-click = "">Actualizar</button>
+        </div>
+        <div class="card-body">
+            <div ng-if="uploadFileTrue" id="bar-file" class="col-12">
+                <span class="progress" ng-show="uploadProgress >= 0">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width:{{uploadProgress}}%"  
+                         ng-bind="uploadProgress + '% ' + msg"></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -203,7 +203,7 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
     $scope.botonSavePromotion = true;
     $scope.botonUpdatePromotion = false;
     $scope.idPromoUpdate = 0;
-
+    
     $scope.formPromotion = {
         title: "",
         link_qr: "",
