@@ -31,10 +31,11 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
     $scope.idsPromoActuScreen = []; //Listado de ids de promociones a actualizar en DinamoDB para una pantalla especifica.
     
     //Informacion de las promociones creadas para una sede
-    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (response) {
-
-        $scope.promotionsBranch = response.data.Items;
-
+    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion', configService.getConfig()).then(function (response) {
+        for (var item in  response.data.Items) {
+            if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
+                $scope.promotionsBranch = response.data.Items;
+        }
     });
     
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {

@@ -253,7 +253,6 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
     };
 
     $scope.savePromotion = function (formData) {
-        $scope.promotion = "Creada";
         $scope.list4 = [];
         $scope.formPromotion.title = formData.title;
         $scope.formPromotion.link_qr = formData.link_qr;
@@ -281,8 +280,10 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
                 }
             }
         };
+        console.log("Inicio a guardar promo: "+$scope.formPromotion.image);
         $http.post('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios', params).then(function (response) {
-            console.log(response);
+            console.log("Guardando: "+response);
+            $scope.promotion = "Creada";
             getPromotions();
             $scope.formPromotion = {};
             $location.hash('areaPromo');
@@ -405,9 +406,9 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         };
         $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', params).then(function (response) {
             console.log(response.data.Items);
-            
+
             getBranches();
-            $scope.branchInterval.name= "";
+            $scope.branchInterval.name = "";
             $scope.branchInterval.time = "";
             $scope.stateInterval = "Actualizada";
         });

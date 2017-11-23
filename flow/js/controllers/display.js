@@ -50,7 +50,7 @@ function displayCtrl($scope, $http, $state, creds, configService, $interval) {
     
     
     //Se listan las promociones disponibles de un hotel.
-    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion').then(function (response){
+    $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion', configService.getConfig()).then(function (response){
         
         $scope.promotionsBranch = response.data.Items;
         
