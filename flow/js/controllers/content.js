@@ -53,15 +53,17 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
     }
     ;
     function getBranches() {
-   $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
-      
-      for (var item in response.data.Items) {
-            if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString() )
-                $scope.branchesTimeInterval.push(response.data.Items[item]);
-        }
-      
-   });
-    };
+        $scope.branchesTimeInterval = [];
+        $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
+
+            for (var item in response.data.Items) {
+                if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
+                    $scope.branchesTimeInterval.push(response.data.Items[item]);
+            }
+
+        });
+    }
+    ;
     function getPromotions() {
         //Se listan las promociones disponibles de un hotel.
 
@@ -212,13 +214,18 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
     $scope.botonSavePromotion = true;
     $scope.botonUpdatePromotion = false;
     $scope.idPromoUpdate = 0;
-    
+
     $scope.formPromotion = {
         title: "",
         link_qr: "",
         image: "",
         active: "1",
         user: window.sessionStorage.getItem('user').toString()
+    };
+
+    $scope.branchInterval = {
+        name: "",
+        time: ""
     };
 
     $scope.list4 = [];
@@ -376,28 +383,48 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         $location.hash('areaPromo');
         $anchorScroll();
     };
-    $scope.updateTimeInterval = function(branch){
+
+    $scope.updateTimeInterval = function (branch) {
+
         $scope.brancheName = branch.name;
         $scope.timeInterval = branch.time;
-        var params={
-            "TableName":"branch",
-            "Key":{
-                "name":{
+        var params = {
+            "TableName": "branch",
+            "Key": {
+                "name": {
                     "S": $scope.brancheName
                 }
             },
-            "UpdateExpression":"SET timeInterval =:t",
+            "UpdateExpression": "SET timeInterval =:t",
             "ExpressionAttributeValues": {
-                ":t":{
+                ":t": {
                     "N": $scope.timeInterval
                 }
             },
-            "ReturnValues":"ALL_NEW"
+            "ReturnValues": "ALL_NEW"
         };
-        $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch',params).then(function(response){
-           console.log(response.data.Items); 
+        $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', params).then(function (response) {
+            console.log(response.data.Items);
+            
+            getBranches();
+            $scope.branchInterval.name= "";
+            $scope.branchInterval.time = "";
+            $scope.stateInterval = "Actualizada";
         });
-    }
+    };
+
+    $scope.branchSelect = "";
+
+
+    $scope.getInterval = function () {
+        for (var branch in $scope.branchesTimeInterval) {
+            if ($scope.branchesTimeInterval[branch].name["S"] === $scope.branchSelect) {
+                $scope.stateInterval = "";
+                $scope.branchInterval.name = $scope.branchesTimeInterval[branch].name["S"];
+                $scope.branchInterval.time = $scope.branchesTimeInterval[branch].timeInterval["N"];
+            }
+        }
+    };
     //FIN CRUD PROMOTIONS
 
 }
