@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
     <div class="card card-default">
-        <div class="card-header">
+        <div id="areaPromo" class="card-header">
             <i class="fa fa-gift"></i>Cargar promoción
         </div>
         <div class="card-body">
@@ -56,7 +56,10 @@
                                                 <label for="image">(*) Imagen</label>
                                                 <div ng-mouseover="contentExist()" class="addContent"  data-drop="true">
                                                     <div id="conBox" class="areaDrag" data-drop="true"  ng-model='list4' jqyoui-droppable="{multiple:true}">
-                                                        <div ng-hide="hideMe()" class="areaDrop">Suelte aquí la imagen.</div>
+                                                        <div ng-hide="hideMe()" class="areaDrop">Suelte aquí la imagen.
+                                                            <img id="imgUpdate" class="img-responsive center-block" src="{{link_img}}"  width="100%"  />
+                                                            
+                                                        </div>
                                                         <div class="listContent">
                                                             <div   class="contentShow" ng-repeat="item in list4 track by $index">
                                                                 <img  ng-if="item.type['S'] === 'img'"   src="{{item.path['S']}}" ng-show="item.id['N']" data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" ng-model="list4" jqyoui-draggable="{index: {{$index}}}"  width="100%"  />
@@ -64,7 +67,7 @@
                                                             </div>
                                                         </div>
                                                             
-                                                        <input type="text" style="border: 1px solid white; height: 1px;color:white;font-size: 1px;" type="text" class="form-control" name="image" ng-model="formPromotion.image" required>
+                                                        <input type="text" style="border: 1px solid white; height: 1px;color:white;font-size: 1px;" class="form-control" name="image" ng-model="formPromotion.image" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -79,7 +82,8 @@
                                                 <input type="text" class="form-control" placeholder="Url para código QR" name="link_qr" ng-model="formPromotion.link_qr" required>
                                             </div>
 
-                                            <input type="submit" value="Crear" class="btn btn-success pull-right" ng-click="savePromotion(formPromotion)" ng-disabled="!formPromo.$valid" />
+                                            <input ng-show="botonSavePromotion" type="submit" value="Crear" class="btn btn-success pull-right" ng-click="savePromotion(formPromotion)" ng-disabled="!formPromo.$valid" />
+                                            <input ng-show="botonUpdatePromotion" type="submit" value="Actualizar" class="btn btn-success pull-right" ng-click="updatePromotion(formPromotion)" ng-disabled="!formPromo.$valid" />
                                         </form>
                                         
                                     </div>
@@ -124,7 +128,7 @@
                                         </td>
                                         <td><img id="img2" class="img-responsive center-block" src="{{item.image['S']}}"  style="width: 100px; height: 100px;" /></td>
                                         <td>
-                                            <button type="button" class="btn badge-info" style="padding: 1px;"ng-click="updatePromotion(item.id['N'])"><i class="fa fa-edit"></i></button> 
+                                            <button type="button" class="btn badge-info" style="padding: 1px;"ng-click="selectPromotion(item.id['N'])"><i class="fa fa-edit"></i></button> 
                                         </td>
                                         <td>
                                             <button type="button"  class="btn btn-danger" style="padding: 1px;" ng-click="deletePromotion(item.id['N'])"><i class="fa fa-trash"></i></button> 
