@@ -76,12 +76,14 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
         $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion', configService.getConfig()).then(function (res) {
             $scope.contentPromotions = [];
             $scope.promoIds = [];
+            $scope.promoNewIds = [];
             for (var item in  res.data.Items) {
                 if (res.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString()) {
                     $scope.contentPromotions.push(res.data.Items[item]);
                     $scope.promoIds.push(parseInt(res.data.Items[item].id["N"]));
 
                 }
+                $scope.promoNewIds.push(parseInt(res.data.Items[item].id["N"]));
             }
 
         });
@@ -94,7 +96,11 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
     getBranches();
 
     function setPromoNewId() {
-        return  Math.max.apply(this, $scope.promoIds) + 1;
+        var newId = 1;
+        if($scope.promoNewIds.length > 0){
+            newId = Math.max.apply(this, $scope.promoNewIds) + 1;
+        }
+        return newId;
     }
 
     AWS.config.update({accessKeyId: $scope.creds.access_key, secretAccessKey: $scope.creds.secret_key});
@@ -280,9 +286,23 @@ function contentCtrl($scope, $state, $timeout, $http, creds, ngToast, configServ
                 }
             }
         };
-        console.log("Inicio a guardar promo: "+$scope.formPromotion.image);
+        /*var resultado = "";
+        for (var i in params) {
+          if (params.hasOwnProperty(i)) {
+              resultado += params + "." + i + " = " + params[i] + "\n";
+          }
+        }
+        */
+        var objetoAInspeccionar;
+        var resultado = [];
+
+        for(objetoAInspeccionar = params; objetoAInspeccionar !== null; objetoAInspeccionar = Object.getPrototypeOf(objetoAInspeccionar)){
+           resultado = resultado.concat(Object.getOwnPropertyNames(objetoAInspeccionar)) + "\n";
+        } 
+        
+        console.log("BODY: "+JSON.stringify(params));
         $http.post('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios', params).then(function (response) {
-            console.log("Guardando: "+response);
+            console.log("respuesta de servicio: "+response);
             $scope.promotion = "Creada";
             getPromotions();
             $scope.formPromotion = {};

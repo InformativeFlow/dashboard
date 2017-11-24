@@ -29,52 +29,57 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
     $scope.promotionsBranch = []; // Objetos con la informacion de las promociones que se han creado para una sede.
     $scope.idsPromoScreen = []; // id de las promociones que tiene asociado una pantalla en DinamoDB.
     $scope.idsPromoActuScreen = []; //Listado de ids de promociones a actualizar en DinamoDB para una pantalla especifica.
-    
+
     //Informacion de las promociones creadas para una sede
     $http.get('https://fj40cj5l8f.execute-api.us-west-2.amazonaws.com/prod/promotios?TableName=promotion', configService.getConfig()).then(function (response) {
         for (var item in  response.data.Items) {
-            if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString())
-                $scope.promotionsBranch = response.data.Items;
+            if (response.data.Items[item].user['S'] === window.sessionStorage.getItem('user').toString()) {
+                $scope.promotionsBranch.push(response.data.Items[item]);
+            }
         }
     });
-    
+
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
 
         $scope.screens = response.data.Items;
+        for (var item in  response.data.Items) {
+            if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString()) {
 
-        for (var item in $scope.screens) {
-            if ($scope.screens[item].id["N"] == $scope.branchId) {
-                $scope.branchSelectedName = $scope.screens[item].name["S"];
-                $scope.screensBranch = $scope.screens[item].screens["L"];
-                for (var screen in $scope.screensBranch) {
-                    if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) {
-                        $scope.promotionsScreen = $scope.screensBranch[screen]["M"].promotions["L"];
+                for (var item in $scope.screens) {
+                    if ($scope.screens[item].id["N"] == $scope.branchId) {
+                        $scope.branchSelectedName = $scope.screens[item].name["S"];
+                        $scope.screensBranch = $scope.screens[item].screens["L"];
+                        for (var screen in $scope.screensBranch) {
+                            if ($scope.screensBranch[screen]["M"].id["N"] == $scope.screenId) {
+                                $scope.promotionsScreen = $scope.screensBranch[screen]["M"].promotions["L"];
 
-                        $scope.paramsMsg = {
-                            MessageBody: $scope.screensBranch[screen]["M"].url['S'],
-                            QueueUrl: queueURL
+                                $scope.paramsMsg = {
+                                    MessageBody: $scope.screensBranch[screen]["M"].url['S'],
+                                    QueueUrl: queueURL
 
-                        };
+                                };
 
-                        $scope.detailNameScreen = $scope.screensBranch[screen]["M"].name["S"];
+                                $scope.detailNameScreen = $scope.screensBranch[screen]["M"].name["S"];
 
-                        for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
+                                for (var content in $scope.screensBranch[screen]["M"].content["L"]) {
 
-                            $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
+                                    $scope.list4.push($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
 
 
-                            if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img") {
-                                //console.log($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
-                                $scope.idsImg.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
-                            } else {
-                                $scope.idsVideo.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
+                                    if ($scope.screensBranch[screen]["M"].content["L"][content]["M"].type["S"] == "img") {
+                                        //console.log($scope.screensBranch[screen]["M"].content["L"][content]["M"]);
+                                        $scope.idsImg.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
+                                    } else {
+                                        $scope.idsVideo.push($scope.screensBranch[screen]["M"].content["L"][content]["M"].id["N"]);
+                                    }
+                                }
+                                //Informacion de Promociones asociadas a la pantalla actual.
+                                for (var promotion in $scope.screensBranch[screen]["M"].promotions["L"]) {
+
+                                    //ALEJO, la idea aqui es incluir el id de las promociones asociadas a la pantalla en la variable 'idsPromoScreen'
+                                    $scope.idsPromoScreen.push($scope.screensBranch[screen]["M"].promotions["L"][promotion]["M"].id["N"]);
+                                }
                             }
-                        }
-                        //Informacion de Promociones asociadas a la pantalla actual.
-                        for (var promotion in $scope.screensBranch[screen]["M"].promotions["L"]) {
-
-                            //ALEJO, la idea aqui es incluir el id de las promociones asociadas a la pantalla en la variable 'idsPromoScreen'
-                            $scope.idsPromoScreen.push($scope.screensBranch[screen]["M"].promotions["L"][promotion]["M"].id["N"]);
                         }
                     }
                 }
@@ -354,7 +359,7 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
     };
 
     // PROCESO relacionados con gestion de PROMOCIONES.
-    
+
     $scope.promoIsActive = function (x) {
         var respuesta = false;
         for (var con in $scope.idsPromoScreen) {
@@ -439,12 +444,12 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
             };
 
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
-               sqs.sendMessage($scope.paramsMsg, function (err, data) {
-                        if (err)
-                            console.log(err, err.stack); // an error occurred
-                        else
-                            console.log(data);
-                    });
+                sqs.sendMessage($scope.paramsMsg, function (err, data) {
+                    if (err)
+                        console.log(err, err.stack); // an error occurred
+                    else
+                        console.log(data);
+                });
                 console.log(response.data);
             });
             console.log("Id promociones a actualizar para la pantalla actuall: " + JSON.stringify($scope.idsPromoActuScreen));
@@ -465,17 +470,17 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                 console.log(JSON.stringify(paramsPromo));
                 $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
                     console.log(response.data);
-                    complete = promo==$scope.promotionsScreen.length-1?true:false;
+                    complete = promo == $scope.promotionsScreen.length - 1 ? true : false;
                 });
-            
+
             }
-            if(complete)
+            if (complete)
                 sqs.sendMessage($scope.paramsMsg, function (err, data) {
-                        if (err)
-                            console.log(err, err.stack); // an error occurred
-                        else
-                            console.log(data);
-                    });
+                    if (err)
+                        console.log(err, err.stack); // an error occurred
+                    else
+                        console.log(data);
+                });
             console.log("Se eliminaran todas las promociones que tenga la pantalla actual: " + JSON.stringify($scope.idsPromoActuScreen));
 
         }
