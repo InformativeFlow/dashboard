@@ -27,7 +27,7 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
     $scope.list4 = [];
     $scope.detailNameScreen = {};
     $scope.promotionsBranch = []; // Objetos con la informacion de las promociones que se han creado para una sede.
-    $scope.idsPromoScreen = []; // id de las promociones que tiene asociado una pantalla en DinamoDB.
+     // id de las promociones que tiene asociado una pantalla en DinamoDB.
     $scope.idsPromoActuScreen = []; //Listado de ids de promociones a actualizar en DinamoDB para una pantalla especifica.
 
     //Informacion de las promociones creadas para una sede
@@ -38,9 +38,9 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
             }
         }
     });
-
+function getBranches(){
     $http.get('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches?TableName=branch', configService.getConfig()).then(function (response) {
-
+ $scope.idsPromoScreen = [];
         $scope.screens = response.data.Items;
         for (var item in  response.data.Items) {
             if (response.data.Items[item].user['S'] == window.sessionStorage.getItem('user').toString()) {
@@ -87,7 +87,8 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
         }
         console.log($scope.idsPromoScreen);
     });
-
+    };
+    getBranches();
     $http.get('https://r4mhv473uk.execute-api.us-west-2.amazonaws.com/prod/dbimages?TableName=image', configService.getConfig()).then(function (res) {
         $scope.contentImages = [];
         for (var item in  res.data.Items) {
@@ -418,16 +419,17 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
     $scope.updatePromotions = function () {
 
         var idx = $scope.screenId - 1;
-        if ($scope.idsPromoActuScreen.length > 0) {
-
-            var listPromo = [];
-            for (var mp in $scope.idsPromoActuScreen) {
+        var listPromo = [];
+       for(var item in $scope.idsPromoActuScreen)
+           if($scope.idsPromoScreen.indexOf($scope.idsPromoActuScreen[item])==-1){
+       
                 var mapPromo = {};
                 mapPromo["M"] = {};
                 mapPromo["M"]["id"] = {};
-                mapPromo["M"]["id"]["N"] = $scope.idsPromoActuScreen[mp];
+                mapPromo["M"]["id"]["N"] = $scope.idsPromoActuScreen[item];
                 listPromo.push(mapPromo);
-            }
+           }
+       if(listPromo.length>0){
             var paramsPromo = {
                 "TableName": "branch",
                 "Key": {
@@ -442,7 +444,7 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                 },
                 "ReturnValues": "UPDATED_NEW"
             };
-
+ 
             $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
                 sqs.sendMessage($scope.paramsMsg, function (err, data) {
                     if (err)
@@ -451,12 +453,13 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                         console.log(data);
                 });
                 console.log(response.data);
+               getBranches();
             });
+        };
             console.log("Id promociones a actualizar para la pantalla actuall: " + JSON.stringify($scope.idsPromoActuScreen));
-        } else {
-            var complete = false;
-            for (var promo in $scope.promotionsScreen) {
-
+ 
+            for (var promo in $scope.idsPromoScreen) 
+            if($scope.idsPromoActuScreen.indexOf($scope.idsPromoScreen[promo])==-1){
                 var paramsPromo = {
                     "TableName": "branch",
                     "Key": {
@@ -467,25 +470,27 @@ function screenCtrl($scope, $http, $state, $q, creds, configService) {
                     "UpdateExpression": "REMOVE screens[" + idx + "].promotions[" + promo + "]",
                     "ReturnValues": "ALL_NEW"
                 };
-                console.log(JSON.stringify(paramsPromo));
+                
                 $http.put('https://c354kdhd51.execute-api.us-west-2.amazonaws.com/prod/branches', paramsPromo).then(function (response) {
                     console.log(response.data);
-                    complete = promo == $scope.promotionsScreen.length - 1 ? true : false;
-                });
-
-            }
-            if (complete)
-                sqs.sendMessage($scope.paramsMsg, function (err, data) {
+                      sqs.sendMessage($scope.paramsMsg, function (err, data) {
                     if (err)
                         console.log(err, err.stack); // an error occurred
                     else
                         console.log(data);
+                }); 
+                 console.log(response.data);
+               getBranches();   
                 });
+              
+            }
+           
+             
             console.log("Se eliminaran todas las promociones que tenga la pantalla actual: " + JSON.stringify($scope.idsPromoActuScreen));
 
-        }
-        ;
+        };
 
         // FIN PROCESO relacionados con gestion de PROMOCIONES.
-    }
+  
+   
 }
